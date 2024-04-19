@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+
+<html lang="zh">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>CTF Web中的常见内容 |  welcome to my world</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/bookmark.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-CTF Web中的常见内容"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  CTF Web中的常见内容
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/04/18/CTF%20Web%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="article-date">
+  <time datetime="2024-04-18T12:46:38.952Z" itemprop="datePublished">2024-04-18</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">9 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="1、SQL注入"><a href="#1、SQL注入" class="headerlink" title="1、SQL注入  "></a><strong><font size=4>1、SQL注入</font></strong>  </h2><p>详细内容查阅文章“SQL注入中的常见内容”  </p>
+<h2 id="2、任意文件读取漏洞"><a href="#2、任意文件读取漏洞" class="headerlink" title="2、任意文件读取漏洞  "></a><strong><font size=4>2、任意文件读取漏洞</font></strong>  </h2><p>任意文件读取漏洞是指攻击者通过在应用程序中输入非法的文件名或路径，从而获取未授权的文件读取权限的漏洞。攻击者可以利用此漏洞来读取系统文件、敏感数据或其他用户数据。<br>常见形式：页面利用URL的方式进行参数传递  </p>
+<p>例题：<br><img src="/pic/rread/rread1.png"><br>只有设备维护中心可以点击，尝试sql注入无结果，查看源代码发现传递了page参数，尝试使用文件读取<code>?page=php://filter/read=convert.base64-encode/resource=../../../../../etc/passwd</code>（除此之外也可以直接尝试访问文件，如<code>?page=../../../../etc/passwd</code>，若网站采用flask框架，则可以通过读取app.py文件来获取后端代码）<br><img src="/pic/rread/rread2.png"><br>发现存在文件读取漏洞，读取index.php文件，base64解码后得到源代码<code>?page=php://filter/read=convert.base64-encode/resource=index.php</code><br><img src="/pic/rread/rread3.png"><br>其中：<br><img src="/pic/rread/rread4.png"><br>可以利用 preg_replace函数漏洞<br><img src="/pic/rread/rread5.png"><br>查找flag文件<br><img src="/pic/rread/rread6.png"><br>进入目录并查看文件%20为空格，%26为&amp;<br><img src="/pic/rread/rread7.png"><br><img src="/pic/rread/rread8.png">   </p>
+<h2 id="3、反序列化漏洞"><a href="#3、反序列化漏洞" class="headerlink" title="3、反序列化漏洞  "></a><strong><font size=4>3、反序列化漏洞</font></strong>  </h2><p>序列化 (Serialization)是将对象的状态信息转换为可以存储或传输的形式的过程。反序列化（unserialize)为其逆过程。当传给unserialize()的参数可控时，那么用户就可以注入payload,进行反序列化的时候就可能触发对象中的一些魔术方法。</p>  
+PHP中的几个特殊的魔术方法： 
+ 
+<ul>
+<li>__construct()：当对象创建（new）时会自动调用，但在unserialize()时是不会 自动调用的（构造函数）   </li>
+<li>__destruct()：当对象操作执行完毕后自动执行__destruct()函数的代码  </li>
+<li>__wakeup：unserialize()时自动调用<br>序列化后的字符串意义为：<br><img src="/pic/xlh/xlh1.png"><br>存在以下代码：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">highlight_file(__FILE__);</span><br><span class="line">class ease&#123;  </span><br><span class="line">			private $method;  </span><br><span class="line">			private $args;  </span><br><span class="line">			function __construct($method, $args) &#123;  </span><br><span class="line">								$this-&gt;method = $method;  </span><br><span class="line">								$this-&gt;args = $args;  </span><br><span class="line">								&#125;  </span><br><span class="line">				function __destruct()&#123;  </span><br><span class="line">					if (in_array($this-&gt;method, array(&quot;ping&quot;))) &#123;  </span><br><span class="line">						call_user_func_array(array($this, $this-&gt;method), $this-&gt;args);  </span><br><span class="line">						&#125;  </span><br><span class="line">					&#125;   </span><br><span class="line">			function ping($ip)&#123;  </span><br><span class="line">				exec($ip, $result);  </span><br><span class="line">				var_dump($result);  </span><br><span class="line">				&#125;  </span><br><span class="line">			function waf($str)&#123;  </span><br><span class="line">				if (!preg_match_all(&quot;/(\||&amp;|;| |\/|cat|flag|tac|php|ls)/&quot;, $str, $pat_array)) &#123;  </span><br><span class="line">						return $str;  </span><br><span class="line">				&#125; else &#123;  </span><br><span class="line">					echo &quot;don&#x27;t hack&quot;;  </span><br><span class="line">						&#125;  </span><br><span class="line">				&#125;  </span><br><span class="line">			function __wakeup()&#123;  </span><br><span class="line">				foreach($this-&gt;args as $k =&gt; $v) &#123;  </span><br><span class="line">				$this-&gt;args[$k] = $this-&gt;waf($v);  </span><br><span class="line">				&#125;  </span><br><span class="line">			&#125;  </span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">$ctf=@$_POST[&#x27;ctf&#x27;];</span><br><span class="line">@unserialize(base64_decode($ctf)) </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<hr>
+<ul>
+<li>unserialize()在调用前会检查是否存在一个__wakeup方法。如果存在，则会先调用 __wakeup方法，预先准备对象数据。__wakeup的绕过：将需要进行反序列化的对象的序列化字符串中的成员数改为大于实际成员数即可。  </li>
+<li>$()与 ` `（反引号）:在bash中，$( )与` `（反引号）都是用来作命令替换的，执行括号或者反引号中的命令。命令替换与变量替换差不多，先完成引号里的命令行，然后将其执行结果作为替换，再重组成新的命令行进行执行。</li>
+<li>对空格的绕过：IFS，用法：${IFS}  </li>
+<li>对&#x2F;的绕过：利用printf。用法：printf “\57”  </li>
+<li>对字符串的绕过：字符串中间加入””，用法f””lag</li>
+</ul>
+<p>解题所需传递的内容由以下生成：<br><img src="/pic/xlh/xlh2.png"><br>拓展：PHP中的正则表达式<br><img src="/pic/xlh/xlh3.png">  </p>
+<p>例2：<br><img src="/pic/xlh/xlh4.png"><br>题目包含两个点：对于正则表达式的绕过和wakeup函数的绕过。题中正则表达式表示匹配以下格式的内容：（包含字符o或者c：包含一个或者多个整数：），该形式为序列化数据的格式，其中o可以用O代替，整数前可以加一个+号绕过，对于wakeup函数只需要增加对象属性的个数就可以绕过。构造payload的代码如下：<br><img src="/pic/xlh/xlh5.png"><br><img src="/pic/xlh/xlh6.png">  </p>
+<h2 id="4、字符串的比较及构造"><a href="#4、字符串的比较及构造" class="headerlink" title="4、字符串的比较及构造  "></a><strong><font size=4>4、字符串的比较及构造</font></strong>  </h2><p>代码如下：<br><img src="/pic/xlh/xlh7.png">  </p>
+<ul>
+<li>对于a，采用科学计数法1e8即可满足其整数值大于6000000同时小于3位  </li>
+<li>对于b，其md5的后六位应当为8b184b，用以下脚本破解：   <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line">	$b=1;  </span><br><span class="line">	while(substr(md5($b),-6,6)!=&#x27;8b184b&#x27;) $b++;  </span><br><span class="line">	var_dump($b);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<ul>
+<li>对于c，c需为数组且c的m键需要为数字，且大于2022，可以令m键值为2023a，c中n键需要为数组且其第一个元素也需要为数组，同时需要同DGGJ进行比较。<br>Array_search函数在将字符串和数字进行比较时会先将字符串转换为数字 ，同时若字符串中本不包含数字，该字符串将被转换为0，所以当c的n键值包含0时即可通过第一个验证，同时也可以通过第二个验证，所以构造c&#x3D;{“m”:”2023a”,”n”:[[0,1],0]}</li>
+<li>Payload为?a&#x3D;1e8&amp;b&#x3D;b&#x3D;53724&amp;c&#x3D;{“m”:”2023a”,”n”:[[0,1],0]}</li>
+</ul>
+<h2 id="5、文件包含漏洞"><a href="#5、文件包含漏洞" class="headerlink" title="5、文件包含漏洞  "></a><strong><font size=4>5、文件包含漏洞</font></strong>  </h2><p>文件包含漏洞是一种注入型漏洞，其本质就是输入一段用户能够控制的脚本或者代码，并让服务端执行。<br>以PHP为例,常用的文件包含函数有以下四种<br>include(),require(),include_once(),require_once()   </p>
+<ul>
+<li>require():找不到被包含的文件会产生致命错误，并停止脚本运行  </li>
+<li>include():找不到被包含的文件只会产生警告，脚本继续执行  </li>
+<li>require_once()与require()类似:唯一的区别是如果该文件的代码已经被包含，则不会再次包含  </li>
+<li>include_once()与include()类似:唯一的区别是如果该文件的代码已经被包含，则不会再次包含</li>
+</ul>
+<p>例子：<br><img src="/pic/wjbh/wjbh1.png"><br>分析需要在file1中传入读取flag.php文件的语句，file2内容需要为hello ctf<br>构造<code>file1=php://filter/read=convert.base64-encode/resource=flag.php</code><br><code>file2=data://text/plain,hello ctf</code><br>提交。<br>返回base64编码结果：<code>PD9waHAKZWNobyAiV1JPTkcgV0FZISI7Ci8vICRmbGFnID0gY3liZXJwZWFjZXs0YzIwMzJiMjA5MTZhNWFlZTNmNWFiZTVmZmNmZjliMn0=</code></p>
+<p>利用hackbar进行base64解码得出flag。  </p>
+<h2 id="6、模板注入漏洞"><a href="#6、模板注入漏洞" class="headerlink" title="6、模板注入漏洞  "></a><strong><font size=4>6、模板注入漏洞</font></strong>  </h2><p>什么是模板注入呢，当不正确的使用模板引擎进行渲染时，则会造成模板注入。例如以下代码：  </p>
+<pre><code>
+    from flask import Flask
+    from flask import request
+    from flask import config
+    from flask import render_template_string
+    app = Flask(__name__)
+    app.config[&#39;SECRET_KEY&#39;] = &quot;flag&#123;SSTI_123456&#125;&quot;
+    @app.route(&#39;/&#39;)
+    def hello_world():
+        return &#39;Hello World!&#39;
+    @app.errorhandler(404)
+    def page_not_found(e):
+        template = &#39;&#39;&#39;
+        &#123;%% block body %%&#125;
+        &lt;div class=&quot;center-content error&quot;&gt;
+        &lt;h1&gt;Oops! That page doesn&#39;t exist.&lt;/h1&gt;
+        &lt;h3&gt;%s&lt;/h3&gt;
+    &lt;/div&gt; 
+        &#123;%% endblock %%&#125;
+    &#39;&#39;&#39; % (request.args.get(&#39;404_url&#39;))
+        return render_template_string(template), 404
+    if __name__ == &#39;__main__&#39;:
+        app.run(host=&#39;0.0.0.0&#39;,debug=True)
+</code></pre>
+<hr>
+<p>当我们访问的页面404时，会从get传递的参数中获取404_url的值并且拼接进模板进行渲染<br><img src="/pic/mbzr/mbzr1.png"><br>通过控制输入来实现代码运行，达到注入攻击的效果,几个魔术方法:  </p>
+<ul>
+<li><strong>class</strong>  返回类型所属的对象</li>
+<li><strong>mro</strong>    返回一个包含对象所继承的基类元组，方法在解析时按照元组的顺序解析。</li>
+<li><strong>base</strong>   返回该对象所继承的基类  &#x2F;&#x2F; __base__和__mro__都是用来寻找基类的</li>
+<li><strong>subclasses</strong>   每个新类都保留了子类的引用，这个方法返回一个类中仍然可用的的引用的列表</li>
+<li><strong>init</strong>  类的初始化方法</li>
+<li><strong>globals</strong>  对包含函数全局变量的字典的引用<br> 示例：<br><img src="/pic/mbzr/mbzr2.png"><br>例题：<br><img src="/pic/mbzr/mbzr3.png"><br>1.模板注入的判断<img src="/pic/mbzr/mbrz34.png"><br><img src="/pic/mbzr/mbzr4.png"><br>2.寻找可用引用<img src="/pic/mbzr/mbrz45.png"><br><img src="/pic/mbzr/mbzr5.png"><br>3.可以看到有一个type file类型(可以进行文件读取) ，[40]是tupe file类型出现位置（从0开始的位置）读取密码文件<br><img src="/pic/mbzr/mbrz55.png"><br><img src="/pic/mbzr/mbzr6.png"><br>4.还看到有一个&lt;class ‘site._Printer’&gt;类型（可以进行命令执行）<br><img src="/pic/mbzr/mbzr7.png"><br>5.执行命令查看目录<img src="/pic/mbzr/mbrz75.png"><br><img src="/pic/mbzr/mbzr8.png"><br>6.读取flag<img src="/pic/mbzr/mbrz85.png"><br><img src="/pic/mbzr/mbzr9.png"></li>
+</ul>
+<h2 id="7、JS原型链污染"><a href="#7、JS原型链污染" class="headerlink" title="7、JS原型链污染  "></a><strong><font size=4>7、JS原型链污染</font></strong>  </h2><p>利用条件：后端处理语言为Node.js。通过POST传递的数据，后端通过JSON.parse()函数将json字符串转换为对象，同时出现函数：assign（）等。<br>利用原理：通过.__proto__来修改原有类的原型。<br>例题：<br><img src="/pic/jswr/jswr1.png"><br>可以进行注册，注册一个普通用户登录后得到一个虚假flag。在注册时可以勾选是否为管理员账户，为突破点。得知后端处理语言为node.js，尝试原型链污染攻击：<br><img src="/pic/jswr/jswr2.png"><br>成功注册管理员账户，登录即可获取flag<br><img src="/pic/jswr/jswr3.png"><br>原型链污染介绍：<br><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html">https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html</a>  </p>
+<h2 id="8、Git源码泄露"><a href="#8、Git源码泄露" class="headerlink" title="8、Git源码泄露  "></a><strong><font size=4>8、Git源码泄露</font></strong>  </h2><p>.git文件是开发人员在开发过程中使用 Git(分布式版本控制系统)做开发时产生的隐藏目录，该文件包含一些版本信息和网站源码，数据库信息等敏感信息。开发人员使用 git 进行版本控制，对站点自动部署。但如果配置不当，可能会将 .git 文件夹直接部署到线上环境，这就引起了 git 泄露漏洞，我们可以通过 .git文件恢复网站源码，来获取一些敏感信息。<br>例题：<br><img src="/pic/git/git1.png"><br>猜测存在Git源码泄露,访问&#x2F;.git确实存在泄露<br><img src="/pic/git/git2.png"><br>利用Githacker获取源码<code>python GitHack.py http://61.147.171.105:52864/.git/</code><br><img src="/pic/git/git3.png"><br>在flag.php中未发现flag，在index.php发现漏洞assert函数为对字符串进行过滤处理<br><img src="/pic/git/git4.png"><br>通过传入参数<code>？page=123’) or system( “cat templates/flag.php”）</code>；&#x2F;&#x2F;来拼接语句使得可以查看flag文件。（其实这里的前半段可以是它存在的文件也可以是它不存在的文件（123就算换成flag也不影响）因为我们前半段返回的是false，我们只要or后面的执行即可。在最后添加注释&#x2F;&#x2F;，确保后面的代码不会执行）。<br><img src="/pic/git/git5.png">  </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/04/18/CTF%20Web%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">SQL注入中常见的内容</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024
+        <i class="ri-heart-fill heart_icon"></i> KXB
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/ayer-side.png" alt="welcome to my world"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

