@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>PHP中的正则表达式 |  welcome to my world</title>
+      <title>渗透测试笔记 |  welcome to my world</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/bookmark.ico" />
@@ -56,7 +56,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-正则表达式"
+  id="post-渗透测试笔记"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -67,7 +67,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  PHP中的正则表达式
+  渗透测试笔记
 </h1>
  
 
@@ -75,15 +75,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/04/22/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-date">
-  <time datetime="2024-04-22T11:44:10.540Z" itemprop="datePublished">2024-04-22</time>
+      <a href="/2024/05/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2024-05-14T07:25:53.302Z" itemprop="datePublished">2024-05-14</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.2k</span>
+            <span class="post-count">1.8k</span>
         </span>
     </span>
 
@@ -92,90 +92,184 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">4 min</span>
+            <span class="post-count">6 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
+    <div class="tocbot"></div>
+
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p>正则表达式是形成搜索模式的字符序列。当您在文本中搜索数据时，您可以使用此搜索模式来描述您要搜索的内容。正则表达式可以是单个字符，也可以是更复杂的模式。正则表达式可用于执行所有类型的文本搜索和文本替换操作。<br><font color=red>语法：</font><br>在PHP中，正则表达式构成为：分隔符、模式和可选修饰符，例如：<br><code>$e=&quot;/mode/i&quot;;</code><br>其中，&#x2F;为分隔符，mode为匹配模式，i表示修饰符，使搜索不区分大小写。<br>分隔符可以是任何非字母、数字、反斜杠或空格的字符。 最常见的分隔符是正斜杠 (&#x2F;)，但是当模式包含正斜杠时，选择其他分隔符（例如 # 或 ~）会很方便。<br>PHP中存在的常见的三个函数允许使用正则表达式：  </p>
+  <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识  "></a>基础知识  </h2><p><strong>1</strong>、在对网站进行扫描时，利用IP地址进行扫描和利用域名进行扫描可以获取的信息可能不同，因为域名访问通常指向WWW目录，而IP访问通常指其上一级目录，此目录可能存在网页代码备份，但是只能用IP地址扫描才能得到。<br><strong>2</strong>、中间件（IIS服务器等）存在文件后缀和解析之间的映射，如后缀为asp,adsp,asd的文件都可以被解析为ASP文件，按照ASP文件进行处理。<br><strong>3</strong>、服务器端存在一些安全设置，如IP限制，文件运行权限限制，导致我们自己上传的文件无法运行或者网页无法访问。<br>4、如何识别平台所使用的中间件：打开网页，查看网页中返回数据包。<br><img src="/pic/stcs/stcs1.png"><br><strong>5</strong>、中间件漏洞靶场及查询：<a target="_blank" rel="noopener" href="http://www.vulhub.org/">www.vulhub.org</a>  </p>
 <hr>
-<table>
-<tr>
-<th>函数</th>
-<th>功能</th>
-</tr><tr>
-<td>preg_match()</td>
-<td>在字符串中进行模式匹配，匹配成功返回1，否则返回0</td></tr>
-<tr><td>preg_match_all()</td>
-<td>返回模式在字符串中被找到的次数</td></tr>
-<tr><td>preg_replace(mixed $pattern , mixed $replacement , mixed $subject )</td>
-<td>搜索 subject 中匹配 pattern 的部分， 以 replacement 进行替换</td></tr>
-</table>
-
-<p>正则表达式修饰符：  </p>
+<p><strong>1、网站源码获取</strong></p>
+<ul>
+<li>大型网站可以直接在网上搜索下载源代码  </li>
+<li>通过闲鱼、淘宝、第三方源码站（菜鸟源码）获取源码</li>
+</ul>
+<p><strong>2、CMS识别</strong>  </p>
+<ul>
+<li>人工观察：打开网站在网站显示的地方查找网站相关信息，然后获取源码  </li>
+<li>可以保存网站的内容，例如图片，然后计算其MD5值，再利用网上整理的MD5值和文件路径的对应关系，可以发现网站信息  </li>
+<li>可通过CMS在线平台进行识别</li>
+</ul>
+<p><strong>3、漏洞利用思路</strong>  </p>
+<ul>
+<li>若网站源码可在网上获取，且开发者并未修改默认路径，可以通过访问这些路径下载到对应的文件，如数据库文件，其中会包含网站管理员的账号密码，利用此登录系统后台  </li>
+<li>根据CMS识别的结果到网上查找相关漏洞信息，进行利用  </li>
+<li>根据网站的不同功能侧重分析，例如购物网站的支付流程通常着重考虑</li>
+</ul>
+<p><strong>4</strong>、web安全学习笔记：websec.readthedocs.io  </p>
 <hr>
-<table>
-<tr>
-<th>修饰符</th>
-<th>功能</th>
-</tr><tr>
-<td>i</td>
-<td>执行不区分大小写的搜索</td></tr>
-<td>g</td>
-<td>全局搜索</td></tr>
-<tr><td>m</td>
-<td>执行多行搜索</td></tr>
-<tr><td>u</td>
-<td>启用 UTF-8 编码模式的正确匹配</td></tr>
-<tr><td>e</td>
-<td>/e 修正符使 preg_replace() 将 replacement 参数当作 PHP 代码</td>
-</table>
-
-<p>正则表达式依赖于元字符，常见的元字符有：<br><img src="/pic/zzbds/zzbds1.png"><br>1、 .运算符<br>.匹配任意单个字符，但不匹配换行符，例如.ab表示匹配一个字符串，其末尾为ab。<br>2、 字符集<br>用方括号[]来指定字符集的取值范围，如[Tt]he表示匹配字符The和the。<br>3、 否定字符集^<br> ^ 表示一个字符串的开头，但它用在一个方括号的开头的时候，它表示这个字符集是否定的。 例如，表达式[^e]n 匹配一个后面跟着n的除了e的任意字符。<br><img src="/pic/zzbds/zzbds2.png"><br>4、 *号<br>*号匹配在*号之前的字符出现次数大于等于0的字符串。例如，表达式 a* 匹配0或更多个以a开头的字符。表达式[a-c]* 匹配一个行中以小写字母a-c开头的字符串。<br><img src="/pic/zzbds/zzbds3.png"><br>5、 +号<br>+号匹配+号之前的字符出现 &gt;&#x3D;1 次。 例如表达式g.+t 匹配以首字母g开头以t结尾，中间跟着至少一个字符的字符串。<br><img src="/pic/zzbds/zzbds4.png"><br>6、？号<br>? 标记在符号前面的字符为可选，即出现 0 或 1 次。 例如，表达式 [c]?on 匹配字符串 on 和 con。<br><img src="/pic/zzbds/zzbds5.png"><br>7、{}号<br>在正则表达式中 {} 是一个量词，常用来限定一个或一组字符可以重复出现的次数。 例如,表达式 [0-9]{2,3} 匹配最少2位最多3位0~9的数字。我们可以省略第二个参数。 例如[0-9]{2,} 匹配至少两位0~9 的数字。如果逗号也省略掉则表示重复固定的次数。 例如，[0-9]{3} 匹配3位数字。<br>8、|<br>|运算符就表示或<br>9、转码特殊字符<br>反斜杠\用于转码{ } [ ] &#x2F; \ + * . $ ^ | ? 这些特殊字符<br>10、锚点^和$<br>想要匹配指定开头或结尾的字符串就要使用到锚点。^ 指定开头，$ 指定结尾，如^[d]at表示匹配dat且位于开头。<br><img src="/pic/zzbds/zzbds6.png">  </p>
-<p>字符集简写</p>
+<p><strong>1、操作系统识别</strong> </p>
+<ul>
+<li>通过URL大小写，判断页面是否正确显示（Windows下大小写不敏感）  </li>
+<li>TTL判断，通过ping命令，返回不同的TTL判断不同的操作系统，但是不准确  </li>
+<li>nmap扫描（-O +IP）</li>
+</ul>
+<p><strong>2、数据库识别</strong>  </p>
+<ul>
+<li><p>网站采用的不同脚本语言通常对应不同的数据库，例如以下常见:</p>
+<ul>
+<li>ASP+Access</li>
+<li>PHP+mysql</li>
+<li>aspx+mssql</li>
+<li>jsp+mssql&#x2F;oracle</li>
+<li>python+mysql&#x2F;mongodb</li>
+</ul>
+</li>
+<li><p>某些数据库只支持Windows&#x2F;Linux系统</p>
+</li>
+<li><p>nmap扫描端口，通过开放的不同端口号区分不同的数据库</p>
+</li>
+</ul>
+<p><strong>3、第三方平台或者软件识别</strong>  </p>
+<ul>
+<li><p>端口扫描，通过开放的端口来判断启用的第三方软件或平台</p>
+</li>
+<li><p>21端口：FTP 文件传输服务</p>
+</li>
+<li><p>22端口：SSH协议、SCP（文件传输）、端口号重定向</p>
+</li>
+<li><p>23&#x2F;tcp端口：TELNET 终端仿真服务</p>
+</li>
+<li><p>25端口：SMTP 简单邮件传输服务</p>
+</li>
+<li><p>53端口：DNS 域名解析服务</p>
+</li>
+<li><p>69&#x2F;udp：TFTP</p>
+</li>
+<li><p>80&#x2F;8080&#x2F;3128&#x2F;8081&#x2F;9098端口：HTTP协议代理服务器</p>
+</li>
+<li><p>110&#x2F;tcp端口：POP3（E-mail）</p>
+</li>
+<li><p>119端口：Network </p>
+</li>
+<li><p>123端口：NTP（网络时间协议）</p>
+</li>
+<li><p>135、137、138、139端口： 局域网相关默认端口，应关闭</p>
+</li>
+<li><p>161端口：SNMP（简单网络管理协议）</p>
+</li>
+<li><p>389端口：LDAP（轻量级目录访问协议）、ILS（定位服务）</p>
+</li>
+<li><p>443&#x2F;tcp 443&#x2F;udp：HTTPS服务器</p>
+</li>
+<li><p>465端口：SMTP（简单邮件传输协议）</p>
+</li>
+<li><p>873端口：rsync</p>
+</li>
+<li><p>1080端口：SOCKS代理协议服务器常用端口号、QQ</p>
+</li>
+<li><p>1158端口：ORACLE EMCTL</p>
+</li>
+<li><p>1433&#x2F;tcp&#x2F;udp端口：MS SQL<em>SERVER数据库server、MS SQL</em>SERVER数据库monitor</p>
+</li>
+<li><p>1521端口：Oracle 数据库</p>
+</li>
+<li><p>2100端口：Oracle XDB FTP服务</p>
+</li>
+<li><p>3389端口：WIN2003远程登录</p>
+</li>
+<li><p>3306端口：MYSQL数据库端口</p>
+</li>
+<li><p>5432端口：postgresql数据库端口</p>
+</li>
+<li><p>5601端口：kibana</p>
+</li>
+<li><p>6379端口：Redis数据库端口</p>
+</li>
+<li><p>8080端口：TCP服务端默认端口、JBOSS、TOMCAT、Oracle XDB（XML 数据库）</p>
+</li>
+<li><p>8081端口：Symantec AV&#x2F;Filter for MSE</p>
+</li>
+<li><p>8888端口：Nginx服务器的端口</p>
+</li>
+<li><p>9000端口：php-fpm</p>
+</li>
+<li><p>9080端口：Webshpere应用程序</p>
+</li>
+<li><p>9090端口：webshpere管理工具</p>
+</li>
+<li><p>9200端口：Elasticsearch服务器端口</p>
+</li>
+<li><p>10050端口：zabbix_server 10050</p>
+</li>
+<li><p>10051端口：zabbix_agent</p>
+</li>
+<li><p>11211端口：memcache（高速缓存系统）</p>
+</li>
+<li><p>27017端口：mongoDB数据库默认端口</p>
+</li>
+<li><p>22122端口：fastdfs服务器默认端口</p>
+</li>
+<li><p>网站目录扫描，部署第三方软件或者平台后本地一定存储了相关的软件目录，通过网站目录可以知道所安装的平台或者软件</p>
+</li>
+</ul>
+<p><font color='red'>通过识别之后，采取对应的措施进行测试，例如不同平台对应的不同漏洞。</font></p>
 <hr>
-<table>
-<tr>
-<th>简写</th>
-<th>功能</th>
-</tr><tr>
-<td>.</td>
-<td>除换行符之外的所有字符</td></tr>
-<tr><td>\m</td>
-<td>匹配所有字母数字</td></tr>
-<tr><td>\W</td>
-<td>匹配所有非字母数字，即符号</td></tr>
-<tr><td>\d</td>
-<td>匹配数字</td></tr>
-<tr><td>\D</td>
-<td>匹配非数字</td></tr>
-<tr><td>\s</td>
-<td>匹配所有空格</td></tr>
-<tr><td>\S</td>
-<td>匹配所有非空格字符</td></tr>
-<tr><td>\f</td>
-<td>匹配一个换页符</td></tr>
-<tr><td>\n</td>
-<td>匹配一个换行符</td></tr>
-<tr><td>\r</td>
-<td>匹配一个回车符</td></tr>
-<tr><td>\t</td>
-<td>匹配一个制表符</td></tr>
-<tr><td>\v</td>
-<td>匹配一个垂直制表符</td></tr>
-<tr><td>\p</td>
-<td>匹配DOS行终止符</td></tr>
-</table>
-
-<p>11、正先行断言<br>?&#x3D;… 为正先行断言，表示第一部分表达式之后必须跟着 ?&#x3D;…定义的表达式<br><img src="/pic/zzbds/zzbds7.png"><br>12、负先行断言<br>负先行断言 ?! 用于筛选所有匹配结果，筛选条件为 其后不跟随着断言中定义的格式。 （就是正先行断言的反例）<br><img src="/pic/zzbds/zzbds8.png"><br>13、?&lt;&#x3D;正后发断言<br>正后发断言 记作(?&lt;&#x3D;…) 用于筛选所有匹配结果，筛选条件为 其前跟随着断言中定义的格式。 例如，表达式<br>(?&lt;&#x3D;(T|t)he\s)(fat|mat) 匹配 fat 和 mat，且其前跟着 The 或 the。<br>14、?&lt;!负后发断言<br>负后发断言 记作 (?&lt;!..) 用于筛选所有匹配结果，筛选条件为 其前不跟随着断言中定义的格式  </p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><h2 id="一、CDN穿透"><a href="#一、CDN穿透" class="headerlink" title="一、CDN穿透"></a><strong><font size=4>一、CDN穿透</font></strong></h2><p><strong>1、CDN</strong><br>CDN：内容分发网络，其功能是为了提高网络访问速度，提高服务质量，在不同的地点建立分服务器，用户在请求服务时向最近的服务器进行请求，从而提高实时性。<br>影响：分服务器中通常存储的只是主服务器的副本文件，可能不完整，对此服务器进行渗透测试并不能得到真实的结果。<br><strong>2、是否使用CDN的判断</strong><br>利用超级ping工具（百度搜索超级ping），若响应的IP地址有很多，说明开启了CDN服务。<br><strong>3、CDN绕过</strong>  </p>
+<ul>
+<li>子域名查询：通常子域名的访问量不及主域名，对于延迟的要求不高，一般不会使用CDN服务，所以子域名对应的IP地址可能为真实IP地址。</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如何获取子域名：<font color='red'>子域名在线查询工具</font><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;通常在设置CDN时只配置WWW开头的地址，所以在利用域名查询IP地址时候，未加上WWW的域名可能对应其真实IP地址。  </p>
+<ul>
+<li><p>邮件服务查询：邮件服务通常只是内容人员访问，需求不大，一般不做CDN，所以通过对方邮件的IP地址可以判断出其为真实IP地址。</p>
+</li>
+<li><p>国外地址：国外访问人数较少，为节约成本，通常无需CDN服务。所以可以开启代理，利用国外的IP地址ping需要查询IP地址的域名，若多个地区的代理ping后获得的结果相同，则此结果大概率为真实IP地址。  </p>
+</li>
+<li><p>利用遗留文件判断：网站搭建时可能存在一些遗留文件中保存了服务器的IP地址，可以利用此文件进行判断，例如phpinfo文件。  </p>
+</li>
+<li><p>扫描全网：利用工具进行全网的扫描，收集大量IP地址，利用技术分析出真实的IP地址。工具有：  </p>
+</li>
+<li><p>fuckcdn</p>
+</li>
+<li><p>w8fuckcdn(准确性不如fuckcdn)</p>
+</li>
+<li><p>zmap<br> 常见的在线扫描工具有：</p>
+</li>
+<li><p>get-site-ip.com</p>
+</li>
+<li><p>x.threatbook.cn(收费)</p>
+</li>
+<li><p>asm.ca.com&#x2F;en&#x2F;ping.php</p>
+</li>
+<li><p>黑暗引擎搜索特定的文件，如ico文件的hash值：shodan,zoomeye,fofa</p>
+</li>
+<li><p>查DNS历史记录：在DNS历史记录中可能存在真实的IP地址，上面的后两个在线扫描工具中有。</p>
+</li>
+<li><p>以量打量：本质为DDos攻击，利用大量服务消耗完分设备的资源，再次请求得到的IP一定为主设备IP。</p>
+</li>
+<li><p>小技巧：人为观察网页的备案地址，其中的地区多半为主设备IP地址所在地。</p>
+</li>
+</ul>
  
       <!-- reward -->
       
@@ -246,7 +340,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/04/22/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/05/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -257,19 +351,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2024/05/14/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95%E7%AC%94%E8%AE%B0/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            渗透测试笔记
-          
-        </div>
-      </a>
     
-    
-      <a href="/2024/04/18/CTF%20Web%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="article-nav-link">
+      <a href="/2024/04/22/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">CTF Web中的常见内容</div>
+        <div class="article-nav-title">PHP中的正则表达式</div>
       </a>
     
   </nav>
