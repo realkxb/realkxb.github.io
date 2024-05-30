@@ -83,7 +83,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.8k</span>
+            <span class="post-count">2.2k</span>
         </span>
     </span>
 
@@ -92,7 +92,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">6 min</span>
+            <span class="post-count">8 min</span>
         </span>
     </span>
 </div>
@@ -235,7 +235,7 @@
 </ul>
 <p><font color='red'>通过识别之后，采取对应的措施进行测试，例如不同平台对应的不同漏洞。</font></p>
 <hr>
-<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><h2 id="一、CDN穿透"><a href="#一、CDN穿透" class="headerlink" title="一、CDN穿透"></a><strong><font size=4>一、CDN穿透</font></strong></h2><p><strong>1、CDN</strong><br>CDN：内容分发网络，其功能是为了提高网络访问速度，提高服务质量，在不同的地点建立分服务器，用户在请求服务时向最近的服务器进行请求，从而提高实时性。<br>影响：分服务器中通常存储的只是主服务器的副本文件，可能不完整，对此服务器进行渗透测试并不能得到真实的结果。<br><strong>2、是否使用CDN的判断</strong><br>利用超级ping工具（百度搜索超级ping），若响应的IP地址有很多，说明开启了CDN服务。<br><strong>3、CDN绕过</strong>  </p>
+<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><h2 id="一、CDN穿透"><a href="#一、CDN穿透" class="headerlink" title="一、CDN穿透"></a><img src="/pic/stcs/stcs2.png"><br><strong><font size=4>一、CDN穿透</font></strong></h2><p><strong>1、CDN</strong><br>CDN：内容分发网络，其功能是为了提高网络访问速度，提高服务质量，在不同的地点建立分服务器，用户在请求服务时向最近的服务器进行请求，从而提高实时性。<br>影响：分服务器中通常存储的只是主服务器的副本文件，可能不完整，对此服务器进行渗透测试并不能得到真实的结果。<br><strong>2、是否使用CDN的判断</strong><br>利用超级ping工具（百度搜索超级ping），若响应的IP地址有很多，说明开启了CDN服务。<br><strong>3、CDN绕过</strong>  </p>
 <ul>
 <li>子域名查询：通常子域名的访问量不及主域名，对于延迟的要求不高，一般不会使用CDN服务，所以子域名对应的IP地址可能为真实IP地址。</li>
 </ul>
@@ -269,6 +269,30 @@
 </li>
 <li><p>小技巧：人为观察网页的备案地址，其中的地区多半为主设备IP地址所在地。</p>
 </li>
+</ul>
+<h2 id="二、站点搭建和WAF防护分析"><a href="#二、站点搭建和WAF防护分析" class="headerlink" title="二、站点搭建和WAF防护分析"></a><strong><font size=4>二、站点搭建和WAF防护分析</font></strong></h2><p>1、站点搭建  </p>
+<ul>
+<li><p>目录型站点：不同的目录对应不同的程序代码，可以利用不同的站点代码进行漏洞分析</p>
+</li>
+<li><p>端口型站点：不同端口对应不同服务，安全性相互影响</p>
+</li>
+<li><p>子域名：子域名与主域名运行的后端代码不同，但是其在同一服务器运行，或者在同一网段运行</p>
+</li>
+<li><p>类似域名站点：站点可能会更换不同的域名，例如域名后缀，但是仍然在同一服务器运行</p>
+</li>
+<li><p>旁注和C段站点 </p>
+<ul>
+<li>旁注：同服务器，但是不同站点。例如服务器192.168.100.1下存在站点<a target="_blank" rel="noopener" href="http://www.a.com和www.b.com/">www.a.com和www.b.com</a>(可百度旁注查询工具进行查询）</li>
+<li>C站：不同服务器，不同站点，但在同一网段。例如192.168.100.1下存在站点<a target="_blank" rel="noopener" href="http://www.c.com.服务器192.168.100.2下存在www.d.com/">www.c.com。服务器192.168.100.2下存在www.d.com</a></li>
+</ul>
+</li>
+<li><p>搭建软件的特征：利用搭建软件搭建的站点存在的问题，例如默认参数未修改。</p>
+</li>
+</ul>
+<p>2、WAF防护分析  </p>
+<ul>
+<li>WAF应用：Web应用防护系统（也称为：网站应用级入侵防御系统。英文：Web Application Firewall，简称： WAF）。Web 应用防火墙 (WAF) 可防御恶意攻击和非授权流量，包括机器人流量、注入攻击和应用层拒绝服务 (DoS) 攻击，保护 Web 应用安全。</li>
+<li>识别：利用工具wafw00f;通过网页返回数据包进行判断</li>
 </ul>
  
       <!-- reward -->
