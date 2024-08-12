@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.9k</span>
+            <span class="post-count">4.4k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">10 min</span>
+            <span class="post-count">15 min</span>
         </span>
     </span>
 </div>
@@ -306,11 +306,51 @@
 <li>Layer子域名挖掘机</li>
 <li>查DNS记录：dnsdb.io&#x2F;securitytrails.com&#x2F;crt.sh</li>
 </ul>
-<h2 id="五、WEB漏洞"><a href="#五、WEB漏洞" class="headerlink" title="五、WEB漏洞"></a><strong><font size=4>五、WEB漏洞</font></strong></h2><p>1、SSRF<br>SSRF(Server-Side Request Forgery:服务器端请求伪造)<br>是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻击外网无法访问的内部系统，也就是把目标网站当中间人），在CTF中通常结合gopher协议一起使用。<br>2、CRLF漏洞<br>RLF：回车+换行（\r\n)(%0D%0A),HTTP头部和主体部分用两个CRLF分割，浏览器根据这两个CRLF 读取HTTP内容。CRLF（Carriage Return Line Feed，回车换行）注入漏洞是一种常见的网络安全漏洞，通常出现在处理HTTP头和其他基于文本协议的应用中。通过在输入中注入CRLF序列（%0D%0A），攻击者可以伪造或修改HTTP头，导致各种安全问题。<br><font color="red">CRLF漏洞的原理</font><br>HTTP协议中的请求和响应是由头部和主体组成的，其中头部字段通过CRLF序列分隔。CRLF注入攻击利用了这一点，通过插入额外的CRLF序列，攻击者可以：  </p>
+<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h2 id="一、SSRF漏洞"><a href="#一、SSRF漏洞" class="headerlink" title="一、SSRF漏洞"></a><strong><font size=3>一、SSRF漏洞</font></strong></h2><p>SSRF(Server-Side Request Forgery:服务器端请求伪造)
+是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻击外网无法访问的内部系统，也就是把目标网站当中间人），在CTF中通常结合gopher协议一起使用。</p>    
+
+<h2 id="二、CRLF漏洞"><a href="#二、CRLF漏洞" class="headerlink" title="二、CRLF漏洞"></a><strong><font size=3>二、CRLF漏洞</font></strong></h2><p>RLF：回车+换行（\r\n)(%0D%0A),HTTP头部和主体部分用两个CRLF分割，浏览器根据这两个CRLF 读取HTTP内容。CRLF（Carriage Return Line Feed，回车换行）注入漏洞是一种常见的网络安全漏洞，通常出现在处理HTTP头和其他基于文本协议的应用中。通过在输入中注入CRLF序列（%0D%0A），攻击者可以伪造或修改HTTP头，导致各种安全问题。<br><font color="red">CRLF漏洞的原理</font><br>HTTP协议中的请求和响应是由头部和主体组成的，其中头部字段通过CRLF序列分隔。CRLF注入攻击利用了这一点，通过插入额外的CRLF序列，攻击者可以：  </p>
 <ul>
 <li>插入新的HTTP头。</li>
 <li>修改现有的HTTP头。</li>
 <li>插入额外的HTTP响应（响应拆分攻击）。</li>
+</ul>
+<h2 id="三、SQL注入漏洞"><a href="#三、SQL注入漏洞" class="headerlink" title="三、SQL注入漏洞"></a><strong><font size=3>三、SQL注入漏洞</font></strong></h2><p>文章：SQL注入笔记</p>  
+ 
+<h2 id="四、文件上传漏洞"><a href="#四、文件上传漏洞" class="headerlink" title="四、文件上传漏洞"></a><strong><font size=3>四、文件上传漏洞</font></strong></h2><p>文件上传漏洞是指由于程序员在对用户文件上传部分的控制不足或者处理缺陷，而导致的用户可以越过其本身权限向服务器上上传可执行的动态脚本文件。这里上传的文件可以是木马，病毒，恶意脚本或者WebShell等。下面针对常见的文件上传漏洞的过滤绕过进行介绍。</p>
+<h2 id="4-1-前端验证"><a href="#4-1-前端验证" class="headerlink" title="4.1 前端验证"></a><strong><font size=3>4.1 前端验证</font></strong></h2><p>1、前端验证<br>在前端的JS代码中进行文件的验证和检查，绕过方式：  </p>
+<ul>
+<li>在浏览器设置中禁用JavaScript</li>
+<li>右键检查代码将相关检查的代码删去</li>
+</ul>
+<h2 id="4-2-MIME验证"><a href="#4-2-MIME验证" class="headerlink" title="4.2 MIME验证"></a><strong><font size=3>4.2 MIME验证</font></strong></h2><p>MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的标准，用来表示文档、文件或字节流的性质和格式。浏览器通常使用 MIME 类型（而不是文件扩展名）来确定如何处理URL。</p>    
+绕过方式：利用BP抓包修改文件类型  
+  
+<h2 id="4-3-黑名单验证"><a href="#4-3-黑名单验证" class="headerlink" title="4.3 黑名单验证"></a><strong><font size=3>4.3 黑名单验证</font></strong></h2><p>1、php3、php5、phtml等绕过：利用黑名单不全，修改文件后缀名为php3、php5、phtml等等绕过。<br>2、.htaccess绕过<br>htaccess文件为Apache服务中的一个配置文件，它负责相关目录下的网页配置。其中.htaccess文件内容：SetHandler application&#x2F;x-http-php的意思是设置当前目录所有文件都使用php解析，那么无论上传任何文件，只要符合php语言代码规范，就会被当做PHP执行。不符合规则则报错。所以可以通过先上传.htaccess文件，再上传需要执行的PHP文件来进行绕过。<font color=red>前提：在http.conf文件文件中设置AllowOverried All</font><br>3、.user.ini绕过<br>php.ini是php的一个全局配置文件，对整个web服务起作用；而.user.ini和.htaccess一样是目录的配置文件，.user.ini就是用户自定义的一个php.ini，我们可以利用这个文件来构造后门和隐藏后门。  </p>
+<ul>
+<li>创建.user.ini文件，其中写入auto_prepend_file&#x3D;xxx.png</li>
+<li>上传木马文件xxx.png</li>
+</ul>
+<p></p>    
+4、大小写绕过<br>    
+若后端处理代码未使用strtolower()函数（字符串全转为小写）,可以将文件名后缀改为大写进行绕过。<br>   
+5、空格绕过<br>   
+若后端处理代码未使用trim()函数去除空格，可以使用空格绕过黑名单，方法为在文件后缀之后加入空格。<br>   
+6、.绕过<br> 
+后端没有使用deldot()过滤文件名末尾的.，在文件名后面加入.即可绕过。  
+若使用了此函数，因为deldot()函数从后向前检测，当检测到末尾的第一个点时会继续它的检测，但是遇到空格会停下来，所以可以修改后缀为x.php. .来进行绕过。<br>       
+7、特殊字符::$DATA绕过<br>   
+php在window的时候如果文件名+"::$DATA"会把::$DATA之后的数据当成文件流处理,不会检测后缀名，且保持"::$DATA"之前的文件名 他的目的就是不检查后缀名。<br>   
+利用BP抓包之后改后缀x.php::$DATA进行绕过。<br>   
+8、双写绕过<br>   
+使用str_ireplace()函数寻找文件名中存在的黑名单字符串，将它替换成空（即将它删掉），可以使用双写绕过黑名单。例如.pphphp  
+  
+<h2 id="4-4-白名单验证"><a href="#4-4-白名单验证" class="headerlink" title="4.4 白名单验证"></a><strong><font size=3>4.4 白名单验证</font></strong></h2><p>1、%00截断<br>最终文件的存放位置是以拼接的方式，可以使用%00截断，但需要php版本&lt;5.3.4，并且magic_quotes_gpc关闭。<br>方法：BP抓包修改路径为upload&#x2F;x.php%00<br>2、post 00截断<br>文件上传路径拼接生成，而且使用了post发送的数据进行拼接，我们可以控制post数据进行0x00截断绕过白名单。<br>方法：BP抓包后在..&#x2F;upload&#x2F; 路径下加上x.php+,然后修改+号Hex值为00  </p>
+<h2 id="4-5-文件内容检查和处理"><a href="#4-5-文件内容检查和处理" class="headerlink" title="4.5 文件内容检查和处理"></a><strong><font size=3>4.5 文件内容检查和处理</font></strong></h2><p>1、图片马unpack<br>读取判断上传文件的前两个字节，判断上传文件类型，并且后端会根据判断得到的文件类型重命名上传文件，使用getimagesize()检查是否为图片文件，exif_imagetype()读取一个图像的第一个字节并检查其后缀名：使用图片马+文件包含绕过。<br>图片马制作：<code>copy 777.png/b + zoe.php pass14.png</code>，然后利用文件包含漏洞进行处理。<br>2、二次渲染绕过<br>对上传图片进行了判断了后缀名、content-type，以及利用imagecreatefromgif判断是否为gif图片，最后再做了一次二次渲染，但是后端二次渲染需要找到渲染后的图片里面没有发生变化的Hex地方，添加一句话，通过文件包含漏洞执行一句话，使用蚁剑进行连接。<br>方法：上传正常的GIF图片下载回显的图片，用010Editor编辑器进行对比两个GIF图片内容，找到相同的地方（指的是上传前和上传后，两张图片的部分Hex仍然保持不变的位置）并插入PHP一句话，上传带有PHP一句话木马的GIF图片。（图片：<a target="_blank" rel="noopener" href="https://wwe.lanzoui.com/iFSwwn53jaf%EF%BC%89">https://wwe.lanzoui.com/iFSwwn53jaf）</a><br>3、条件竞争<br>例如服务器先是将上传的文件保存下来，然后将文件的后缀名同白名单对比，如果是jpg、png、gif中的一种，就将文件进行重命名。如果不符合的话，unlink()函数就会删除该文件。<br>方法：代码执行的过程是需要耗费时间的。在上传的一句话被删除之前访问。这个叫做条件竞争上传绕过。  </p>
+<ul>
+<li>通过BP的intruder模块不停得向服务器发送文件，若有一次成功，则会在服务器上留下木马文件</li>
+<li>利用python脚本，通过它来不停的访问我们上传上去的PHP文件 </li>
+<li>两者同时运行</li>
 </ul>
  
       <!-- reward -->
