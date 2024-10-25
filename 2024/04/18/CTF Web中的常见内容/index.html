@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">2.4k</span>
+            <span class="post-count">2.5k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">9 min</span>
+            <span class="post-count">10 min</span>
         </span>
     </span>
 </div>
@@ -178,8 +178,9 @@ PHP中的几个特殊的魔术方法：
 <li><strong>base</strong>   返回该对象所继承的基类  &#x2F;&#x2F; __base__和__mro__都是用来寻找基类的</li>
 <li><strong>subclasses</strong>   每个新类都保留了子类的引用，这个方法返回一个类中仍然可用的的引用的列表</li>
 <li><strong>init</strong>  类的初始化方法</li>
-<li><strong>globals</strong>  对包含函数全局变量的字典的引用<br> 示例：<br><img src="/pic/mbzr/mbzr2.png"><br>例题：<br><img src="/pic/mbzr/mbzr3.png"><br>1.模板注入的判断<img src="/pic/mbzr/mbrz34.png"><br><img src="/pic/mbzr/mbzr4.png"><br>2.寻找可用引用<img src="/pic/mbzr/mbrz45.png"><br><img src="/pic/mbzr/mbzr5.png"><br>3.可以看到有一个type file类型(可以进行文件读取) ，[40]是tupe file类型出现位置（从0开始的位置）读取密码文件<br><img src="/pic/mbzr/mbrz55.png"><br><img src="/pic/mbzr/mbzr6.png"><br>4.还看到有一个&lt;class ‘site._Printer’&gt;类型（可以进行命令执行）<br><img src="/pic/mbzr/mbzr7.png"><br>5.执行命令查看目录<img src="/pic/mbzr/mbrz75.png"><br><img src="/pic/mbzr/mbzr8.png"><br>6.读取flag<img src="/pic/mbzr/mbrz85.png"><br><img src="/pic/mbzr/mbzr9.png"></li>
+<li><strong>globals</strong>  对包含函数全局变量的字典的引用</li>
 </ul>
+<p>SSTI过滤绕过：<br>1、利用request：request.args 是 Flask 中的一个对象，它包含 URL 查询参数。对于URL请求<code>http://example.com/?a=__class__&amp;b=__mro__&amp;c=__subclasses__</code>，request.args[‘a’] 的值是 ‘<strong>class</strong>‘，request.args[‘b’] 的值是 ‘<strong>mro</strong>‘，request.args[‘c’] 的值是 ‘<strong>subclasses</strong>‘，·所以可以利用这个原理构造payload进行过滤的绕过，payload如：<code>&#123;&#123;''[request.args.a][request.args.b][2][request.args.c]()&#125;&#125;?a=__class__&amp;b=__mro__&amp;c=__subclasses__</code>,后续操作只需要添加参数request.args.x即可实现文件的读取操作，例如：<code>&#123;&#123;''[request.args.a][request.args.b][2][request.args.c]()[40]('/opt/flag_1de36dff62a3a54ecfbc6e1fd2ef0ad1.txt')[request.args.d]()&#125;&#125;?a=__class__&amp;b=__mro__&amp;c=__subclasses__&amp;d=read</code><br> 示例：<br><img src="/pic/mbzr/mbzr2.png"><br>例题：<br><img src="/pic/mbzr/mbzr3.png"><br>1.模板注入的判断<img src="/pic/mbzr/mbrz34.png"><br><img src="/pic/mbzr/mbzr4.png"><br>2.寻找可用引用<img src="/pic/mbzr/mbrz45.png"><br><img src="/pic/mbzr/mbzr5.png"><br>3.可以看到有一个type file类型(可以进行文件读取) ，[40]是tupe file类型出现位置（从0开始的位置）读取密码文件<br><img src="/pic/mbzr/mbrz55.png"><br><img src="/pic/mbzr/mbzr6.png"><br>4.还看到有一个&lt;class ‘site._Printer’&gt;类型（可以进行命令执行）<br><img src="/pic/mbzr/mbzr7.png"><br>5.执行命令查看目录<img src="/pic/mbzr/mbrz75.png"><br><img src="/pic/mbzr/mbzr8.png"><br>6.读取flag<img src="/pic/mbzr/mbrz85.png"><br><img src="/pic/mbzr/mbzr9.png">  </p>
 <h2 id="7、JS原型链污染"><a href="#7、JS原型链污染" class="headerlink" title="7、JS原型链污染  "></a><strong><font size=4>7、JS原型链污染</font></strong>  </h2><p>利用条件：后端处理语言为Node.js。通过POST传递的数据，后端通过JSON.parse()函数将json字符串转换为对象，同时出现函数：assign（）等。<br>利用原理：通过.__proto__来修改原有类的原型。<br>例题：<br><img src="/pic/jswr/jswr1.png"><br>可以进行注册，注册一个普通用户登录后得到一个虚假flag。在注册时可以勾选是否为管理员账户，为突破点。得知后端处理语言为node.js，尝试原型链污染攻击：<br><img src="/pic/jswr/jswr2.png"><br>成功注册管理员账户，登录即可获取flag<br><img src="/pic/jswr/jswr3.png"><br>原型链污染介绍：<br><a target="_blank" rel="noopener" href="https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html">https://www.leavesongs.com/PENETRATION/javascript-prototype-pollution-attack.html</a>  </p>
 <h2 id="8、Git源码泄露"><a href="#8、Git源码泄露" class="headerlink" title="8、Git源码泄露  "></a><strong><font size=4>8、Git源码泄露</font></strong>  </h2><p>.git文件是开发人员在开发过程中使用 Git(分布式版本控制系统)做开发时产生的隐藏目录，该文件包含一些版本信息和网站源码，数据库信息等敏感信息。开发人员使用 git 进行版本控制，对站点自动部署。但如果配置不当，可能会将 .git 文件夹直接部署到线上环境，这就引起了 git 泄露漏洞，我们可以通过 .git文件恢复网站源码，来获取一些敏感信息。<br>例题：<br><img src="/pic/git/git1.png"><br>猜测存在Git源码泄露,访问&#x2F;.git确实存在泄露<br><img src="/pic/git/git2.png"><br>利用Githacker获取源码<code>python GitHack.py http://61.147.171.105:52864/.git/</code><br><img src="/pic/git/git3.png"><br>在flag.php中未发现flag，在index.php发现漏洞assert函数为对字符串进行过滤处理<br><img src="/pic/git/git4.png"><br>通过传入参数<code>？page=123’) or system( “cat templates/flag.php”）</code>；&#x2F;&#x2F;来拼接语句使得可以查看flag文件。（其实这里的前半段可以是它存在的文件也可以是它不存在的文件（123就算换成flag也不影响）因为我们前半段返回的是false，我们只要or后面的执行即可。在最后添加注释&#x2F;&#x2F;，确保后面的代码不会执行）。<br><img src="/pic/git/git5.png">  </p>
  
