@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4.4k</span>
+            <span class="post-count">4.9k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">15 min</span>
+            <span class="post-count">17 min</span>
         </span>
     </span>
 </div>
@@ -307,7 +307,24 @@
 <li>查DNS记录：dnsdb.io&#x2F;securitytrails.com&#x2F;crt.sh</li>
 </ul>
 <h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h2 id="一、SSRF漏洞"><a href="#一、SSRF漏洞" class="headerlink" title="一、SSRF漏洞"></a><strong><font size=3>一、SSRF漏洞</font></strong></h2><p>SSRF(Server-Side Request Forgery:服务器端请求伪造)
-是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻击外网无法访问的内部系统，也就是把目标网站当中间人），在CTF中通常结合gopher协议一起使用。</p>    
+是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻击外网无法访问的内部系统，也就是把目标网站当中间人），在CTF中通常结合gopher协议一起使用。</p>  
+常见可能存在SSRF漏洞的点：  
+1、通过URL地址分享网页内容：`?link=http://www.aaa.com`  
+2、转码：通过URL地址把原地址的网页内容调优使其适合手机屏幕浏览:由于手机屏幕大小的关系，直接浏览网页内容的时候会造成许多不便，因此有些公司提供了转码功能，把网页内容通过相关手段转为适合手机屏幕浏览的样式。例如百度、腾讯、搜狗等公司都有提供在线转码服务。<br>  
+<font color=red>总结来说可能特征就是在URL中存在参数传递了其他服务器的地址</font><br>
+发现SSRF漏洞后首先就要测试可用的URL伪协议：<br>  
+&nbsp;&nbsp;&nbsp;&nbsp;file:/// 从文件系统中获取文件内容，如，file:///etc/passwd<br>  
+&nbsp;&nbsp;&nbsp;&nbsp;dict:// 字典服务器协议，访问字典资源，如，dict:///ip:6739/info：<br>  
+&nbsp;&nbsp;&nbsp;&nbsp;sftp:// SSH文件传输协议或安全文件传输协议<br>  
+&nbsp;&nbsp;&nbsp;&nbsp;ldap:// 轻量级目录访问协议<br>  
+&nbsp;&nbsp;&nbsp;&nbsp;tftp:// 简单文件传输协议<br>  
+&nbsp;&nbsp;&nbsp;&nbsp;gopher:// 分布式文档传递服务，可使用gopherus生成payload<br>  
+<font color=red>SSRF防御</font><br>  
+1、过滤返回信息，验证远程服务器对请求的响应是比较容易的方法。如果web应用是去获取某一种类型的文件。那么在把返回结果展示给用户之前先验证返回的信息是否符合标准。<br>  
+2、 统一错误信息，避免用户可以根据错误信息来判断远端服务器的端口状态。<br>  
+3、限制请求的端口为http常用的端口，比如，80,443,8080,8090。<br>  
+4、黑名单内网ip。避免应用被用来获取获取内网数据，攻击内网。<br>  
+5、禁用不需要的协议。仅仅允许http和https请求。可以防止类似于file:///,gopher://,ftp:// 等引起的问题。  
 
 <h2 id="二、CRLF漏洞"><a href="#二、CRLF漏洞" class="headerlink" title="二、CRLF漏洞"></a><strong><font size=3>二、CRLF漏洞</font></strong></h2><p>RLF：回车+换行（\r\n)(%0D%0A),HTTP头部和主体部分用两个CRLF分割，浏览器根据这两个CRLF 读取HTTP内容。CRLF（Carriage Return Line Feed，回车换行）注入漏洞是一种常见的网络安全漏洞，通常出现在处理HTTP头和其他基于文本协议的应用中。通过在输入中注入CRLF序列（%0D%0A），攻击者可以伪造或修改HTTP头，导致各种安全问题。<br><font color="red">CRLF漏洞的原理</font><br>HTTP协议中的请求和响应是由头部和主体组成的，其中头部字段通过CRLF序列分隔。CRLF注入攻击利用了这一点，通过插入额外的CRLF序列，攻击者可以：  </p>
 <ul>
