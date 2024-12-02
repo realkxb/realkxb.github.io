@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">107</span>
+            <span class="post-count">1.4k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">1 min</span>
+            <span class="post-count">5 min</span>
         </span>
     </span>
 </div>
@@ -105,6 +105,8 @@
     <div class="article-entry" itemprop="articleBody">
        
   <h2 id="一、目录扫描工具dirsearch"><a href="#一、目录扫描工具dirsearch" class="headerlink" title="一、目录扫描工具dirsearch"></a><strong><font size=4>一、目录扫描工具dirsearch</font></strong></h2><p>1、-u:指定要扫描的URL：<code>dirsearch.py -u http://example.com</code><br>2、-w:自定义字典文件：<code>dirsearch.py -u http://example.com -w /path/to/your/wordlist.txt</code><br>3、-t:指定线程数（默认为10）提高扫描速度：<code>dirsearch.py -u http://testphp.vulnweb.com -t 50</code><br>4、-x:过滤特定状态码：<code>dirsearch.py -u http://example.com -x 404,403</code><br>5、-o:将结果输出到文件:<code>dirsearch.py -u http://example.com -o results.txt</code><br>6、-r：递归扫描   </p>
+<h2 id="二、目录扫描工具dirb"><a href="#二、目录扫描工具dirb" class="headerlink" title="二、目录扫描工具dirb"></a><strong><font size=4>二、目录扫描工具dirb</font></strong></h2><p>格式：<code>dirb &lt;url&gt; [字典文件名] [参数]</code><br>1、-a:设置user-agent<br>2、-p:设置代理<br>3、-c:设置cookie<br>4、-z:设置毫秒延迟<br>5、-o:将结果输出到文件<br>6、-H：添加请求头   </p>
+<h2 id="三、端口扫描工具nmap"><a href="#三、端口扫描工具nmap" class="headerlink" title="三、端口扫描工具nmap"></a><strong><font size=4>三、端口扫描工具nmap</font></strong></h2><p>Nmap 允许用户在网络上执行主机发现、端口扫描、服务识别和版本检测等操作，以帮助评估网络的安全性、发现主机和服务、以及识别潜在的安全威胁。<br>1、快速扫描：<code>nmap ip</code><br>2、扫描多个目标：<code>nmap ip1 ip2</code><br>3、扫描一个网段的主机：<code>nmap ip/子网掩码</code>（255.255.255.0:24&#x2F;255.255.0.0:16）<br>4、IP过滤：<code>nmap ip/子网掩码 -exclude 需要过滤的IP </code><br>5、扫描存活主机不扫描端口：<code>nmap -sP ip/子网掩码</code><br>6、扫描指定端口(可以一次扫描单个端口、多个端口、或扫描一个范围的端口):  <code>nmap ip -p 端口号</code><br>7、识别具体的服务版本：<code>nmap -sV ip -p 端口号或范围</code><br>8、识别操作系统：<code>nmap -O ip</code><br>9、TCP SYN 扫描：<code>nmap -sS ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp; TCP SYN 扫描是一种用于探测目标主机上开放端口的网络扫描技术。它属于 Nmap 工具中的一种扫描方式，通常用于获取目标系统的端口状态信息。<br>10、UDP 扫描：<code>nmap -sU ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;UDP（User Datagram Protocol）扫描是一种用于探测目标主机上开放的 UDP（非连接性协议）端口的扫描技术。与 TCP 扫描不同，UDP 扫描涉及到发送 UDP 数据包并分析目标主机的响应。<br>11、TCP Null 扫描：<code>nmap -sN ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;TCP Null 扫描是 Nmap 工具中的一种扫描技术，用于探测目标主机上的开放端口。与 TCP SYN 扫描和 TCP Connect 扫描不同，TCP Null 扫描尝试利用 TCP 协议的一个特性，即发送一个不包含任何标志位的 TCP 报文，来判断端口的状态。<br>12、TCP FIN 扫描： <code>nmap -sF ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;TCP FIN（Finish）扫描是 Nmap 工具中的一种扫描技术，用于探测目标主机上的开放端口。与 TCP SYN 扫描和 TCP Null 扫描类似，TCP FIN 扫描尝试利用 TCP 协议的一个特性，即发送一个不包含 SYN 标志位和其他标志位为零的 TCP 报文，来判断端口的状态。<br>13、TCP Xmas 扫描：<code>nmap -sX ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;TCP Xmas（也称为Christmas Tree）扫描是 Nmap 工具中的一种扫描技术，用于探测目标主机上的开放端口。TCP Xmas 扫描尝试利用 TCP 协议的一个特性，即发送一个所有标志位均被设置为 1 的 TCP 报文，来判断端口的状态。<br>14、TCP ACK 扫描：<code>nmap -sA ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;TCP ACK（Acknowledgment）扫描是 Nmap 工具中的一种扫描技术，用于确定目标主机上的端口状态。与其他 TCP 扫描技术不同，TCP ACK 扫描不关心端口是否开放，而是专注于获取目标主机对特定端口的响应。<br>15、TCP 窗口扫描：<code>nmap -sW ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;TCP窗口扫描是一种用于探测目标主机上开放端口的扫描技术。这种扫描技术主要关注TCP协议中的窗口字段（Window Size）。<br>16、报文分段：<code>nmap -f ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;-f 参数用于在发送的TCP数据包中进行报文分段（fragmentation）。报文分段是将大的数据包分成更小的片段以适应网络传输的过程。在网络安全领域，报文分段经常用于绕过一些网络防火墙或入侵检测系统的检测。<br>17、最大传输单元:<code>nmap --mtu 1500 ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;–mtu 参数用于指定数据包的最大传输单元（MTU）。MTU是指一次能够通过通信链路的最大数据包大小。通过调整MTU，可以影响数据包的大小，从而可能绕过一些网络设备的检测。<br>18、诱饵隐藏扫描：<code>nmap -D &lt;ip,ip,ip……&gt; 目标 ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;-D 参数在Nmap中用于进行诱饵（decoy）扫描，通过在扫描中伪装其他主机的IP地址，使得被扫描目标难以确定扫描的真实来源。这有助于混淆目标主机的入侵检测系统，使其难以追踪扫描的发起者。<br>19、源地址哄骗：<code>nmap -S &lt;伪装的源 ip&gt; ip</code><br>20、源端口哄骗：<code>nmap --source-port 或 -g &lt;源端口号&gt; ip</code><br>21、附加随机数据：<code>nmap --data-length &lt;长度&gt; ip</code><br>&nbsp;&nbsp;&nbsp;&nbsp;–data-length <number> 参数在Nmap中用于在发送的数据包中附加指定长度的随机数据。这个功能有助于混淆目标主机上的入侵检测系统，使得对扫描流量的分析更加困难。<br>22、生存时间：<code>nmap --ttl &lt;值&gt; ip</code><br>23、MAC 地址哄骗：<code>nmap --spoof-mac &lt;mac 地址&gt; ip</code> </p>
  
       <!-- reward -->
       
