@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">17 min</span>
+            <span class="post-count">18 min</span>
         </span>
     </span>
 </div>
@@ -361,6 +361,8 @@ php在window的时候如果文件名+"::$DATA"会把::$DATA之后的数据当成
 利用BP抓包之后改后缀x.php::$DATA进行绕过。<br>   
 8、双写绕过<br>   
 使用str_ireplace()函数寻找文件名中存在的黑名单字符串，将它替换成空（即将它删掉），可以使用双写绕过黑名单。例如.pphphp  
+9、条件竞争：上传文件后返回均为200，代表文件上传成功，但是上传目录却看不到上传文件，说明可能是文件上传后被删除了  
+原理：多线程大量上传，只要有一瞬间上传并访问成功，木马文件即可以在目标主机创建成功。  
   
 <h2 id="4-4-白名单验证"><a href="#4-4-白名单验证" class="headerlink" title="4.4 白名单验证"></a><strong><font size=3>4.4 白名单验证</font></strong></h2><p>1、%00截断<br>最终文件的存放位置是以拼接的方式，可以使用%00截断，但需要php版本&lt;5.3.4，并且magic_quotes_gpc关闭。<br>方法：BP抓包修改路径为upload&#x2F;x.php%00<br>2、post 00截断<br>文件上传路径拼接生成，而且使用了post发送的数据进行拼接，我们可以控制post数据进行0x00截断绕过白名单。<br>方法：BP抓包后在..&#x2F;upload&#x2F; 路径下加上x.php+,然后修改+号Hex值为00  </p>
 <h2 id="4-5-文件内容检查和处理"><a href="#4-5-文件内容检查和处理" class="headerlink" title="4.5 文件内容检查和处理"></a><strong><font size=3>4.5 文件内容检查和处理</font></strong></h2><p>1、图片马unpack<br>读取判断上传文件的前两个字节，判断上传文件类型，并且后端会根据判断得到的文件类型重命名上传文件，使用getimagesize()检查是否为图片文件，exif_imagetype()读取一个图像的第一个字节并检查其后缀名：使用图片马+文件包含绕过。<br>图片马制作：<code>copy 777.png/b + zoe.php pass14.png</code>，然后利用文件包含漏洞进行处理。<br>2、二次渲染绕过<br>对上传图片进行了判断了后缀名、content-type，以及利用imagecreatefromgif判断是否为gif图片，最后再做了一次二次渲染，但是后端二次渲染需要找到渲染后的图片里面没有发生变化的Hex地方，添加一句话，通过文件包含漏洞执行一句话，使用蚁剑进行连接。<br>方法：上传正常的GIF图片下载回显的图片，用010Editor编辑器进行对比两个GIF图片内容，找到相同的地方（指的是上传前和上传后，两张图片的部分Hex仍然保持不变的位置）并插入PHP一句话，上传带有PHP一句话木马的GIF图片。（图片：<a target="_blank" rel="noopener" href="https://wwe.lanzoui.com/iFSwwn53jaf%EF%BC%89">https://wwe.lanzoui.com/iFSwwn53jaf）</a><br>3、条件竞争<br>例如服务器先是将上传的文件保存下来，然后将文件的后缀名同白名单对比，如果是jpg、png、gif中的一种，就将文件进行重命名。如果不符合的话，unlink()函数就会删除该文件。<br>方法：代码执行的过程是需要耗费时间的。在上传的一句话被删除之前访问。这个叫做条件竞争上传绕过。  </p>
