@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.2k</span>
+            <span class="post-count">2.1k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">5 min</span>
+            <span class="post-count">8 min</span>
         </span>
     </span>
 </div>
@@ -107,116 +107,92 @@
   <h2 id="1、母牛的故事"><a href="#1、母牛的故事" class="headerlink" title="1、母牛的故事  "></a><strong><font size=4>1、母牛的故事</font></strong>  </h2><p>有一头母牛，它每年年初生一头小母牛。每头小母牛从第四个年头开始，每年年初也生一头小母牛。请编程实现在第n年的时候，共有多少头母牛？ </p>
 <ul>
 <li>输入：多个数据，每个占一行，每行包含一个整数，输入0代表结束  </li>
-<li>输出：输出每一行的输入所对应的正确运行值<br><font color=red>代码实现</font></li>
+<li>输出：输出每一行的输入所对应的正确运行值</li>
 </ul>
-<pre><code class="c++">
-    #include &lt;iostream&gt;
-    #include &lt;vector&gt;
-    using namespace std;
-    int count(int n) &#123;
-        int count = 0;
-        while (n - 3 &gt; 0) &#123;
-            n -= 3;
-            count++;
-        &#125;
-        return count;
-    &#125;
-    int main() &#123;
-        vector&lt;int&gt; s;
-        int input;
-        while (cin &gt;&gt; input) &#123;
-            if (input != 0) &#123;
-                s.push_back(input);
-            &#125;
-            else &#123;
-                break;
-            &#125;
-        &#125;
-        //循环计算第n-1年的牛总数
-        int sum1 = 0;
-        for (int j = 0;j &lt; s.size();j++) &#123;
-            int n = s[j];
-            sum1 += n;
-            if (n == 0) &#123;
-                return 0;
-            &#125;
-            else &#123;
-                for (int j = n - 1;j &gt; 0;j--) &#123;
-                    sum1 += count(j);
-                &#125;
+<p>实现思路：母牛每年年初会生一头小牛，每个小牛从第四年开始会生一头小牛，则相当于最后第n年的总牛数包含了一个序列的总数，序列为n、n-1、n-2...，所以循环处理这几个数列分别有多少牛，其总和为最后的母牛数。</p>  
+<font color=red>代码实现</font>  
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">count</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (n - <span class="number">3</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">		n -= <span class="number">3</span>;</span><br><span class="line">		count++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt; s;</span><br><span class="line">	<span class="type">int</span> input;</span><br><span class="line">	<span class="keyword">while</span> (cin &gt;&gt; input) &#123;</span><br><span class="line">		<span class="keyword">if</span> (input != <span class="number">0</span>) &#123;</span><br><span class="line">			s.<span class="built_in">push_back</span>(input);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//循环计算第n-1年的牛总数</span></span><br><span class="line">	<span class="type">int</span> sum1 = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>;j &lt; s.<span class="built_in">size</span>();j++) &#123;</span><br><span class="line">		<span class="type">int</span> n = s[j];</span><br><span class="line">		sum1 += n;</span><br><span class="line">		<span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> &#123;</span><br><span class="line">			<span class="keyword">for</span> (<span class="type">int</span> j = n - <span class="number">1</span>;j &gt; <span class="number">0</span>;j--) &#123;</span><br><span class="line">				sum1 += <span class="built_in">count</span>(j);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		cout &lt;&lt; sum1 &lt;&lt; endl;</span><br><span class="line">		sum1 = <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  
+    
 
-            &#125;
-            cout &lt;&lt; sum1 &lt;&lt; endl;
-            sum1 = 0;
-        &#125;
-    &#125;
-</code></pre>
-<h2 id="2、校门外的树"><a href="#2、校门外的树" class="headerlink" title="2、校门外的树  "></a><strong><font size=4>2、校门外的树</font></strong>  </h2><p>某校大门外长度为L的马路上有一排树，每两棵相邻的树之间的间隔都是1米。我们可以把马路看成一个数轴，马路的一端在数轴0的位置，另一端在L的位置；数轴上的每个整数点，即0，1，2，……，L，都种有一棵树。<br>由于马路上有一些区域要用来建地铁。这些区域用它们在数轴上的起始点和终止点表示。已知任一区域的起始点和终止点的坐标都是整数，区域之间可能有重合的部分。现在要把这些区域中的树（包括区域端点处的两棵树）移走。你的任务是计算将这些树都移走后，马路上还有多少棵树？ </p>
+<h2 id="2、校门外的树"><a href="#2、校门外的树" class="headerlink" title="2、校门外的树  "></a><strong><font size=4>2、校门外的树</font></strong>  </h2><p>某校大门外长度为L的马路上有一排树，每两棵相邻的树之间的间隔都是1米。我们可以把马路看成一个数轴，马路的一端在数轴0的位置，另一端在L的位置；数轴上的每个整数点，即0，1，2，……，L，都种有一棵树。  
+由于马路上有一些区域要用来建地铁。这些区域用它们在数轴上的起始点和终止点表示。已知任一区域的起始点和终止点的坐标都是整数，区域之间可能有重合的部分。现在要把这些区域中的树（包括区域端点处的两棵树）移走。你的任务是计算将这些树都移走后，马路上还有多少棵树？</p> 
+ 
 <ul>
 <li>输入：输入的第一行有两个整数L（1 &lt;&#x3D; L &lt;&#x3D; 10000）和 M（1 &lt;&#x3D; M &lt;&#x3D; 100），L代表马路的长度，M代表区域的数目，L和M之间用一个空格隔开。接下来的M行每行包含两个不同的整数，用一个空格隔开，表示一个区域的起始点和终止点的坐标。  </li>
-<li>输出：输出包括一行，这一行只包含一个整数，表示马路上剩余的树的数目。<br><font color=red>代码实现</font></li>
+<li>输出：输出包括一行，这一行只包含一个整数，表示马路上剩余的树的数目。</li>
 </ul>
-<pre><code class="c++">
-    #include &lt;iostream&gt;
-    #include&lt;vector&gt;
-    using namespace std;
-    int main() &#123;
-        int L, M;
-        cin &gt;&gt; L &gt;&gt; M;
-        vector&lt;bool&gt;tree(L+1,true);
-        for (int i = 0;i &lt; M;i++) &#123;
-            int start,end;
-            cin &gt;&gt; start &gt;&gt; end;
-            for (int j = start;j &lt;= end;j++) &#123;
-                tree[j] = false;
-            &#125;
+<p>实现思路：初始化一个bool类型的列表，初始值均为true，表示存在树，在需要移除的树木区间将列表值设置为false，最后统计列表中剩余true的树木。</p>    
+<font color=red>代码实现</font>  
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> L, M;</span><br><span class="line">	cin &gt;&gt; L &gt;&gt; M;</span><br><span class="line">	vector&lt;<span class="type">bool</span>&gt;<span class="built_in">tree</span>(L+<span class="number">1</span>,<span class="literal">true</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>;i &lt; M;i++) &#123;</span><br><span class="line">		<span class="type">int</span> start,end;</span><br><span class="line">		cin &gt;&gt; start &gt;&gt; end;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = start;j &lt;= end;j++) &#123;</span><br><span class="line">			tree[j] = <span class="literal">false</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="type">int</span> count = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> k = <span class="number">0</span>;k &lt; tree.<span class="built_in">size</span>();k++) &#123;</span><br><span class="line">		<span class="keyword">if</span> (tree[k] == <span class="literal">true</span>) &#123;</span><br><span class="line">			count++;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-        &#125;
-        int count = 0;
-        for (int k = 0;k &lt; tree.size();k++) &#123;
-            if (tree[k] == true) &#123;
-                count++;
-            &#125;
-        &#125;
-        cout &lt;&lt; count;
-    &#125;
-</code></pre>
 <h2 id="3、采药（0-1背包）"><a href="#3、采药（0-1背包）" class="headerlink" title="3、采药（0-1背包）  "></a><strong><font size=4>3、采药（0-1背包）</font></strong>  </h2><p>辰辰是个天资聪颖的孩子，他的梦想是成为世界上最伟大的医师。为此，他想拜附近最有威望的医师为师。医师为了判断他的资质，给他出了一个难题。医师把他带到一个到处都是草药的山洞里对他说：“孩子，这个山洞里有一些不同的草药，采每一株都需要一些时间，每一株也有它自身的价值。我会给你一段时间，在这段时间里，你可以采到一些草药。如果你是一个聪明的孩子，你应该可以让采到的草药的总价值最大。” </p>
 <ul>
 <li>输入：输入第一行有两个整数T（1 &lt;&#x3D; T &lt;&#x3D; 1000）和M（1 &lt;&#x3D; M &lt;&#x3D; 100），用一个空格隔开，T代表总共能够用来采药的时间，M代表山洞里的草药的数目。接下来的M行每行包括两个在1到100之间（包括1和100）的整数，分别表示采摘某株草药的时间和这株草药的价值。  </li>
-<li>输出：输出一行，这一行只包含一个整数，表示在规定的时间内，可以采到的草药的最大总价值。<br><font color=red>代码实现</font></li>
+<li>输出：输出一行，这一行只包含一个整数，表示在规定的时间内，可以采到的草药的最大总价值。</li>
 </ul>
-<pre><code class="c++">
-        #include &lt;iostream&gt;
-        #include &lt;vector&gt;
-        using namespace std;
-
-        int main() &#123;
-            int T, M;
-            cin &gt;&gt; T &gt;&gt; M;
-            vector&lt;int&gt;time(M+1), weight(M+1);
-            for (int i = 1;i &lt; M+1;i++) &#123;
-                cin &gt;&gt; time[i] &gt;&gt; weight[i];
+<p>实现思路：经典的0-1背包问题</p>  
+<font color=red>代码实现</font>  
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="type">int</span> T, M;</span><br><span class="line">	cin &gt;&gt; T &gt;&gt; M;</span><br><span class="line">	vector&lt;<span class="type">int</span>&gt;<span class="built_in">time</span>(M+<span class="number">1</span>), <span class="built_in">weight</span>(M+<span class="number">1</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">1</span>;i &lt; M+<span class="number">1</span>;i++) &#123;</span><br><span class="line">		cin &gt;&gt; time[i] &gt;&gt; weight[i];</span><br><span class="line">	&#125;</span><br><span class="line">	vector&lt;vector&lt;<span class="type">int</span>&gt;&gt;<span class="built_in">p</span>(M + <span class="number">1</span>, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(T + <span class="number">1</span>, <span class="number">0</span>));</span><br><span class="line">	<span class="keyword">for</span> (<span class="type">int</span> t = <span class="number">1</span>;t &lt; M + <span class="number">1</span>;t++) &#123;</span><br><span class="line">		<span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">1</span>;j &lt; T + <span class="number">1</span>;j++) &#123;</span><br><span class="line">			<span class="keyword">if</span> (j &lt; weight[t]) &#123;</span><br><span class="line">				p[t][j] = p[t - <span class="number">1</span>][j];</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> (p[t - <span class="number">1</span>][j] &gt; p[t - <span class="number">1</span>][j - weight[t]] + weight[t]) &#123;</span><br><span class="line">					p[t][j] = p[t - <span class="number">1</span>][j];</span><br><span class="line">				&#125;</span><br><span class="line">				<span class="keyword">else</span> &#123;</span><br><span class="line">					p[t][j] = p[t - <span class="number">1</span>][j - weight[t]] + weight[t];</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	cout &lt;&lt; p[M][T];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+ 
+<h2 id="4、循环"><a href="#4、循环" class="headerlink" title="4、循环  "></a><strong><font size=4>4、循环</font></strong>  </h2><p>乐乐是一个聪明而又勤奋好学的孩子。他总喜欢探求事物的规律。一天，他突然对数的正整数次幂产生了兴趣。<br>众所周知，2的正整数次幂最后一位数总是不断的在重复2，4，8，6，2，4，8，6……我们说2的正整数次幂最后一位的循环长度是4（实际上4的倍数都可以说是循环长度，但我们只考虑最小的循环长度）。类似的，其余的数字的正整数次幂最后一位数也有类似的循环现象：<br>循环<br>循环长度<br>2<br>2、4、8、6<br>4<br>这时乐乐的问题就出来了：是不是只有最后一位才有这样的循环呢？对于一个整数n的正整数次幂来说，它的后k位是否会发生循环？如果循环的话，循环长度是多少呢？ </p>
+<ul>
+<li>输入：输入只有一行，包含两个整数n（1 &lt;&#x3D; n &lt; 10100）和k（1 &lt;&#x3D; k &lt;&#x3D; 100），n和k之间用一个空格隔开，表示要求n的正整数次幂的最后k位的循环长度。  </li>
+<li>输出：输出一行，这一行只包含一个整数，表示循环长度。如果循环不存在，输出-1。</li>
+</ul>
+<p>实现思路：（1）计算n的各个幂指数，存储到列表1中；（2）获取每个幂指数的后k位存储到另一列表2中；（3）记录下列表2中开始出现循环时的位数；（4）判断列表2中的数是否都满足此循环条件。<br><font color=red>代码实现（Python初期版本）</font>  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">input_str = <span class="built_in">input</span>()</span><br><span class="line">   n, k = <span class="built_in">map</span>(<span class="built_in">int</span>, input_str.split())  <span class="comment">#输入以空格分开</span></span><br><span class="line">mlist=[]</span><br><span class="line"><span class="comment">#计算幂次</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1</span>,<span class="number">20</span>):</span><br><span class="line">  	mlist.append(n**i)</span><br><span class="line">clist=[]</span><br><span class="line"><span class="comment">#取最后k位</span></span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> mlist:</span><br><span class="line">  	s=<span class="built_in">str</span>(j)[-k:]</span><br><span class="line">  	clist.append(<span class="built_in">int</span>(s))</span><br><span class="line"><span class="comment">#计算最后k位的循环次数</span></span><br><span class="line">c1=clist[<span class="number">0</span>]</span><br><span class="line">count=<span class="number">1</span></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> clist[<span class="number">1</span>:]:</span><br><span class="line">  	<span class="keyword">if</span>(k!=c1 <span class="keyword">and</span> count&lt;<span class="built_in">len</span>(clist)):</span><br><span class="line">      		count+=<span class="number">1</span></span><br><span class="line">  	<span class="keyword">else</span>:</span><br><span class="line">      		<span class="keyword">break</span></span><br><span class="line"><span class="keyword">if</span>(count==<span class="number">1</span> <span class="keyword">and</span> clist[<span class="number">0</span>]==clist[<span class="number">1</span>]):</span><br><span class="line">  	<span class="built_in">print</span>(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">elif</span>(count!=<span class="number">1</span>):</span><br><span class="line">  	<span class="built_in">print</span>(count)</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">  	<span class="built_in">print</span>(-<span class="number">1</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><font color=red>代码实现（C++版本）</font>  </p>
+<pre><code class="c++">    #include &lt;iostream&gt;
+    #include &lt;vector&gt;
+    #include &lt;math.h&gt;
+    using namespace std;
+    int main() &#123;
+            int n, k;
+            cin &gt;&gt; n &gt;&gt; k;
+            long long m;
+            vector&lt;long long&gt;p; //存储幂次数字
+            for (int i = 1;i &lt; 10;i++) &#123;
+                m = pow(n,i);
+                p.push_back(m);
             &#125;
-            vector&lt;vector&lt;int&gt;&gt;p(M + 1, vector&lt;int&gt;(T + 1, 0));
-            for (int t = 1;t &lt; M + 1;t++) &#123;
-                for (int j = 1;j &lt; T + 1;j++) &#123;
-                    if (j &lt; weight[t]) &#123;
-                        p[t][j] = p[t - 1][j];
+            long long s;
+            vector&lt;int&gt;q; //存储每个幂数的最后k位数
+            for (int j = 0;j &lt; p.size();j++) &#123;
+                s = p[j] % int(pow(10, k));
+                q.push_back(s);
+            &#125;
+            //检查从第几位开始出现循环
+            long s0 = q[0];
+            int count = 0;
+            for (int k = 1;k &lt; q.size();k++) &#123;
+                if (q[k] == s0) &#123;
+                    count = k;
+                    break;
+                &#125;
+            &#125;
+            //检查是否是在整个后k位都存在此循环
+            int count1 = 1;
+            bool yes = false;
+            if (count != 0) &#123;
+                for (int l = 0;l &lt; q.size();count1++) &#123;
+                    if (q[l] == s0) &#123;
+                        l += (count1 * count);
+                        yes = true;
                     &#125;
                     else &#123;
-                        if (p[t - 1][j] &gt; p[t - 1][j - weight[t]] + weight[t]) &#123;
-                            p[t][j] = p[t - 1][j];
-                        &#125;
-                        else &#123;
-                            p[t][j] = p[t - 1][j - weight[t]] + weight[t];
-                        &#125;
+                        yes = false;
+                        break;
                     &#125;
                 &#125;
             &#125;
-            cout &lt;&lt; p[M][T];
-        &#125;
-
+            if (yes==true) &#123;
+                cout &lt;&lt; count;
+            &#125;
+            else &#123;
+                cout &lt;&lt; -1; //不存在循环输出-1
+            &#125;
+    &#125;
 </code></pre>
  
       <!-- reward -->
