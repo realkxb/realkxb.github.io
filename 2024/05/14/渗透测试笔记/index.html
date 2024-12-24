@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4.9k</span>
+            <span class="post-count">6.7k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">18 min</span>
+            <span class="post-count">25 min</span>
         </span>
     </span>
 </div>
@@ -104,7 +104,7 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识  "></a>基础知识  </h2><p><strong>1</strong>、在对网站进行扫描时，利用IP地址进行扫描和利用域名进行扫描可以获取的信息可能不同，因为域名访问通常指向WWW目录，而IP访问通常指其上一级目录，此目录可能存在网页代码备份，但是只能用IP地址扫描才能得到。<br><strong>2</strong>、中间件（IIS服务器等）存在文件后缀和解析之间的映射，如后缀为asp,adsp,asd的文件都可以被解析为ASP文件，按照ASP文件进行处理。<br><strong>3</strong>、服务器端存在一些安全设置，如IP限制，文件运行权限限制，导致我们自己上传的文件无法运行或者网页无法访问。<br>4、如何识别平台所使用的中间件：打开网页，查看网页中返回数据包。<br><img src="/pic/stcs/stcs1.png"><br><strong>5</strong>、中间件漏洞靶场及查询：<a target="_blank" rel="noopener" href="http://www.vulhub.org/">www.vulhub.org</a>  </p>
+  <h2 id="一、基础知识"><a href="#一、基础知识" class="headerlink" title="一、基础知识  "></a>一、基础知识  </h2><p><strong>1</strong>、在对网站进行扫描时，利用IP地址进行扫描和利用域名进行扫描可以获取的信息可能不同，因为域名访问通常指向WWW目录，而IP访问通常指其上一级目录，此目录可能存在网页代码备份，但是只能用IP地址扫描才能得到。<br><strong>2</strong>、中间件（IIS服务器等）存在文件后缀和解析之间的映射，如后缀为asp,adsp,asd的文件都可以被解析为ASP文件，按照ASP文件进行处理。<br><strong>3</strong>、服务器端存在一些安全设置，如IP限制，文件运行权限限制，导致我们自己上传的文件无法运行或者网页无法访问。<br>4、如何识别平台所使用的中间件：打开网页，查看网页中返回数据包。<br><img src="/pic/stcs/stcs1.png"><br><strong>5</strong>、中间件漏洞靶场及查询：<a target="_blank" rel="noopener" href="http://www.vulhub.org/">www.vulhub.org</a>  </p>
 <hr>
 <p><strong>1、网站源码获取</strong></p>
 <ul>
@@ -232,7 +232,7 @@
 </ul>
 <p><font color='red'>通过识别之后，采取对应的措施进行测试，例如不同平台对应的不同漏洞。</font></p>
 <hr>
-<h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><h2 id="一、CDN穿透"><a href="#一、CDN穿透" class="headerlink" title="一、CDN穿透"></a><img src="/pic/stcs/stcs2.png"><br><strong><font size=4>一、CDN穿透</font></strong></h2><p><strong>1、CDN</strong><br>CDN：内容分发网络，其功能是为了提高网络访问速度，提高服务质量，在不同的地点建立分服务器，用户在请求服务时向最近的服务器进行请求，从而提高实时性。<br>影响：分服务器中通常存储的只是主服务器的副本文件，可能不完整，对此服务器进行渗透测试并不能得到真实的结果。<br><strong>2、是否使用CDN的判断</strong><br>利用超级ping工具（百度搜索超级ping），若响应的IP地址有很多，说明开启了CDN服务。<br><strong>3、CDN绕过</strong>  </p>
+<h2 id="二、信息收集"><a href="#二、信息收集" class="headerlink" title="二、信息收集"></a>二、信息收集</h2><h2 id="2-1、CDN穿透"><a href="#2-1、CDN穿透" class="headerlink" title="2.1、CDN穿透"></a><img src="/pic/stcs/stcs2.png"><br><strong><font size=4>2.1、CDN穿透</font></strong></h2><p><strong>1、CDN</strong><br>CDN：内容分发网络，其功能是为了提高网络访问速度，提高服务质量，在不同的地点建立分服务器，用户在请求服务时向最近的服务器进行请求，从而提高实时性。<br>影响：分服务器中通常存储的只是主服务器的副本文件，可能不完整，对此服务器进行渗透测试并不能得到真实的结果。<br><strong>2、是否使用CDN的判断</strong><br>利用超级ping工具（百度搜索超级ping），若响应的IP地址有很多，说明开启了CDN服务。<br><strong>3、CDN绕过</strong>  </p>
 <ul>
 <li>子域名查询：通常子域名的访问量不及主域名，对于延迟的要求不高，一般不会使用CDN服务，所以子域名对应的IP地址可能为真实IP地址。</li>
 </ul>
@@ -269,7 +269,7 @@
 <li><p>ipip工具，可以选择外网IP地址快速ping目标：tools.ipip.net&#x2F;cdn.php</p>
 </li>
 </ul>
-<h2 id="二、站点搭建和WAF防护分析"><a href="#二、站点搭建和WAF防护分析" class="headerlink" title="二、站点搭建和WAF防护分析"></a><strong><font size=4>二、站点搭建和WAF防护分析</font></strong></h2><p>1、站点搭建  </p>
+<h2 id="2-2、站点搭建和WAF防护分析"><a href="#2-2、站点搭建和WAF防护分析" class="headerlink" title="2.2、站点搭建和WAF防护分析"></a><strong><font size=4>2.2、站点搭建和WAF防护分析</font></strong></h2><p>1、站点搭建  </p>
 <ul>
 <li><p>目录型站点：不同的目录对应不同的程序代码，可以利用不同的站点代码进行漏洞分析</p>
 </li>
@@ -293,20 +293,30 @@
 <li>WAF应用：Web应用防护系统（也称为：网站应用级入侵防御系统。英文：Web Application Firewall，简称： WAF）。Web 应用防火墙 (WAF) 可防御恶意攻击和非授权流量，包括机器人流量、注入攻击和应用层拒绝服务 (DoS) 攻击，保护 Web 应用安全。</li>
 <li>识别：利用工具wafw00f;通过网页返回数据包进行判断</li>
 </ul>
-<h2 id="三、APP信息收集和分析"><a href="#三、APP信息收集和分析" class="headerlink" title="三、APP信息收集和分析"></a><strong><font size=4>三、APP信息收集和分析</font></strong></h2><p>1、APP逆向<br>利用APP逆向工具对APP进行逆向，获得源代码后进行分析。<br>2、抓包分析<br>利用brup抓取APP发送的流量，通过对APP发起请求的网址进行分析，寻求渗透测试的点<br>3、只有IP地址，打开无网页分析思路  </p>
+<h2 id="2-3、APP信息收集和分析"><a href="#2-3、APP信息收集和分析" class="headerlink" title="2.3、APP信息收集和分析"></a><strong><font size=4>2.3、APP信息收集和分析</font></strong></h2><p>1、APP逆向<br>利用APP逆向工具对APP进行逆向，获得源代码后进行分析。<br>2、抓包分析<br>利用brup抓取APP发送的流量，通过对APP发起请求的网址进行分析，寻求渗透测试的点<br>3、只有IP地址，打开无网页分析思路  </p>
 <ul>
 <li>利用黑暗引擎搜索IP地址，利用其返回的搜索结果进行逐个分析，查找存在的漏洞点，例如其使用的第三方软件或者其端口开启的服务等</li>
 <li>查找到其对应的域名信息后，利用WEB站点的分析技巧进行分析</li>
 <li>对IP地址进行端口扫描，获取其端口开放的服务信息，利用这些第三方服务软件的漏洞进行渗透测试</li>
 </ul>
-<h2 id="四、Github资产信息和域名收集"><a href="#四、Github资产信息和域名收集" class="headerlink" title="四、Github资产信息和域名收集"></a><strong><font size=4>四、Github资产信息和域名收集</font></strong></h2><p>Github资产信息监控：利用相关脚本或工具爬取最新的exp或poc，或者可以通过名称爬取到网站源代码。<br>域名收集：</p>
+<h2 id="2-4、Github资产信息和域名收集"><a href="#2-4、Github资产信息和域名收集" class="headerlink" title="2.4、Github资产信息和域名收集"></a><strong><font size=4>2.4、Github资产信息和域名收集</font></strong></h2><p>Github资产信息监控：利用相关脚本或工具爬取最新的exp或poc，或者可以通过名称爬取到网站源代码。<br>域名收集：</p>
 <ul>
 <li>黑暗引擎搜索</li>
 <li>teemo工具</li>
 <li>Layer子域名挖掘机</li>
 <li>查DNS记录：dnsdb.io&#x2F;securitytrails.com&#x2F;crt.sh</li>
 </ul>
-<h2 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h2><h2 id="一、SSRF漏洞"><a href="#一、SSRF漏洞" class="headerlink" title="一、SSRF漏洞"></a><strong><font size=3>一、SSRF漏洞</font></strong></h2><p>SSRF(Server-Side Request Forgery:服务器端请求伪造)
+<h2 id="2-5、信息收集中的waf绕过"><a href="#2-5、信息收集中的waf绕过" class="headerlink" title="2.5、信息收集中的waf绕过"></a><strong><font size=4>2.5、信息收集中的waf绕过</font></strong></h2><p>CC防护：CC(ChallengeCollapsar，挑战黑洞)攻击是DDoS攻击的一种类型，使用代理服务器向受害服务器发送大量貌似合法的请求，许多waf提供了CC防护的功能。<br>未开启CC防护：利用扫描工具进行扫描可能会产生误报，此时可以切换扫描方式（GET、POST、…)。<br>开启CC防护之后可能会产生问题，主要解决思路是在扫描中模拟正常的访问请求，解决办法为：  </p>
+<ul>
+<li>设置延迟扫描</li>
+<li>模拟搜索引擎请求头User-Agent</li>
+<li>利用Python脚本实现灵活的扫描：在Python爬虫中可以设置扫描速度、UA、设置代理池</li>
+</ul>
+<p>简易的一个爬虫脚本：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">   	<span class="string">&#x27;Accept&#x27;</span>: <span class="string">&#x27;text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Accept-Encoding&#x27;</span>: <span class="string">&#x27;gzip, deflate, br&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Accept-Language&#x27;</span>: <span class="string">&#x27;zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Cache-Control&#x27;</span>: <span class="string">&#x27;max-age=0&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Connection&#x27;</span>: <span class="string">&#x27;keep-alive&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Cookie&#x27;</span>: <span class="string">&#x27;PHPSESSID=4d6f9bc8de5e7456fd24d60d2dfd5e5a&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;sec-ch-ua&#x27;</span>: <span class="string">&#x27;&quot;Chromium&quot;;v=&quot;92&quot;, &quot; Not A;Brand&quot;;v=&quot;99&quot;, &quot;Microsoft Edge&quot;;v=&quot;92&quot;&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;sec-ch-ua-mobile&#x27;</span>: <span class="string">&#x27;?0&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Sec-Fetch-Dest&#x27;</span>: <span class="string">&#x27;document&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Sec-Fetch-Mode&#x27;</span>: <span class="string">&#x27;navigate&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Sec-Fetch-Site&#x27;</span>: <span class="string">&#x27;none&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;Sec-Fetch-User&#x27;</span>: <span class="string">&#x27;?1&#x27;</span>,</span><br><span class="line">  		<span class="string">&#x27;Upgrade-Insecure-Requests&#x27;</span>: <span class="string">&#x27;1&#x27;</span>,</span><br><span class="line">   	<span class="string">&#x27;User-Agent&#x27;</span>: <span class="string">&#x27;Mozilla/5.0 (compatible; Baiduspider-render/2.0; +http://www.baidu.com/search/spider.html)&#x27;</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> paths <span class="keyword">in</span> <span class="built_in">open</span>(<span class="string">&#x27;php_b.txt&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>):</span><br><span class="line">   	url = <span class="string">&quot;http://127.0.0.1/pikachu&quot;</span></span><br><span class="line">   	paths = paths.replace(<span class="string">&#x27;\n&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">   	urls = url + paths</span><br><span class="line">   	proxy = &#123;</span><br><span class="line">       	<span class="string">&#x27;http&#x27;</span>: <span class="string">&#x27;127.0.0.1:7777&#x27;</span></span><br><span class="line">   	&#125;</span><br><span class="line">   	<span class="keyword">try</span>:</span><br><span class="line">       	code = requests.get(urls, headers=headers, proxies=proxy).status_code</span><br><span class="line">       	<span class="comment"># time.sleep(3)</span></span><br><span class="line">       	<span class="built_in">print</span>(urls + <span class="string">&#x27;|&#x27;</span> + <span class="built_in">str</span>(code))</span><br><span class="line">   	<span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">       	<span class="built_in">print</span>(<span class="string">&#x27;connect error&#x27;</span>)</span><br><span class="line">       	time.sleep(<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="三、漏洞利用"><a href="#三、漏洞利用" class="headerlink" title="三、漏洞利用"></a>三、漏洞利用</h2><h2 id="3-1、SSRF漏洞"><a href="#3-1、SSRF漏洞" class="headerlink" title="3.1、SSRF漏洞"></a><strong><font size=3>3.1、SSRF漏洞</font></strong></h2><p>SSRF(Server-Side Request Forgery:服务器端请求伪造)
 是一种由攻击者构造形成由服务端发起请求的一个安全漏洞。一般情况下，SSRF是要目标网站的内部系统。（因为他是从内部系统访问的，所有可以通过它攻击外网无法访问的内部系统，也就是把目标网站当中间人），在CTF中通常结合gopher协议一起使用。</p>  
 常见可能存在SSRF漏洞的点：  
 1、通过URL地址分享网页内容：`?link=http://www.aaa.com`  
@@ -326,51 +336,70 @@
 4、黑名单内网ip。避免应用被用来获取获取内网数据，攻击内网。<br>  
 5、禁用不需要的协议。仅仅允许http和https请求。可以防止类似于file:///,gopher://,ftp:// 等引起的问题。  
 
-<h2 id="二、CRLF漏洞"><a href="#二、CRLF漏洞" class="headerlink" title="二、CRLF漏洞"></a><strong><font size=3>二、CRLF漏洞</font></strong></h2><p>RLF：回车+换行（\r\n)(%0D%0A),HTTP头部和主体部分用两个CRLF分割，浏览器根据这两个CRLF 读取HTTP内容。CRLF（Carriage Return Line Feed，回车换行）注入漏洞是一种常见的网络安全漏洞，通常出现在处理HTTP头和其他基于文本协议的应用中。通过在输入中注入CRLF序列（%0D%0A），攻击者可以伪造或修改HTTP头，导致各种安全问题。<br><font color="red">CRLF漏洞的原理</font><br>HTTP协议中的请求和响应是由头部和主体组成的，其中头部字段通过CRLF序列分隔。CRLF注入攻击利用了这一点，通过插入额外的CRLF序列，攻击者可以：  </p>
+<h2 id="3-2、CRLF漏洞"><a href="#3-2、CRLF漏洞" class="headerlink" title="3.2、CRLF漏洞"></a><strong><font size=3>3.2、CRLF漏洞</font></strong></h2><p>RLF：回车+换行（\r\n)(%0D%0A),HTTP头部和主体部分用两个CRLF分割，浏览器根据这两个CRLF 读取HTTP内容。CRLF（Carriage Return Line Feed，回车换行）注入漏洞是一种常见的网络安全漏洞，通常出现在处理HTTP头和其他基于文本协议的应用中。通过在输入中注入CRLF序列（%0D%0A），攻击者可以伪造或修改HTTP头，导致各种安全问题。<br><font color="red">CRLF漏洞的原理</font><br>HTTP协议中的请求和响应是由头部和主体组成的，其中头部字段通过CRLF序列分隔。CRLF注入攻击利用了这一点，通过插入额外的CRLF序列，攻击者可以：  </p>
 <ul>
 <li>插入新的HTTP头。</li>
 <li>修改现有的HTTP头。</li>
 <li>插入额外的HTTP响应（响应拆分攻击）。</li>
 </ul>
-<h2 id="三、SQL注入漏洞"><a href="#三、SQL注入漏洞" class="headerlink" title="三、SQL注入漏洞"></a><strong><font size=3>三、SQL注入漏洞</font></strong></h2><p>文章：SQL注入笔记</p>  
+<h2 id="3-3、SQL注入漏洞"><a href="#3-3、SQL注入漏洞" class="headerlink" title="3.3、SQL注入漏洞"></a><strong><font size=3>3.3、SQL注入漏洞</font></strong></h2><p>文章：SQL注入笔记</p>  
  
-<h2 id="四、文件上传漏洞"><a href="#四、文件上传漏洞" class="headerlink" title="四、文件上传漏洞"></a><strong><font size=3>四、文件上传漏洞</font></strong></h2><p>文件上传漏洞是指由于程序员在对用户文件上传部分的控制不足或者处理缺陷，而导致的用户可以越过其本身权限向服务器上上传可执行的动态脚本文件。这里上传的文件可以是木马，病毒，恶意脚本或者WebShell等。下面针对常见的文件上传漏洞的过滤绕过进行介绍。</p>
-<h2 id="4-1-前端验证"><a href="#4-1-前端验证" class="headerlink" title="4.1 前端验证"></a><strong><font size=3>4.1 前端验证</font></strong></h2><p>1、前端验证<br>在前端的JS代码中进行文件的验证和检查，绕过方式：  </p>
+<h2 id="3-4、文件上传漏洞"><a href="#3-4、文件上传漏洞" class="headerlink" title="3.4、文件上传漏洞"></a><strong><font size=3>3.4、文件上传漏洞</font></strong></h2><p>文件上传漏洞是指由于程序员在对用户文件上传部分的控制不足或者处理缺陷，而导致的用户可以越过其本身权限向服务器上上传可执行的动态脚本文件。这里上传的文件可以是木马，病毒，恶意脚本或者WebShell等。下面针对常见的文件上传漏洞的过滤绕过进行介绍。</p>
+<p><font color=red>1、前端验证</font><br>在前端的JS代码中进行文件的验证和检查，绕过方式：  </p>
 <ul>
 <li>在浏览器设置中禁用JavaScript</li>
 <li>右键检查代码将相关检查的代码删去</li>
 </ul>
-<h2 id="4-2-MIME验证"><a href="#4-2-MIME验证" class="headerlink" title="4.2 MIME验证"></a><strong><font size=3>4.2 MIME验证</font></strong></h2><p>MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的标准，用来表示文档、文件或字节流的性质和格式。浏览器通常使用 MIME 类型（而不是文件扩展名）来确定如何处理URL。</p>    
+<p><font color=red>2、MIME验证</font></p>
+<p>MIME (Multipurpose Internet Mail Extensions) 是描述消息内容类型的标准，用来表示文档、文件或字节流的性质和格式。浏览器通常使用 MIME 类型（而不是文件扩展名）来确定如何处理URL。</p>    
 绕过方式：利用BP抓包修改文件类型  
   
-<h2 id="4-3-黑名单验证"><a href="#4-3-黑名单验证" class="headerlink" title="4.3 黑名单验证"></a><strong><font size=3>4.3 黑名单验证</font></strong></h2><p>1、php3、php5、phtml等绕过：利用黑名单不全，修改文件后缀名为php3、php5、phtml等等绕过。<br>2、.htaccess绕过<br>htaccess文件为Apache服务中的一个配置文件，它负责相关目录下的网页配置。其中.htaccess文件内容：SetHandler application&#x2F;x-http-php的意思是设置当前目录所有文件都使用php解析，那么无论上传任何文件，只要符合php语言代码规范，就会被当做PHP执行。不符合规则则报错。所以可以通过先上传.htaccess文件，再上传需要执行的PHP文件来进行绕过。<font color=red>前提：在http.conf文件文件中设置AllowOverried All</font><br>3、.user.ini绕过<br>php.ini是php的一个全局配置文件，对整个web服务起作用；而.user.ini和.htaccess一样是目录的配置文件，.user.ini就是用户自定义的一个php.ini，我们可以利用这个文件来构造后门和隐藏后门。  </p>
+<p><font color=red>3、黑名单验证</font><br>3.1、php3、php5、phtml等绕过：利用黑名单不全，修改文件后缀名为php3、php5、phtml等等绕过。<br>3.2、.htaccess绕过<br>htaccess文件为Apache服务中的一个配置文件，它负责相关目录下的网页配置。其中.htaccess文件内容：SetHandler application&#x2F;x-http-php的意思是设置当前目录所有文件都使用php解析，那么无论上传任何文件，只要符合php语言代码规范，就会被当做PHP执行。不符合规则则报错。所以可以通过先上传.htaccess文件，再上传需要执行的PHP文件来进行绕过。<font color=red>前提：在http.conf文件文件中设置AllowOverried All</font><br>3.3、.user.ini绕过<br>php.ini是php的一个全局配置文件，对整个web服务起作用；而.user.ini和.htaccess一样是目录的配置文件，.user.ini就是用户自定义的一个php.ini，我们可以利用这个文件来构造后门和隐藏后门。  </p>
 <ul>
 <li>创建.user.ini文件，其中写入auto_prepend_file&#x3D;xxx.png</li>
 <li>上传木马文件xxx.png</li>
 </ul>
 <p></p>    
-4、大小写绕过<br>    
+3.4、大小写绕过<br>    
 若后端处理代码未使用strtolower()函数（字符串全转为小写）,可以将文件名后缀改为大写进行绕过。<br>   
-5、空格绕过<br>   
+3.5、空格绕过<br>   
 若后端处理代码未使用trim()函数去除空格，可以使用空格绕过黑名单，方法为在文件后缀之后加入空格。<br>   
-6、.绕过<br> 
+3.6、.绕过<br> 
 后端没有使用deldot()过滤文件名末尾的.，在文件名后面加入.即可绕过。  
 若使用了此函数，因为deldot()函数从后向前检测，当检测到末尾的第一个点时会继续它的检测，但是遇到空格会停下来，所以可以修改后缀为x.php. .来进行绕过。<br>       
-7、特殊字符::$DATA绕过<br>   
+3.7、特殊字符::$DATA绕过<br>   
 php在window的时候如果文件名+"::$DATA"会把::$DATA之后的数据当成文件流处理,不会检测后缀名，且保持"::$DATA"之前的文件名 他的目的就是不检查后缀名。<br>   
 利用BP抓包之后改后缀x.php::$DATA进行绕过。<br>   
-8、双写绕过<br>   
+3.8、双写绕过<br>   
 使用str_ireplace()函数寻找文件名中存在的黑名单字符串，将它替换成空（即将它删掉），可以使用双写绕过黑名单。例如.pphphp  
-9、条件竞争：上传文件后返回均为200，代表文件上传成功，但是上传目录却看不到上传文件，说明可能是文件上传后被删除了  
+3.9、条件竞争：上传文件后返回均为200，代表文件上传成功，但是上传目录却看不到上传文件，说明可能是文件上传后被删除了  
 原理：多线程大量上传，只要有一瞬间上传并访问成功，木马文件即可以在目标主机创建成功。  
   
-<h2 id="4-4-白名单验证"><a href="#4-4-白名单验证" class="headerlink" title="4.4 白名单验证"></a><strong><font size=3>4.4 白名单验证</font></strong></h2><p>1、%00截断<br>最终文件的存放位置是以拼接的方式，可以使用%00截断，但需要php版本&lt;5.3.4，并且magic_quotes_gpc关闭。<br>方法：BP抓包修改路径为upload&#x2F;x.php%00<br>2、post 00截断<br>文件上传路径拼接生成，而且使用了post发送的数据进行拼接，我们可以控制post数据进行0x00截断绕过白名单。<br>方法：BP抓包后在..&#x2F;upload&#x2F; 路径下加上x.php+,然后修改+号Hex值为00  </p>
-<h2 id="4-5-文件内容检查和处理"><a href="#4-5-文件内容检查和处理" class="headerlink" title="4.5 文件内容检查和处理"></a><strong><font size=3>4.5 文件内容检查和处理</font></strong></h2><p>1、图片马unpack<br>读取判断上传文件的前两个字节，判断上传文件类型，并且后端会根据判断得到的文件类型重命名上传文件，使用getimagesize()检查是否为图片文件，exif_imagetype()读取一个图像的第一个字节并检查其后缀名：使用图片马+文件包含绕过。<br>图片马制作：<code>copy 777.png/b + zoe.php pass14.png</code>，然后利用文件包含漏洞进行处理。<br>2、二次渲染绕过<br>对上传图片进行了判断了后缀名、content-type，以及利用imagecreatefromgif判断是否为gif图片，最后再做了一次二次渲染，但是后端二次渲染需要找到渲染后的图片里面没有发生变化的Hex地方，添加一句话，通过文件包含漏洞执行一句话，使用蚁剑进行连接。<br>方法：上传正常的GIF图片下载回显的图片，用010Editor编辑器进行对比两个GIF图片内容，找到相同的地方（指的是上传前和上传后，两张图片的部分Hex仍然保持不变的位置）并插入PHP一句话，上传带有PHP一句话木马的GIF图片。（图片：<a target="_blank" rel="noopener" href="https://wwe.lanzoui.com/iFSwwn53jaf%EF%BC%89">https://wwe.lanzoui.com/iFSwwn53jaf）</a><br>3、条件竞争<br>例如服务器先是将上传的文件保存下来，然后将文件的后缀名同白名单对比，如果是jpg、png、gif中的一种，就将文件进行重命名。如果不符合的话，unlink()函数就会删除该文件。<br>方法：代码执行的过程是需要耗费时间的。在上传的一句话被删除之前访问。这个叫做条件竞争上传绕过。  </p>
+<p><font color=red>4、白名单验证</font><br>4.1、%00截断<br>最终文件的存放位置是以拼接的方式，可以使用%00截断，但需要php版本&lt;5.3.4，并且magic_quotes_gpc关闭。<br>方法：BP抓包修改路径为upload&#x2F;x.php%00<br>4.2、post 00截断<br>文件上传路径拼接生成，而且使用了post发送的数据进行拼接，我们可以控制post数据进行0x00截断绕过白名单。<br>方法：BP抓包后在..&#x2F;upload&#x2F; 路径下加上x.php+,然后修改+号Hex值为00  </p>
+<p><font color=red>5、文件内容检查和处理</font><br>5.1、图片马unpack<br>读取判断上传文件的前两个字节，判断上传文件类型，并且后端会根据判断得到的文件类型重命名上传文件，使用getimagesize()检查是否为图片文件，exif_imagetype()读取一个图像的第一个字节并检查其后缀名：使用图片马+文件包含绕过。<br>图片马制作：<code>copy 777.png/b + zoe.php pass14.png</code>，然后利用文件包含漏洞进行处理。<br>5.2、二次渲染绕过<br>对上传图片进行了判断了后缀名、content-type，以及利用imagecreatefromgif判断是否为gif图片，最后再做了一次二次渲染，但是后端二次渲染需要找到渲染后的图片里面没有发生变化的Hex地方，添加一句话，通过文件包含漏洞执行一句话，使用蚁剑进行连接。<br>方法：上传正常的GIF图片下载回显的图片，用010Editor编辑器进行对比两个GIF图片内容，找到相同的地方（指的是上传前和上传后，两张图片的部分Hex仍然保持不变的位置）并插入PHP一句话，上传带有PHP一句话木马的GIF图片。（图片：<a target="_blank" rel="noopener" href="https://wwe.lanzoui.com/iFSwwn53jaf%EF%BC%89">https://wwe.lanzoui.com/iFSwwn53jaf）</a><br>5.3、条件竞争<br>例如服务器先是将上传的文件保存下来，然后将文件的后缀名同白名单对比，如果是jpg、png、gif中的一种，就将文件进行重命名。如果不符合的话，unlink()函数就会删除该文件。<br>方法：代码执行的过程是需要耗费时间的。在上传的一句话被删除之前访问。这个叫做条件竞争上传绕过。  </p>
 <ul>
 <li>通过BP的intruder模块不停得向服务器发送文件，若有一次成功，则会在服务器上留下木马文件</li>
 <li>利用python脚本，通过它来不停的访问我们上传上去的PHP文件 </li>
 <li>两者同时运行</li>
 </ul>
+<h2 id="3-5、XSS漏洞"><a href="#3-5、XSS漏洞" class="headerlink" title="3.5、XSS漏洞"></a><strong><font size=3>3.5、XSS漏洞</font></strong></h2><p>XSS全称：跨站脚本(Cross Site Scripting) ,为了不和层叠样式表(Cascading Style Sheets)的缩写CSS混合，所以改名为XSS。由于服务器对用户提交的数据过滤不严，导致浏览器把用户的输入当成了JS代码并直接返回给客户端执行，从而实现对客户端的攻击目的。<br><font color=red>XSS分类</font><br>1、反射型XSS<br>反射型XSS，又称非持久型XSS，攻击相对于受害者而言是一次性的，具体表现在受害者点击了含有的恶意JavaScript脚本的url，恶意代码并没有保存在目标网站，而Web应用程序只是不加处理的把该恶意脚本“反射”回受害者的浏览器而使受害者的浏览器执行相应的脚本。<br>2、存储型<br>存储型XSS是指应用程序通过Web请求获取不可信赖的数据，在未检验数据是否存在XSS代码的情况下，便将其存入数据库。当下一次从数据库中获取该数据时程序也未对其进行过滤，页面再次执行XSS代码持续攻击用户。存储型XSS漏洞大多出现在留言板、评论区，用户提交了包含XSS代码的留言到数据库，当目标用户查询留言时，那些留言的内容会从服务器解析之后加载出来。<br>3、DOM型<br>DOM，全称Document Object Model，是一个平台和语言都中立的接口，可以使程序和脚本能够动态访问和更新文档的内容、结构以及样式，DOM-XSS简单理解就是不与后台服务器产生数据交互，是一种通过DOM操作前端代码输出的时候产生的问题。<br><font color=red>XSS的危害</font>  </p>
+<ul>
+<li>盗取各类用户帐号，如机器登录帐号、用户网银帐号、各类管理员帐号</li>
+<li>控制企业数据，包括读取、篡改、添加、删除企业敏感数据的能力</li>
+<li>盗窃企业重要的具有商业价值的资料  </li>
+<li>网站挂马</li>
+<li>控制受害者机器向其它网站发起攻击</li>
+<li>窃取cookie的sessionid，冒充登录</li>
+</ul>
+<p><font color=red>XSS的防御</font>  </p>
+<ul>
+<li>对输入和URL参数进行过滤（检查用户输入的数据中是否包含一些特殊字符，如&lt;、&gt;、’、“等，发现存在特殊字符，将这些特殊字符过滤或者编码。）</li>
+<li>HTML实体编码（字符串js编码转换成实体html编码的方法）</li>
+<li>对输出内容进行编码（在变量输出到HTML页面时，可以使用编码或转义的方式来防御XSS攻击）  </li>
+<li>启用HTTPonly防止cookie窃取</li>
+</ul>
+<h2 id="3-6、CSRF漏洞"><a href="#3-6、CSRF漏洞" class="headerlink" title="3.6、CSRF漏洞"></a><strong><font size=3>3.6、CSRF漏洞</font></strong></h2><p>CSRF（Cross-site request forgery，跨站请求伪造），也被称为XSRF或Session Riding，是一种恶意利用网站的攻击方式。它通过伪装成受信任用户的请求，欺骗浏览器去执行攻击者预设的操作，如转账、修改邮箱地址等。如果受害者拥有管理员权限，CSRF攻击甚至可能危及整个网站的安全。其本质原因是重要操作的所有参数都是可以被攻击者猜测到的。<br>攻击者只有预测出URL的所有参数与参数值，才能成功地构造一个伪造的请求;反之，攻击者将无法攻击成功。其原理如下图：<br><img src="/pic/stcs/stcs3.png"><br><font color=red>CSRF漏洞的挖掘</font><br>1、数据包Referer字段和token<br>抓取一个正常请求的数据包，如果没有Referer字段和token，那么极有可能存在CSRF漏洞。<br>2、重新提交<br>如果有Referer字段，但是去掉Referer字段后再重新提交，如果该提交还有效，那么基本上可以确定存在CSRF漏洞。<br>3、检测工具<br>专门针对CSRF漏洞进行检测的工具，如CSRFTester，CSRF Request Builder等。<br><font color=red>CSRF漏洞的防御</font><br>1、验证码<br>CSRF攻击的过程，往往是在用户不知情的情况下构造了网络请求。而验证码，则强制用户必须与应用进行交互，才能完成最终请求。因此在通常情况下，验证码能够很好地遏制CSRF攻击。<br>2、在请求地址中添加 token 并验证<br>可以在 HTTP 请求中以参数的形式加入一个随机产生的 token，并在服务器端建立一个拦截器来验证这token，如果请求中没有 token 或者 token 内容不正确，则认为可能是 CSRF 攻击而拒绝该请求。<br>3、验证 HTTP Referer 字段<br>对于每一个请求验证其 Referer 值，如果是以特定IP开头的域名，则说明该请求是来自自己的请求，是合法的。如果 Referer 是其他网站的话，则有可能是黑客的 CSRF 攻击，拒绝该请求。  </p>
+<h2 id="3-7、其他漏洞"><a href="#3-7、其他漏洞" class="headerlink" title="3.7、其他漏洞"></a><strong><font size=3>3.7、其他漏洞</font></strong></h2><p>文章：CTF WEB中的常见内容。  </p>
  
       <!-- reward -->
       
