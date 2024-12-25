@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">6.7k</span>
+            <span class="post-count">7.7k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">25 min</span>
+            <span class="post-count">29 min</span>
         </span>
     </span>
 </div>
@@ -400,6 +400,52 @@ php在window的时候如果文件名+"::$DATA"会把::$DATA之后的数据当成
 </ul>
 <h2 id="3-6、CSRF漏洞"><a href="#3-6、CSRF漏洞" class="headerlink" title="3.6、CSRF漏洞"></a><strong><font size=3>3.6、CSRF漏洞</font></strong></h2><p>CSRF（Cross-site request forgery，跨站请求伪造），也被称为XSRF或Session Riding，是一种恶意利用网站的攻击方式。它通过伪装成受信任用户的请求，欺骗浏览器去执行攻击者预设的操作，如转账、修改邮箱地址等。如果受害者拥有管理员权限，CSRF攻击甚至可能危及整个网站的安全。其本质原因是重要操作的所有参数都是可以被攻击者猜测到的。<br>攻击者只有预测出URL的所有参数与参数值，才能成功地构造一个伪造的请求;反之，攻击者将无法攻击成功。其原理如下图：<br><img src="/pic/stcs/stcs3.png"><br><font color=red>CSRF漏洞的挖掘</font><br>1、数据包Referer字段和token<br>抓取一个正常请求的数据包，如果没有Referer字段和token，那么极有可能存在CSRF漏洞。<br>2、重新提交<br>如果有Referer字段，但是去掉Referer字段后再重新提交，如果该提交还有效，那么基本上可以确定存在CSRF漏洞。<br>3、检测工具<br>专门针对CSRF漏洞进行检测的工具，如CSRFTester，CSRF Request Builder等。<br><font color=red>CSRF漏洞的防御</font><br>1、验证码<br>CSRF攻击的过程，往往是在用户不知情的情况下构造了网络请求。而验证码，则强制用户必须与应用进行交互，才能完成最终请求。因此在通常情况下，验证码能够很好地遏制CSRF攻击。<br>2、在请求地址中添加 token 并验证<br>可以在 HTTP 请求中以参数的形式加入一个随机产生的 token，并在服务器端建立一个拦截器来验证这token，如果请求中没有 token 或者 token 内容不正确，则认为可能是 CSRF 攻击而拒绝该请求。<br>3、验证 HTTP Referer 字段<br>对于每一个请求验证其 Referer 值，如果是以特定IP开头的域名，则说明该请求是来自自己的请求，是合法的。如果 Referer 是其他网站的话，则有可能是黑客的 CSRF 攻击，拒绝该请求。  </p>
 <h2 id="3-7、其他漏洞"><a href="#3-7、其他漏洞" class="headerlink" title="3.7、其他漏洞"></a><strong><font size=3>3.7、其他漏洞</font></strong></h2><p>文章：CTF WEB中的常见内容。  </p>
+<h2 id="四、漏洞探测"><a href="#四、漏洞探测" class="headerlink" title="四、漏洞探测"></a>四、漏洞探测</h2><h2 id="4-1、操作系统漏洞"><a href="#4-1、操作系统漏洞" class="headerlink" title="4.1、操作系统漏洞"></a><strong><font size=3>4.1、操作系统漏洞</font></strong></h2><p><img src="/pic/stcs/stcs4.png">   </p>
+<p>此处主要介绍针对操作系统的漏洞检测</p>  
+常见进行漏洞检测的工具和方法：<br>  
+<font color=red>1、Goby</font><br>    
+&nbsp;&nbsp;&nbsp;&nbsp;下载地址：https://gobysec.net/<br>    
+&nbsp;&nbsp;&nbsp;&nbsp;优点：可视化界面，操作简单。 <br>   
+&nbsp;&nbsp;&nbsp;&nbsp;主要功能：  
+
+<ul>
+<li>资产扫描：自动探测当前网络空间存活的IP</li>
+<li>端口扫描：涵盖近300个主流端口</li>
+<li>协议识别：预置了超过200种协议识别引擎，覆盖常见网络协议，数据库协议，IoT协议，ICS协议等，通过非常轻量级地发包能够快速的分析出端口对应的协议信息</li>
+<li>漏洞扫描：预置了最具攻击效果的漏洞引擎，覆盖Weblogic，Tomcat等最严重漏洞</li>
+<li>域名扫描：自定解析域名到IP，并自动爬取子域名。包含AXFR检测，二级域名字典爆破，关联域名查询</li>
+<li>自定义：漏洞扫描中可以自定义Poc和字典，实现灵活的漏洞测试</li>
+<li>远程回话：提供远程回话功能，漏洞利用成功后，不需要自己搭建服务器，直接进行shell管理</li>
+<li>结果可以导出报告</li>
+</ul>
+<p><font color=red>2、Nmap</font><br>nmap常用来进行信息收集，扫描端口等信息，同时可以利用nmap 扩展漏洞扫描模块来进行漏洞扫描。<br><br>&nbsp;&nbsp;&nbsp;&nbsp;漏洞扫描模块：  </p>
+<p>vulscan：<code>nmap -sV --script=vulscan/vulscan.nse 192.168.199.1</code><br>使用前需下载：<br>获取vulscan漏洞库<br><code>git clone https://github.com/scipag/vulscan scipag_vulscan</code><br>创建链接<br><code>ln -s </code>pwd<code>/scipag_vulscan /usr/share/nmap/scripts/vulscan</code></p>
+<p>nmap-vulners:<code>nmap -sV --script=nmap-vulners 192.168.199.1</code><br>使用前需下载：<br><code>cd /usr/share/nmap/scripts/</code><br><code>git clone https://github.com/vulnersCom/nmap-vulners.git)</code></p>
+<p><font color=red>3、Nessus</font><br>Nessus是十分强大的漏洞扫描器，内含最新的漏洞数据库，检测速度快，准确性高。<br>&nbsp;&nbsp;&nbsp;&nbsp;下载地址：<a target="_blank" rel="noopener" href="https://www.tenable.com/downloads/nessus?loginAttempted=true">https://www.tenable.com/downloads/nessus?loginAttempted=true</a><br>&nbsp;&nbsp;&nbsp;&nbsp;使用：  </p>
+<ul>
+<li>下载安装后输入注册的账号密码进行登录，进入主页面</li>
+<li>点击“New Scan”新建一个扫描</li>
+<li>选择“Basic Network Scan”，进行配置项目名称，对项目的描述，以及最重要的目标IP地址</li>
+<li>如果我们有目标主机的账号、密码，我们可以点击”Credentials”,进行配置。如果是linux系统就配置SSH，windows就配置windows</li>
+<li>插件，点击”Plugins”进行查看</li>
+<li>全部配置完成之后，我们点击”Save”，进行保存</li>
+<li>开始扫描，在”Vulnerables”，就能看见发现的漏洞</li>
+</ul>
+<p><font color=red>4、searchsploit</font><br>SearchSploit为您提供了在本地保存的存储库中执行详细的离线搜索的能力。这种能力特别适用于在没有互联网接入的情况下对网络进行安全评估。许多漏洞都包含了二进制文件的链接，这些文件不包含在标准存储库中，但可以在我们的Exploit-DB二进制文件中找到。<br>&nbsp;&nbsp;&nbsp;&nbsp;下载地址：<a target="_blank" rel="noopener" href="https://gitlab.com/exploit-database/exploitdb%EF%BC%88kali%E8%87%AA%E5%B8%A6%EF%BC%89">https://gitlab.com/exploit-database/exploitdb（kali自带）</a><br>&nbsp;&nbsp;&nbsp;&nbsp;使用：终端输入searchsploit启动  </p>
+<ul>
+<li>基本搜索：searchsploit &lt;关键词&gt;（<code>searchsploit mysql </code>）</li>
+<li>标题搜索:searchsploit -t &lt;关键词&gt;(<code>searchsploit -t smb windows remote</code>)</li>
+<li>CVE 搜索:searchsploit –cve <CVE-ID>(<code>searchsploit --cve CVE-2017-0146</code>) </li>
+<li>区分大小写搜索:searchsploit -c &lt;关键词&gt;(<code>searchsploit -c -t smb windows remote</code>)</li>
+<li>完全匹配搜索:searchsploit -e “&lt;完整关键词&gt;”(<code>searchsploit -e &quot;wordpress 4.9&quot;</code>)</li>
+<li>严格搜索，结果中只包含完全匹配的条目:searchsploit -s &lt;关键词&gt;(<code>searchsploit -s &quot;openssl &lt; 0.9&quot; searchsploit -s openssl</code>)</li>
+<li>排除搜索:searchsploit &lt;关键词&gt; –exclude&#x3D;”&lt;关键词1&gt;|&lt;关键词2&gt;”</li>
+<li>查看漏洞详情:searchsploit &lt;关键词&#x2F;漏洞编号&gt; -v(<code>searchsploit openssl -v</code>)</li>
+<li>以 JSON 文件格式输出结果:searchsploit &lt;关键词&#x2F;漏洞编号&gt; -j</li>
+<li>显示指定漏洞利用的完整路径:searchsploit -p &lt;漏洞编号id&gt;</li>
+<li>获取漏洞链接:searchsploit &lt;关键词&gt; -w</li>
+<li>将指定的漏洞利用脚本复制到当前工作目录:searchsploit -m <EXP-ID>(<code>searchsploit -m 21534</code>)</li>
+</ul>
  
       <!-- reward -->
       
