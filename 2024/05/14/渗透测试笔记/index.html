@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">7.7k</span>
+            <span class="post-count">8k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">29 min</span>
+            <span class="post-count">30 min</span>
         </span>
     </span>
 </div>
@@ -446,6 +446,30 @@ php在window的时候如果文件名+"::$DATA"会把::$DATA之后的数据当成
 <li>获取漏洞链接:searchsploit &lt;关键词&gt; -w</li>
 <li>将指定的漏洞利用脚本复制到当前工作目录:searchsploit -m <EXP-ID>(<code>searchsploit -m 21534</code>)</li>
 </ul>
+<p><font color=red>5、Metasploit（MSF）</font><br>Metasploit是一个渗透测试平台，能够查找，利用和验证漏洞。<br>Metasploit是一个免费的、可下载的框架，通过它可以很容易的对计算机软件漏洞实施攻击。它本身附带数百个已知软件漏洞的专业级漏洞攻击工具。<br>MSF体系框架<br><img src="/pic/stcs/stcs5.png">   </p>
+<ul>
+<li>AUX:辅助模块</li>
+<li>exploits：渗透攻击模块</li>
+<li>post：后渗透攻击模块</li>
+<li>payloads：攻击载荷模块</li>
+<li>encoders：编码器模块</li>
+<li>nops：空指令模块</li>
+</ul>
+<p><font color=green>使用：</font>kali输入msfconsole<br>常用的命令:  </p>
+<ul>
+<li>connect:远程连接主机(<code>connect 192.168.141.3 80</code>)</li>
+<li>show:列出相关信息(<code>show exploits</code>)</li>
+<li>search:搜索相关漏洞和利用程序</li>
+<li>use:装载相关漏洞模块(<code>use exploit/ms08_067</code>)</li>
+<li>back:退出当前模块</li>
+<li>info:查看模块的详细信息（<code>info exploit/ms08_067</code>）</li>
+<li>show options:查看需要设置的参数</li>
+<li>set:设置相关配置</li>
+<li>run:运行exploit</li>
+<li>chcp 65001：拿到shell后乱码，设置编码为utf-8</li>
+</ul>
+<h2 id="4-2、WEB应用漏洞"><a href="#4-2、WEB应用漏洞" class="headerlink" title="4.2、WEB应用漏洞"></a><strong><font size=3>4.2、WEB应用漏洞</font></strong></h2><p>1、非框架类漏洞<br>属于常见的SQL注入、xss等漏洞。<br>2、框架类漏洞<br>出现于web应用所使用的框架，如thinkPHP、wordpress等。<br>3、未知 CMS 非框架类漏洞<br>只能采用人工代码审计的方式获取。</p>
+<h2 id="4-3、APP应用漏洞"><a href="#4-3、APP应用漏洞" class="headerlink" title="4.3、APP应用漏洞"></a><strong><font size=3>4.3、APP应用漏洞</font></strong></h2><p>需要反编译或抓包获取URL，进行web应用测试，如果不存在或者采用其他协议，则需要采用网络接口抓包进行数据获取，转为其他协议安全测试。<br><img src="/pic/stcs/stcs6.png">     </p>
  
       <!-- reward -->
       
