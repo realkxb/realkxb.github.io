@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">4.1k</span>
+            <span class="post-count">4.2k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">17 min</span>
+            <span class="post-count">18 min</span>
         </span>
     </span>
 </div>
@@ -219,6 +219,7 @@ echo(serialize($a));
 <li>查表的所有列:<code>Select column_name from information_schema.columns where table_name=’xxxxx’</code></li>
 <li>获取某列的数据:<code>select 1,username,password f rom users where id=2</code></li>
 </ul>
+<h2 id="11、利用虚拟表进行注入"><a href="#11、利用虚拟表进行注入" class="headerlink" title="11、利用虚拟表进行注入"></a><strong><font size=4>11、利用虚拟表进行注入</font></strong></h2><p>利用基础：当表名被固定，我们无法使用其他表进行注入查询时，可以考虑使用虚拟表进行注入，语句如下：<br><code>select username,password from (select ‘admin’ username,‘anything’ password)a where username=‘admin’ and password=‘anything’;</code><br>其中<code>(select &#39;admin&#39; username,&#39;anything&#39; password)a</code>表示创建一个虚拟表，并且命名为a，当执行SQL语句时，查询返回的结果其实是这个虚拟表的内容，也就是返回值为username&#x3D;admin&amp;&amp;password&#x3D;anything。</p>
  
       <!-- reward -->
       
