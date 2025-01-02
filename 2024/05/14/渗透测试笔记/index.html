@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">8k</span>
+            <span class="post-count">10.8k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">30 min</span>
+            <span class="post-count">39 min</span>
         </span>
     </span>
 </div>
@@ -470,6 +470,46 @@ php在window的时候如果文件名+"::$DATA"会把::$DATA之后的数据当成
 </ul>
 <h2 id="4-2、WEB应用漏洞"><a href="#4-2、WEB应用漏洞" class="headerlink" title="4.2、WEB应用漏洞"></a><strong><font size=3>4.2、WEB应用漏洞</font></strong></h2><p>1、非框架类漏洞<br>属于常见的SQL注入、xss等漏洞。<br>2、框架类漏洞<br>出现于web应用所使用的框架，如thinkPHP、wordpress等。<br>3、未知 CMS 非框架类漏洞<br>只能采用人工代码审计的方式获取。</p>
 <h2 id="4-3、APP应用漏洞"><a href="#4-3、APP应用漏洞" class="headerlink" title="4.3、APP应用漏洞"></a><strong><font size=3>4.3、APP应用漏洞</font></strong></h2><p>需要反编译或抓包获取URL，进行web应用测试，如果不存在或者采用其他协议，则需要采用网络接口抓包进行数据获取，转为其他协议安全测试。<br><img src="/pic/stcs/stcs6.png">   </p>
+<h2 id="五、权限提升"><a href="#五、权限提升" class="headerlink" title="五、权限提升"></a>五、权限提升</h2><h2 id="5-1、常见类型"><a href="#5-1、常见类型" class="headerlink" title="5.1、常见类型"></a><strong><font size=3>5.1、常见类型</font></strong></h2><p><font color=red>1、纵向权限提升</font><br>指在系统既定的权限层次结构内，从低级别权限向高级别权限的提升。在 Windows 操作系统中，如果存在某个服务存在漏洞，攻击者利用该漏洞在以低权限运行的服务进程上下文中，通过漏洞触发机制执行恶意代码，进而获得 SYSTEM 权限（Windows 系统中的最高权限级别），这就是典型的纵向权限提升。<br><font color=red>2、横向权限提升</font><br>指攻击者在获取同级别权限的不同账户或角色间进行权限扩展的行为。也就是在同一权限层级上，获取更多原本不属于自己的资源访问权限或操作权限。在一个企业内部的协同办公 Web 平台上，用户 A 和用户 B 都是普通员工角色，拥有相似但略有差异的权限。如果存在权限校验漏洞，攻击者以用户 A 的身份登录后，通过构造特殊请求等方式，成功访问并操作了本应只有用户 B 才能操作的项目文档等资源，这就是横向权限提升的情况。  </p>
+<h2 id="5-2、常用方法与技术"><a href="#5-2、常用方法与技术" class="headerlink" title="5.2、常用方法与技术"></a><strong><font size=3>5.2、常用方法与技术</font></strong></h2><p><font color=red>1、利用操作系统漏洞</font><br>无论是 Windows 还是 Linux 操作系统，都可能存在各种可被利用的漏洞。比如 Windows 系统曾出现过的内核漏洞，攻击者可以编写利用这些漏洞的恶意代码（通常以驱动程序等形式），当成功触发漏洞时，就能将当前低权限进程的权限提升到高权限级别。在 Linux 系统中，像某些版本的内核存在权限提升相关的提权漏洞，攻击者可以通过编译并执行特定的利用代码，突破普通用户限制，获取 root 权限。<br><font color=red>2、利用应用程序漏洞</font><br>Web 应用、桌面应用等各类软件也可能成为权限提升的突破口。以 Web 应用为例，如果存在文件上传漏洞且服务器端对上传文件的类型、权限管控不严格，攻击者可以上传恶意的 PHP 脚本文件（假设服务器支持 PHP 解析），然后通过访问该文件对应的 URL，在服务器上以 Web 服务所在用户的权限执行代码，若 Web 服务运行在较高权限下，就有可能借此进一步提升自身权限。<br><font color=red>3、利用配置错误</font><br>系统或应用的错误配置常常会被攻击者利用。例如在 Linux 系统中，如果 “sudoers” 文件（用于配置哪些用户可以通过 sudo 命令以其他用户身份执行命令以及可执行的命令范围）配置不当，赋予了普通用户过多不必要的 sudo 权限，那么攻击者获取普通用户账号后，就可以借助这些不合理的 sudo 权限执行高权限命令，实现权限提升。<br>在一些数据库管理系统中，如果对用户连接权限设置错误，使得低权限用户能够通过特定连接方式执行高权限的数据库操作语句，如修改关键数据表结构等，这也相当于实现了权限的不当提升。<br><font color=red>4、密码破解与复用</font><br>如果攻击者获取了某个低权限用户的账号，可能会尝试通过暴力破解（利用工具如 John the Ripper、Hashcat 等对密码哈希进行破解）、字典攻击等方式去破解该账号对应的密码，若该账号在其他高权限场景下复用（比如在一些系统中，普通用户账号同时也是某个高权限服务的备用登录账号），那么破解成功后就能借助该账号登录到高权限环境中，提升自身权限。<br><font color=red>5、常见权限获取方式</font>  </p>
+<ul>
+<li>后台权限：SQL注入，数据库泄漏，弱口令攻击，未授权访问</li>
+<li>数据库权限：SQL注入，数据库泄漏，弱口令攻击，未授权访问</li>
+<li>Web权限：RCE,反序列化,文件上传等直达或通过后台数据库</li>
+<li>计算机用户权限：弱口令,数据泄漏等直达或通过Web，服务器及域控转移</li>
+<li>计算机系统权限：系统内核漏洞,钓鱼后门攻击,主机软件安全直达或上述权限提升</li>
+<li>宿主机权限：Docker不安全配置或漏洞权限提升直达</li>
+<li>域控制器权限：内网域计算机用户提升或自身内核漏洞，后门攻击，主机软件安全直达</li>
+</ul>
+<h2 id="5-3、Web权限提升"><a href="#5-3、Web权限提升" class="headerlink" title="5.3、Web权限提升"></a><strong><font size=3>5.3、Web权限提升</font></strong></h2><p>通过 Web 漏洞拿到的是 Web 进程的权限，往往 Web 服务都是以一个权限很低的账号启动的，因此通过 Webshell 进行一些操作会受到限制，这就需要将其提升为管理甚至是 System 权限。通常通过操作系统漏洞或操作系统的错误配置进行提权，也可以通过第三方软件服务，如数据库或 FTP 等软件的漏洞进行提权。<br><font color=red>5.3.1、网站后台已知程序</font>  </p>
+<ul>
+<li>查看网站的搭建程序类型，查看网上有无类似的网站源代码</li>
+<li>下载类似的网站源代码，查看网站的后台链接</li>
+<li>登录网站后台</li>
+<li>搜索网络上的漏洞方法，也可以在网站中查找有没有文件上传漏洞，SQL漏洞，命令执行漏洞等等，可以提升权限的漏洞或者进行网站源代码审计</li>
+<li>权限提升</li>
+</ul>
+<p><font color=red>5.3.2、网站后台未知程序</font>  </p>
+<ul>
+<li>使用目录扫描工具，找出后台链接</li>
+<li>利用爆破，注入猜解，弱口令等登录后台</li>
+<li>进行权限提升</li>
+</ul>
+<p><font color=red>5.3.3、权限转移</font><br>web应用提权之后，由于web应用需要和数据库进行交互，所以在其中可能会发现数据库的相关配置信息，从而将web提权转向数据库提权，获得数据库的更多信息之后又可以实现对更多用户的操作。  </p>
+<h2 id="5-3、Windows权限提升"><a href="#5-3、Windows权限提升" class="headerlink" title="5.3、Windows权限提升"></a><strong><font size=3>5.3、Windows权限提升</font></strong></h2><p>在Windows中，有User、Administrator、System、TrustedInstaller这四种用户权限，其权限从左到右依次升高。常用的提权方法有Windows系统内核溢出漏洞提权、错误的系统配置提权、数据库提权等等。<br><font color=red>5.3.1 Windows系统内核溢出漏洞提权</font><br>溢出漏洞是一种计算机程序的可更正性缺陷。溢出漏洞的全名：缓冲区溢出漏洞。因为它是在程序执行的时候在缓冲区执行的错误代码，所以叫缓冲区溢出漏洞。缓冲溢出是最常见的内存错误之一，也是攻击者入侵系统时所用到的最强大、最经典的一类漏洞利用方式。成功地利用缓冲区溢出漏洞可以修改内存中变量的值，甚至可以劫持进程，执行恶意代码，最终获得主机的控制权。<br>攻击者利用该漏洞的关键是目标系统有没有及时安装补丁，如果目标系统没有安装某一漏洞的补丁且存在该漏洞的话，攻击者就会向目标系统上传本地溢出程序，溢出Administrator权限。<br>基本流程为：<br><font color=green>1、查找系统漏洞</font><br>手动查找系统潜在漏洞：<br>systeminfo&#x2F;wmic qfe get caption,description,hotfixid,installedon<br>自动查找系统潜在漏洞：  </p>
+<ul>
+<li>Windows Exploit Suggester</li>
+<li>local_exploit_suggester 模块</li>
+<li>enum_patches 模块</li>
+</ul>
+<p><font color=green>2、选择漏洞并利用</font></p>
+<p><font color=red>5.3.2 Windows系统错误配置漏洞提权</font><br>在Windows系统中，攻击者通常会通过系统内核溢出漏洞来提权，但是如果碰到无法通过系统内核溢出漏洞提权的情况时，会可以利用系统中的错误配置漏洞来提权。<br><font color=green>1、可信任服务路径漏洞</font><br>该漏洞利用了windows文件路径解析的特性，在Windows中，路径的结束是以空格来识别的，所以在注册表等地方填入执行的程序路径时需要对路径添加双引号，如果在配置时未正确添加双引号则会产生问题，例如：“C:\Program Files\Some Folder\Service.exe”和C:\Program Files\Some Folder\Service.exe运行的并不是同一个程序。<br>此时如果我们将一个“适当命名”的可执行程序上传到以上所说的受影响的目录中，服务一旦启动或重启，该程序就会以system权限运行了，可见该漏洞利用了服务路径的文件&#x2F;文件夹的权限。<br><font color=green>2、系统服务错误权限配置漏洞</font><br>Windows 系统服务文件在操作系统启动时加载和执行，并在后台调用可执行文件。因此，如果一个低权限的用户对此系统服务调用的可执行文件拥有写权限，就可以将该文件替换成任意可执行文件，并随着系统服务的启动获得系统权限。<br>该漏洞利用有以下两种情况：  </p>
+<ul>
+<li>服务未运行：攻击者会使用任意服务直接替换原来的服务，然后重启服务。</li>
+<li>服务正在运行且无法终止：这种情况符合绝大多数漏洞利用的场景，攻击者通常会利用DLL劫持技术并尝试重启服务来提权。</li>
+</ul>
+<p><font color=green>3、计划任务</font><br>如果攻击者对以高权限运行的任务所在的目录具有写权限，就可以使用恶意程序覆盖原来的程序，这样在下次计划执行时，就会以高权限来运行我们的恶意程序。查看计划任务的命令：<code>schtasks /query /fo list /v</code> <code>schtasks /query /fo list /v &gt; schtasks.txt</code><br>查看到某个程序在某时刻会以高权限运行时，若此程序具有写入权限，则可以利用木马文件进行覆盖。<br><font color=green>4、自动安装配置文件</font><br>网络管理员在内网中给多台机器配置同一个环境时，通常不会逐台配置，而是会采用脚本化批量部署的方法。在这一过程中，会使用安装配置文件。这些文件中包含所有的安装配置信息，其中的一些还可能包含本地管理员的账号和密码等信息。我们可以对整个系统进行检查，从而获取对我们有帮助的提权信息。  
+      </p>
  
       <!-- reward -->
       

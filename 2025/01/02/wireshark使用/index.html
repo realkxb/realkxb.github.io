@@ -104,7 +104,8 @@
   
     <div class="article-entry" itemprop="articleBody">
        
-  <h2 id="pcap包损坏修复工具：https-f00l-de-pcapfix-一、过滤器规则"><a href="#pcap包损坏修复工具：https-f00l-de-pcapfix-一、过滤器规则" class="headerlink" title="pcap包损坏修复工具：https://f00l.de/pcapfix/一、过滤器规则  "></a>pcap包损坏修复工具：<a target="_blank" rel="noopener" href="https://f00l.de/pcapfix/">https://f00l.de/pcapfix/</a><br>一、过滤器规则  </h2><p>抓包过滤器类型Type（host、net、port）、方向Dir（src、dst）、协议Proto（ether、ip、tcp、udp、http、icmp、ftp等）、逻辑运算符（&amp;&amp; 与、|| 或、！非）<br>1、协议过滤<br>输入协议名即可：TCP、HTTP、ICMP<br>2、IP过滤<br>host 192.168.124.1<br>src host 192.168.124.1<br>dst host 192.168.124.1<br>ip.src &#x3D;&#x3D;192.168.1.104<br>ip.dst&#x3D;&#x3D;192.168.1.104<br>ip.addr &#x3D;&#x3D; 192.168.1.104<br>3、端口过滤<br>port 443<br>src port 443<br>dst port 443<br>tcp.port&#x3D;80  </p>
+  <p>pcap包损坏修复工具：<a target="_blank" rel="noopener" href="https://f00l.de/pcapfix/">https://f00l.de/pcapfix/</a>  </p>
+<h2 id="一、过滤器规则"><a href="#一、过滤器规则" class="headerlink" title="一、过滤器规则  "></a>一、过滤器规则  </h2><p>抓包过滤器类型Type（host、net、port）、方向Dir（src、dst）、协议Proto（ether、ip、tcp、udp、http、icmp、ftp等）、逻辑运算符（&amp;&amp; 与、|| 或、！非）<br>1、协议过滤<br>输入协议名即可：TCP、HTTP、ICMP<br>2、IP过滤<br>host 192.168.124.1<br>src host 192.168.124.1<br>dst host 192.168.124.1<br>ip.src &#x3D;&#x3D;192.168.1.104<br>ip.dst&#x3D;&#x3D;192.168.1.104<br>ip.addr &#x3D;&#x3D; 192.168.1.104<br>3、端口过滤<br>port 443<br>src port 443<br>dst port 443<br>tcp.port&#x3D;80  </p>
 <p>4、比较过滤符<br>&#x3D;&#x3D; 等于、！&#x3D; 不等于、&gt; 大于、&lt; 小于、&gt;&#x3D; 大于等于、&lt;&#x3D;小于等于<br>5、http模式过滤<br>http.request.method&#x3D;&#x3D;“GET”<br>6、逻辑运算符<br>and、or、not<br>7、URL匹配<br>http.request.uri matches “php”  </p>
 <h2 id="二、数据提取"><a href="#二、数据提取" class="headerlink" title="二、数据提取  "></a>二、数据提取  </h2><p>1、数据导出<br>可以导出传输的数据：文件-&gt;导出对象-&gt;选择协议<br>2、数据追踪<br>右键-&gt;追踪流-&gt;选择协议<br>3、协议数据大小统计<br>统计-&gt;协议分级  </p>
  
