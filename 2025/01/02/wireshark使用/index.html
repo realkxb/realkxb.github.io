@@ -11,7 +11,7 @@
         name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1"
       />
-      <title>Archives |  welcome to my world</title>
+      <title>wireshark笔记 |  welcome to my world</title>
   <meta name="generator" content="hexo-theme-ayer">
       
       <link rel="shortcut icon" href="/bookmark.ico" />
@@ -52,99 +52,164 @@
       
     <main class="content on">
       <section class="outer">
-  
-  
-  <article class="articles">
+  <article
+  id="post-wireshark使用"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
     
-    
-    <h1 class="page-type-title">Archives</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2024" class="archive-year">2024</a>
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  wireshark笔记
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2025/01/02/wireshark%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2025-01-02T02:39:22.361Z" itemprop="datePublished">2025-01-02</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">243</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">1 min</span>
+        </span>
+    </span>
+</div>
+ 
     </div>
-    <div class="archives">
       
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/04/18/CTF%20Web%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="archive-article-date">
-  <time datetime="2024-04-18T12:46:38.952Z" itemprop="datePublished">04/18</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2024/04/18/CTF%20Web%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/"
-    >CTF Web中的常见内容</a> 
-</h2>
- 
+    <div class="tocbot"></div>
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  <time datetime="2024-04-12T07:31:58.242Z" itemprop="datePublished">04/12</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2024/04/12/SQL%E6%B3%A8%E5%85%A5%E7%AC%94%E8%AE%B0/"
-    >SQL注入笔记</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2024/03/29/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-  <time datetime="2024-03-29T07:33:38.413Z" itemprop="datePublished">03/29</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2024/03/29/linux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/"
-    >linux常用命令</a> 
-</h2>
- 
 
-    </header>
-    
-    
-  </div>
-</article>
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="pcap包损坏修复工具：https-f00l-de-pcapfix-一、过滤器规则"><a href="#pcap包损坏修复工具：https-f00l-de-pcapfix-一、过滤器规则" class="headerlink" title="pcap包损坏修复工具：https://f00l.de/pcapfix/一、过滤器规则  "></a>pcap包损坏修复工具：<a target="_blank" rel="noopener" href="https://f00l.de/pcapfix/">https://f00l.de/pcapfix/</a><br>一、过滤器规则  </h2><p>抓包过滤器类型Type（host、net、port）、方向Dir（src、dst）、协议Proto（ether、ip、tcp、udp、http、icmp、ftp等）、逻辑运算符（&amp;&amp; 与、|| 或、！非）<br>1、协议过滤<br>输入协议名即可：TCP、HTTP、ICMP<br>2、IP过滤<br>host 192.168.124.1<br>src host 192.168.124.1<br>dst host 192.168.124.1<br>ip.src &#x3D;&#x3D;192.168.1.104<br>ip.dst&#x3D;&#x3D;192.168.1.104<br>ip.addr &#x3D;&#x3D; 192.168.1.104<br>3、端口过滤<br>port 443<br>src port 443<br>dst port 443<br>tcp.port&#x3D;80  </p>
+<p>4、比较过滤符<br>&#x3D;&#x3D; 等于、！&#x3D; 不等于、&gt; 大于、&lt; 小于、&gt;&#x3D; 大于等于、&lt;&#x3D;小于等于<br>5、http模式过滤<br>http.request.method&#x3D;&#x3D;“GET”<br>6、逻辑运算符<br>and、or、not<br>7、URL匹配<br>http.request.uri matches “php”  </p>
+<h2 id="二、数据提取"><a href="#二、数据提取" class="headerlink" title="二、数据提取  "></a>二、数据提取  </h2><p>1、数据导出<br>可以导出传输的数据：文件-&gt;导出对象-&gt;选择协议<br>2、数据追踪<br>右键-&gt;追踪流-&gt;选择协议<br>3、协议数据大小统计<br>统计-&gt;协议分级  </p>
+ 
+      <!-- reward -->
       
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
       
     </div>
-  </div>
-  
-  
-
-  
-  <nav class="page-nav">
     
-    <a class="extend prev" rel="prev" href="/archives/">上一页</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2025/01/02/wireshark%E4%BD%BF%E7%94%A8/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2024/12/20/%E8%87%AA%E5%86%99%E5%B0%8F%E8%84%9A%E6%9C%AC/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">简易脚本文件</div>
+      </a>
+    
   </nav>
+
   
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
 </section>
       <footer class="footer">
   <div class="outer">
@@ -254,6 +319,22 @@
 <script src="/js/lazyload.min.js"></script>
 
 <!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
 
 <script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
 <link
