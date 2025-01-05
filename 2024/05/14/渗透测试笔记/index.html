@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">10.8k</span>
+            <span class="post-count">11.2k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">39 min</span>
+            <span class="post-count">41 min</span>
         </span>
     </span>
 </div>
@@ -496,7 +496,7 @@ php在window的时候如果文件名+"::$DATA"会把::$DATA之后的数据当成
 <li>进行权限提升</li>
 </ul>
 <p><font color=red>5.3.3、权限转移</font><br>web应用提权之后，由于web应用需要和数据库进行交互，所以在其中可能会发现数据库的相关配置信息，从而将web提权转向数据库提权，获得数据库的更多信息之后又可以实现对更多用户的操作。  </p>
-<h2 id="5-3、Windows权限提升"><a href="#5-3、Windows权限提升" class="headerlink" title="5.3、Windows权限提升"></a><strong><font size=3>5.3、Windows权限提升</font></strong></h2><p>在Windows中，有User、Administrator、System、TrustedInstaller这四种用户权限，其权限从左到右依次升高。常用的提权方法有Windows系统内核溢出漏洞提权、错误的系统配置提权、数据库提权等等。<br><font color=red>5.3.1 Windows系统内核溢出漏洞提权</font><br>溢出漏洞是一种计算机程序的可更正性缺陷。溢出漏洞的全名：缓冲区溢出漏洞。因为它是在程序执行的时候在缓冲区执行的错误代码，所以叫缓冲区溢出漏洞。缓冲溢出是最常见的内存错误之一，也是攻击者入侵系统时所用到的最强大、最经典的一类漏洞利用方式。成功地利用缓冲区溢出漏洞可以修改内存中变量的值，甚至可以劫持进程，执行恶意代码，最终获得主机的控制权。<br>攻击者利用该漏洞的关键是目标系统有没有及时安装补丁，如果目标系统没有安装某一漏洞的补丁且存在该漏洞的话，攻击者就会向目标系统上传本地溢出程序，溢出Administrator权限。<br>基本流程为：<br><font color=green>1、查找系统漏洞</font><br>手动查找系统潜在漏洞：<br>systeminfo&#x2F;wmic qfe get caption,description,hotfixid,installedon<br>自动查找系统潜在漏洞：  </p>
+<h2 id="5-4、Windows权限提升"><a href="#5-4、Windows权限提升" class="headerlink" title="5.4、Windows权限提升"></a><strong><font size=3>5.4、Windows权限提升</font></strong></h2><p>在Windows中，有User、Administrator、System、TrustedInstaller这四种用户权限，其权限从左到右依次升高。常用的提权方法有Windows系统内核溢出漏洞提权、错误的系统配置提权、数据库提权等等。<br><font color=red>5.3.1 Windows系统内核溢出漏洞提权</font><br>溢出漏洞是一种计算机程序的可更正性缺陷。溢出漏洞的全名：缓冲区溢出漏洞。因为它是在程序执行的时候在缓冲区执行的错误代码，所以叫缓冲区溢出漏洞。缓冲溢出是最常见的内存错误之一，也是攻击者入侵系统时所用到的最强大、最经典的一类漏洞利用方式。成功地利用缓冲区溢出漏洞可以修改内存中变量的值，甚至可以劫持进程，执行恶意代码，最终获得主机的控制权。<br>攻击者利用该漏洞的关键是目标系统有没有及时安装补丁，如果目标系统没有安装某一漏洞的补丁且存在该漏洞的话，攻击者就会向目标系统上传本地溢出程序，溢出Administrator权限。<br>基本流程为：<br><font color=green>1、查找系统漏洞</font><br>手动查找系统潜在漏洞：<br>systeminfo&#x2F;wmic qfe get caption,description,hotfixid,installedon<br>自动查找系统潜在漏洞：  </p>
 <ul>
 <li>Windows Exploit Suggester</li>
 <li>local_exploit_suggester 模块</li>
@@ -508,8 +508,24 @@ php在window的时候如果文件名+"::$DATA"会把::$DATA之后的数据当成
 <li>服务未运行：攻击者会使用任意服务直接替换原来的服务，然后重启服务。</li>
 <li>服务正在运行且无法终止：这种情况符合绝大多数漏洞利用的场景，攻击者通常会利用DLL劫持技术并尝试重启服务来提权。</li>
 </ul>
-<p><font color=green>3、计划任务</font><br>如果攻击者对以高权限运行的任务所在的目录具有写权限，就可以使用恶意程序覆盖原来的程序，这样在下次计划执行时，就会以高权限来运行我们的恶意程序。查看计划任务的命令：<code>schtasks /query /fo list /v</code> <code>schtasks /query /fo list /v &gt; schtasks.txt</code><br>查看到某个程序在某时刻会以高权限运行时，若此程序具有写入权限，则可以利用木马文件进行覆盖。<br><font color=green>4、自动安装配置文件</font><br>网络管理员在内网中给多台机器配置同一个环境时，通常不会逐台配置，而是会采用脚本化批量部署的方法。在这一过程中，会使用安装配置文件。这些文件中包含所有的安装配置信息，其中的一些还可能包含本地管理员的账号和密码等信息。我们可以对整个系统进行检查，从而获取对我们有帮助的提权信息。  
-      </p>
+<p><font color=green>3、计划任务</font><br>如果攻击者对以高权限运行的任务所在的目录具有写权限，就可以使用恶意程序覆盖原来的程序，这样在下次计划执行时，就会以高权限来运行我们的恶意程序。查看计划任务的命令：<code>schtasks /query /fo list /v</code> <code>schtasks /query /fo list /v &gt; schtasks.txt</code><br>查看到某个程序在某时刻会以高权限运行时，若此程序具有写入权限，则可以利用木马文件进行覆盖。<br><font color=green>4、自动安装配置文件</font><br>网络管理员在内网中给多台机器配置同一个环境时，通常不会逐台配置，而是会采用脚本化批量部署的方法。在这一过程中，会使用安装配置文件。这些文件中包含所有的安装配置信息，其中的一些还可能包含本地管理员的账号和密码等信息。我们可以对整个系统进行检查，从而获取对我们有帮助的提权信息。  </p>
+<h2 id="5-5、Linux权限提升"><a href="#5-5、Linux权限提升" class="headerlink" title="5.5、Linux权限提升"></a><strong><font size=3>5.5、Linux权限提升</font></strong></h2><p><font color=red>5.5.1、内核漏洞提权</font><br><font color=green>1、收集内核信息版本</font>  </p>
+<ul>
+<li>查看主机的内核信息：uname -a </li>
+<li>查看系统内核架构（64位&#x2F;32位）：uname -m </li>
+<li>内核版本：uname -r </li>
+<li>当前系统发行版本：cat &#x2F;etc&#x2F;lsb-release</li>
+<li>查看发行版：cat &#x2F;etc&#x2F;issue </li>
+<li>内核信息：cat &#x2F;proc&#x2F;version</li>
+</ul>
+<p><font color=green>2、通过exploit-db或searchsplopit等工具搜索相关漏洞的POC和exp</font><br><font color=green>3、运行获取权限</font>   </p>
+<p><font color=red>5.5.2、SUID提权</font><br>SUID（set UID 设置用户ID）是一种LINUX的权限机制，有SUID权限的文件在其执行时，会使调用者暂时获得该文件拥有者的权限。如果有SUID提权，就可以利用系统中的二进制文件和工具进行root提权。<br><font color=red>提权条件：</font>  </p>
+<ul>
+<li>只有可以执行的二进制程序文件才能设定SUID权限</li>
+<li>命令执行者对二进制程序文件有执行（x）权限</li>
+<li>SUID权限只在该程序执行过程中有效</li>
+</ul>
+<p>已知可以用来提权的linux可行性的文件列表：Nmap、vim 、find、Bash 、sh 、More 、Less 、SH 、CP 、awk<br><font color=red>5.5.3计划任务提权</font><br><font color=green>1、查找计划任务</font>：<code>ls -l /etc/cron*</code><br><code>cat /etc/crontab</code><br><font color=green>2.分析计划任务权限</font>：检查cron作业文件的权限和所有者，如果某个作业文件权限较为宽松(如777),或属于root，则可能存在提权机会<br><font color=green>3、编辑计划任务提权</font>：编辑可写的cron作业文件，添加执行恶意命令<br><font color=green>4.利用环境变量提权</font>：有些cron作业任务可能通过环境变量执行命令，如果这些环境变量可以被修改，则可以添加恶意代码  </p>
  
       <!-- reward -->
       
