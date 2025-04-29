@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">1.8k</span>
+            <span class="post-count">2.2k</span>
         </span>
     </span>
 
@@ -89,7 +89,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> Reading time≈</span>
-            <span class="post-count">6 min</span>
+            <span class="post-count">7 min</span>
         </span>
     </span>
 </div>
@@ -147,7 +147,47 @@
 <li>可疑服务排查：services.msc</li>
 <li>可疑文件排查：全盘扫描</li>
 </ul>
-<h2 id="八、溯源"><a href="#八、溯源" class="headerlink" title="八、溯源"></a><strong><font size=4>八、溯源</font></strong></h2><h2 id="九、安全加固"><a href="#九、安全加固" class="headerlink" title="九、安全加固"></a><strong><font size=4>九、安全加固</font></strong></h2><p><font color=red>Windows</font><br>1、账号安全<br>不使用弱密码（利用组策略控制器统一控制）、停用administrator（需确保管理员组中存在其他管理员账户）、guest等用户<br>2、服务安全  </p>
+<h2 id="八、溯源"><a href="#八、溯源" class="headerlink" title="八、溯源"></a><strong><font size=4>八、溯源</font></strong></h2><p><font color=green>人物画像刻画</font><br>情报收集利用平台：<a target="_blank" rel="noopener" href="https://dh.aabyss.cn/">https://dh.aabyss.cn/</a><br>1、IP信息分析<br>IP地址获取：火绒剑恶意软件流量分析、电子邮件获取、微步云沙箱  </p>
+<ul>
+<li>根据IP信息反查域名</li>
+<li>查询IP相关信息：是否为移动网络、IP所属地等</li>
+<li>IP定位</li>
+<li>微步威胁情报分析平台</li>
+</ul>
+<p>2、域名信息分析</p>
+<ul>
+<li>whois查询</li>
+<li>备案查询</li>
+<li>企查查、天眼查</li>
+<li>zoomeye&#x2F;fofa查询</li>
+</ul>
+<p>3、样本特征字符密码</p>
+<ul>
+<li>分析：在线沙箱威胁感知平台</li>
+<li>逆向：后门密码、源码注释、反编译特殊字符串等</li>
+</ul>
+<p>4、ID追踪</p>
+<ul>
+<li>百度、谷歌搜索</li>
+<li>src平台信息收集</li>
+<li>微博、微信搜索</li>
+<li>各种社交平台搜索</li>
+<li>github\gitee\技术博客\安全圈搜索</li>
+<li>社工库搜索</li>
+</ul>
+<p><font color=green>溯源反制</font>  </p>
+<ul>
+<li>MySQL蜜罐，部署后攻击者连接后，可以读取到攻击者机器上指定目录的文件内容（CS账号密码等敏感信息）</li>
+<li>构造执行木马的钓鱼源代码，引诱攻击者下载，当其利用IDEA等打开源代码后就可以执行木马文件</li>
+<li>修改被攻击者植入后门的代码，从而获得蚁剑使用者的权限</li>
+<li>提前构造注入页面诱使红队进行sqlmap注入拿到红队机器的权限</li>
+<li>对抗CS：伪造流量实现批量上线</li>
+<li>知道CS服务端地址：爆破CS密码</li>
+<li>旁站反制：CS服务器可能部署了其他的，像NPS和ARL灯塔等，可采取未授权或者默认密码进行反制</li>
+<li>利用CS漏洞：CVE-2022-39197</li>
+<li>利用端口、服务等，采取相应的安全技术</li>
+</ul>
+<h2 id="九、安全加固"><a href="#九、安全加固" class="headerlink" title="九、安全加固"></a><strong><font size=4>九、安全加固</font></strong></h2><p><font color=red>Windows</font><br>1、账号安全<br>不使用弱密码（利用组策略控制器统一控制）、停用administrator（需确保管理员组中存在其他管理员账户）、guest等用户<br>2、服务安全  </p>
 <ul>
 <li>禁止远程桌面或特定用户登录</li>
 <li>禁止或者限制文件共享</li>
@@ -265,6 +305,15 @@
 
    
   <nav class="article-nav">
+    
+      <a href="/2025/04/11/misc%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            misc笔记
+          
+        </div>
+      </a>
     
     
       <a href="/2025/03/10/CTF%20Web%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%86%85%E5%AE%B9/" class="article-nav-link">

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+
+<html lang="zh">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>misc笔记 |  welcome to my world</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/bookmark.ico" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      
+<link rel="stylesheet" href="/css/fonts/remixicon.css">
+
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.staticfile.org/pace/1.2.4/pace.min.js"></script>
+       
+ 
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-bulma@5.0.1/bulma.min.css"
+      />
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.min.js"></script>
+
+      <!-- mermaid -->
+      
+      <style>
+        .swal2-styled.swal2-confirm {
+          font-size: 1.6rem;
+        }
+      </style>
+    </head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-misc笔记"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  misc笔记
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2025/04/11/misc%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time datetime="2025-04-11T02:20:37.398Z" itemprop="datePublished">2025-04-11</time>
+</a>   
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">1.3k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">5 min</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="一、常见图片文件头及打开方式"><a href="#一、常见图片文件头及打开方式" class="headerlink" title="一、常见图片文件头及打开方式"></a><strong><font size=4>一、常见图片文件头及打开方式</font></strong></h2><ul>
+<li><p>JPEG (jpg) 文件头：FF D8 FF  文件尾：FF D9</p>
+</li>
+<li><p>PNG (png)，文件头：89504E47</p>
+</li>
+<li><p>Windows Bitmap (bmp)， 文件头：424D 文件尾：</p>
+</li>
+<li><p>GIF (gif)，文件头：47494638</p>
+</li>
+<li><p>XML (xml)，文件头：3C3F786D6C</p>
+</li>
+<li><p>HTML (html)，文件头：68746D6C3E</p>
+</li>
+<li><p>MS Word&#x2F;Excel (xls.or.doc)，文件头：D0CF11E0</p>
+</li>
+<li><p>MS Access (mdb)，文件头：5374616E64617264204A</p>
+</li>
+<li><p>Adobe Acrobat (pdf)，文件头：255044462D312E</p>
+</li>
+<li><p>Windows Password (pwl)，文件头：E3828596</p>
+</li>
+<li><p>ZIP Archive (zip)，文件头：504B0304</p>
+</li>
+<li><p>RAR Archive (rar)，文件头：52617221</p>
+</li>
+<li><p>Wave (wav)，文件头：57415645</p>
+</li>
+<li><p>AVI (avi)，文件头：41564920</p>
+</li>
+<li><p>TIFF (tif)， 文件头：49492A00 </p>
+</li>
+<li><p>webp，文件头：524946466C，用浏览器打开</p>
+</li>
+<li><p>bpg，用bpgviewer打开</p>
+</li>
+</ul>
+<h2 id="二、图片文件misc解题思路"><a href="#二、图片文件misc解题思路" class="headerlink" title="二、图片文件misc解题思路"></a><strong><font size=4>二、图片文件misc解题思路</font></strong></h2><p>1、用winhex打开，判断文件类型，搜索flag字符串<br>2、判断文件格式是否篡改，检查png的文件头和文件尾  </p>
+<ul>
+<li>PNG文件头(hex)：89 50 4e 47 0d 0a 1a 0a</li>
+<li>PNG文件尾(hex)： 00 00 00 00 49 45 4E 44 AE 42 60 82</li>
+</ul>
+<p>3、判断否有文件二进制合并，搜索png文件头8950，看有几个，判断是否使用二进制合并文件<br>4、判断是否修改png图片宽高，使用TweakPNG或者pngcheck等crc校验工具  </p>
+<ul>
+<li>TweakPNG：IDAT删除</li>
+<li>TweakPNG：IDAT合并（edit-&gt;combine all idat）</li>
+</ul>
+<p>5、用Stegsolve.jar查看图片是否有变换背景色及隐藏色块<br>6、用binwalk，执行-e选项进行文件分离<br>7、检查文件属性<br>8、查看exif详细信息（<a target="_blank" rel="noopener" href="https://exif.tuchong.com/view/15353977/%EF%BC%89">https://exif.tuchong.com/view/15353977/）</a><br>9、图片分帧  </p>
+<ul>
+<li>gif:StegSolve-&gt;Analyse-&gt;Frame Brose</li>
+<li>png:APNG Disassembler直接分或者honeyview打开</li>
+</ul>
+<p>10、CRC错误，检查：pngdebugger，尝试把错误的CRC转换为字符串<br>11、LSB隐写  </p>
+<ul>
+<li>zsteg -a 文件名（linux）</li>
+<li>stegsolve:RGB 选0</li>
+</ul>
+<p>颜色通道解题技巧：<br>1、先放到Linux中用zsteg处理<br>2、在stegsolve中依次查看颜色通道，看在哪个通道存在多余数据。比如：<br><img src="/pic/misc/misc1.png"><br>由于依次查看颜色通道发现Red421和Green421存在数据，且数据出现是横行，所以选择Red421和Green421，Row，发现flag<br>12、图片宽高修改<br><font color=red>puzzlesolver可直接修复png和bmp文件宽高</font><br><font color=red>随波逐流OCR识别工具可以识别图片文字</font><br>010editor打开，alt+4快捷显示模板，可以直接修改宽高：  </p>
+<ul>
+<li>png文件从第二行开始看，前四位是宽，后四位是高</li>
+<li>jpg文件从FF C0开始后面第4个字节位置就是高（2字节）和宽（2字节）</li>
+<li>gif头部六个字节47 49 46 38 39 61，紧跟着的就是它的宽度与高度，而且高度一般是96 00(gif存在多个9600，全部都得修改) </li>
+<li>bmp文件第二行开始，第三位开始的四位是宽，后面跟着四位是高<br><font color=red>获取png图片真实宽高</font></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> os  </span><br><span class="line"><span class="keyword">import</span> binascii  </span><br><span class="line"><span class="keyword">import</span> struct  </span><br><span class="line">crcbp = <span class="built_in">open</span>(<span class="string">&quot;misc26.png&quot;</span>, <span class="string">&quot;rb&quot;</span>).read()    <span class="comment">#打开图片</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1024</span>):</span><br><span class="line">   	<span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1024</span>):</span><br><span class="line">       	data = crcbp[<span class="number">12</span>:<span class="number">16</span>] + struct.pack(<span class="string">&#x27;&gt;i&#x27;</span>, i)+struct.pack(<span class="string">&#x27;&gt;i&#x27;</span>, j)+crcbp[<span class="number">24</span>:<span class="number">29</span>]<span class="comment">#从IHDR开始17个字节，其中宽和高用i和j代替，并以4个字节存放i和j。</span></span><br><span class="line">       	crc32 = binascii.crc32(data) &amp; <span class="number">0xffffffff</span></span><br><span class="line">       	<span class="keyword">if</span>(crc32 == <span class="number">0xec9ccbc6</span>):   <span class="comment">#010Editor第二行倒数3字节，加第三行第一字节。按顺序写就行，不用改。</span></span><br><span class="line">           	<span class="built_in">print</span>(i, j)</span><br><span class="line">           	<span class="built_in">print</span>(<span class="string">&#x27;宽和高的hex:&#x27;</span>, <span class="built_in">hex</span>(i), <span class="built_in">hex</span>(j))</span><br></pre></td></tr></table></figure>
+
+<p><font color=red>爆破jpg图片真实宽度</font>  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="comment">#爆破jpg宽度</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;./misc35/misc35.jpg&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">c = f.read()</span><br><span class="line"><span class="comment"># width = c[c.index(b&#x27;\x00\x96\x03\x84&#x27;)+2:c.index(b&#x27;\x00\x96\x03\x84&#x27;)+4]</span></span><br><span class="line"><span class="comment"># height = c[c.index(b&#x27;\x00\x96\x03\x84&#x27;):c.index(b&#x27;\x00\x96\x03\x84&#x27;)+2]</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">900</span>,<span class="number">1000</span>): <span class="comment">#表示宽度范围</span></span><br><span class="line">   	f1 = <span class="built_in">open</span>(<span class="string">&#x27;./bpout/&#x27;</span>+<span class="built_in">str</span>(i)+<span class="string">&#x27;.jpg&#x27;</span>,<span class="string">&#x27;wb&#x27;</span>)</span><br><span class="line">   	<span class="comment"># print(struct.pack(&#x27;&gt;i&#x27;,i)[::-1])</span></span><br><span class="line">   	img = c[:c.index(<span class="string">b&#x27;\x02\x96\x03\x84&#x27;</span>)+<span class="number">2</span>]+struct.pack(<span class="string">&#x27;&gt;h&#x27;</span>,i)+c[c.index(<span class="string">b&#x27;\x02\x96\x03\x84&#x27;</span>)+<span class="number">4</span>:] <span class="comment">#b&#x27;\x02\x96\x03\x84&#x27;表示原来的宽高</span></span><br><span class="line">   	f1.write(img)</span><br><span class="line">   	f1.close()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><font color=red>爆破gif图片真实宽度</font>  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="keyword">import</span> zlib</span><br><span class="line"><span class="comment">#爆破gif宽度</span></span><br><span class="line">f = <span class="built_in">open</span>(<span class="string">&#x27;./misc36/misc36.gif&#x27;</span>,<span class="string">&#x27;rb&#x27;</span>)</span><br><span class="line">c = f.read()</span><br><span class="line"><span class="comment"># width = c[c.index(b&#x27;\x00\x96\x03\x84&#x27;)+2:c.index(b&#x27;\x00\x96\x03\x84&#x27;)+4]</span></span><br><span class="line"><span class="comment"># height = c[c.index(b&#x27;\x00\x96\x03\x84&#x27;):c.index(b&#x27;\x00\x96\x03\x84&#x27;)+2]</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">920</span>,<span class="number">950</span>):</span><br><span class="line">   	f1 = <span class="built_in">open</span>(<span class="string">&#x27;./bpout/&#x27;</span>+<span class="built_in">str</span>(i)+<span class="string">&#x27;.gif&#x27;</span>,<span class="string">&#x27;wb&#x27;</span>)</span><br><span class="line">   	<span class="comment"># print(struct.pack(&#x27;&gt;i&#x27;,i)[::-1])</span></span><br><span class="line">   	img = c[:c.index(<span class="string">b&#x27;\x00\x00\x84\x03\x96\x02&#x27;</span>)+<span class="number">2</span>]+struct.pack(<span class="string">&#x27;&gt;h&#x27;</span>,i)[::-<span class="number">1</span>]+c[c.index(<span class="string">b&#x27;\x00\x00\x84\x03\x96\x02&#x27;</span>)+<span class="number">4</span>:]</span><br><span class="line">   	f1.write(img)</span><br><span class="line">   	f1.close()</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="三、编程语言笔记"><a href="#三、编程语言笔记" class="headerlink" title="三、编程语言笔记"></a><strong><font size=4>三、编程语言笔记</font></strong></h2><p><strong>1、C&#x2F;C++</strong> </p>
+<ul>
+<li>agrc和agrv:agrc表示传入的参数个数，agrv表示传入的参数</li>
+<li>atoi函数：字符串转换为整数</li>
+<li>printf输出格式：<ul>
+<li>%c             字符</li>
+<li>%d             有符号十进制整数</li>
+<li>%f              浮点数(包括float和double)</li>
+<li>%e(%E)     浮点数指数输出[e-(E-)记数法]</li>
+<li>%g(%G)     浮点数不显无意义的零”0”</li>
+<li>%i              有符号十进制整数(与%d相同)</li>
+<li>%u             无符号十进制整数</li>
+<li>%o             八进制整数    e.g.     0123</li>
+<li>%x(%X)      十六进制整数&lt;?xml:namespace prefix &#x3D; st1 &#x2F;&gt;()   e.g.   0x1234</li>
+<li>%p             指针</li>
+<li>%s             字符串</li>
+<li>%%            “%”</li>
+</ul>
+</li>
+</ul>
+<p><strong>2、Python</strong><br>1、hex函数：10进制数转换为16进制数<br>2、字符统计：from collections import Counter、Counter(str2)<br>3、chr函数：10进制转换为字符串（接受一个范围在0～255之间的整数作为参数，并返回与该整数对应的ASCII字符）<br>4、int(a,2):按照二进制将a转换为十进制  </p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          Donate
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>Copyright： </strong>
+          
+          Copyright is owned by the author. For commercial reprints, please contact the author for authorization. For non-commercial reprints, please indicate the source.
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://example.com/2025/04/11/misc%E7%AC%94%E8%AE%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+    
+      <a href="/2025/04/07/%E6%8A%A4%E7%BD%91%E7%AC%94%E8%AE%B0/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">护网笔记</div>
+      </a>
+    
+  </nav>
+
+  
+   
+  
+   
+    <script src="https://cdn.staticfile.org/twikoo/1.4.18/twikoo.all.min.js"></script>
+    <div id="twikoo" class="twikoo"></div>
+    <script>
+        twikoo.init({
+            envId: ""
+        })
+    </script>
+ 
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2024-2025
+        <i class="ri-heart-fill heart_icon"></i> KXB
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>Visitors:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>Views:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>    
+    </main>
+    <div class="float_btns">
+      <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+    </div>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/ayer-side.png" alt="welcome to my world"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="/images/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-3.6.0.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.staticfile.org/jquery-modal/0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.staticfile.org/justifiedGallery/3.8.1/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.staticfile.org/photoswipe/4.1.3/default-skin/default-skin.min.css">
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe.min.js"></script>
+<script src="https://cdn.staticfile.org/photoswipe/4.1.3/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+ 
+<script src="/js/clickLove.js"></script>
+ 
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.staticfile.org/clipboard.js/2.0.10/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+    
+
+  </div>
+</body>
+
+</html>
