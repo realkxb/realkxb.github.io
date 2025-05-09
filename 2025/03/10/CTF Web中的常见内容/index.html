@@ -201,6 +201,14 @@ PHP中的几个特殊的魔术方法：
 </ul>
 <p>4、利用重定向漏洞对SSRF过滤器进行绕过<br>path后的URL用户可控，则可以将其指向内网IP：<code>?path=http://192.168.0.x:8080/admin</code>，其中内网IP为各种查询手段和信息收集获取到的IP。<br><font color=red>HINT：参数关键字（url字样大概率SSRF，file字样大概率文件包含)</font>  </p>
 <h2 id="11、逻辑越权-一句话木马变形"><a href="#11、逻辑越权-一句话木马变形" class="headerlink" title="11、逻辑越权+一句话木马变形  "></a><strong><font size=4>11、逻辑越权+一句话木马变形</font></strong>  </h2><p>逻辑越权：利用已有的普通用户结合程序漏洞获得或者修改管理员的相关信息<br>一句话木马变形：绕过文件上传的相关过滤<br><img src="/pic/ljyq/ljyq1.png"><br>登录界面尝试SQL注入无果，选择注册一个用户，登录以后感觉像thinkphp框架，尝试thinkPHP框架漏洞无果：<br><img src="/pic/ljyq/ljyq2.png"><br>在Findpwd里面发现在匹配正确用户名、生日和邮件地址后可以修改用户密码：<br><img src="/pic/ljyq/ljyq4.png"><br>发现在修改密码时同时传递了username和pwd，猜测存在逻辑越权漏洞，bp抓包后修改username为admin实现修改admin的密码：<br><img src="/pic/ljyq/ljyq5.png"><br>修改密码后以admin身份登录，点击Manage显示IP不允许,bp抓包后添加X-Forwarded-For:127.0.0.1返回页面注释中查看到传递方式，猜测为文件上传:<br><img src="/pic/ljyq/ljyq6.png"><br>do参数值为upload：<br><img src="/pic/ljyq/ljyq7.png"><br>在上传中只能上传图片且存在PHP语法过滤，抓包修改木马文件后缀为PHP，且以PHP5绕过后缀过滤，同时采取一句话木马变形绕过PHP语法过滤，上传符合条件的木马文件：<br><img src="/pic/ljyq/ljyq8.png"><br><img src="/pic/ljyq/ljyq9.png">  </p>
+<h2 id="12、SVG的xxe和xss"><a href="#12、SVG的xxe和xss" class="headerlink" title="12、SVG的xxe和xss  "></a><strong><font size=4>12、SVG的xxe和xss</font></strong>  </h2><p>上传带有恶意代码的SVG文件：<br><?xml version="1.0" encoding="UTF-8"?><br><!DOCTYPE note [
+<!ENTITY file SYSTEM "file:///flag" ><br>]&gt;<br><svg height="100" width="1000"><br>  <text x="10" y="20">&file;</text><br></svg>  </p>
+<h2 id="13、GET数据包修改为POST"><a href="#13、GET数据包修改为POST" class="headerlink" title="13、GET数据包修改为POST  "></a><strong><font size=4>13、GET数据包修改为POST</font></strong>  </h2><p>第一步：改请求头第一行,把GET改成POST<br>第二步：中间添加2行参数<br>Content-Type:application&#x2F;x-www-form-urlencoded<br>Content-Length:（请求的内容长度）（例如what&#x3D;flag，则长度为9）  </p>
+<p>第三步：末尾空一行，写POST参数<br>结合实际情况，用参数名&#x3D;参数值的格式构造参数，多个参数要用&amp;隔开。  </p>
+<ul>
+<li>%0a可以进行参数的截断，利用第二个参数来rce</li>
+<li>空格的URL编码为%20</li>
+</ul>
  
       <!-- reward -->
       
